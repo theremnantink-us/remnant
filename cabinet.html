@@ -24,8 +24,8 @@
     <form id="login-form" class="auth-form active" novalidate>
       <div class="field-error" id="login-error" aria-live="polite"></div>
       <div class="field">
-        <label for="login-phone">Телефон</label>
-        <input type="tel" id="login-phone" autocomplete="tel" placeholder="+7 (___) ___-__-__" required>
+        <label for="login-email">Email</label>
+        <input type="email" id="login-email" autocomplete="email" placeholder="you@example.com" required>
       </div>
       <div class="field">
         <label for="login-password">Пароль</label>
@@ -46,7 +46,7 @@
       </div>
       <div class="field">
         <label for="reg-email">Email</label>
-        <input type="email" id="reg-email" autocomplete="email" placeholder="you@example.com">
+        <input type="email" id="reg-email" autocomplete="email" placeholder="you@example.com" required>
       </div>
       <div class="field">
         <label for="reg-phone">Телефон</label>
@@ -55,29 +55,13 @@
       <div class="field">
         <label for="reg-password">Пароль</label>
         <div class="field-wrap">
-          <input type="password" id="reg-password" autocomplete="new-password" minlength="8" required>
+          <input type="password" id="reg-password" autocomplete="new-password" minlength="6" required>
           <button type="button" class="pw-toggle" aria-label="Показать пароль" data-for="reg-password">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="16"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg>
           </button>
         </div>
-        <small style="display:block;color:var(--muted);font-size:.75rem;margin-top:.35rem">
-          Минимум 8 символов, должен содержать буквы и цифры
-        </small>
       </div>
-      <button type="submit" class="btn-primary" id="reg-btn">Получить код подтверждения</button>
-    </form>
-    <form id="confirm-form" class="auth-form" novalidate>
-      <div class="field-error" id="confirm-error" aria-live="polite"></div>
-      <p style="color:var(--muted);font-size:.85rem;margin-bottom:1rem">
-        Мы отправили 6-значный код на ваш телефон <span id="confirm-phone-label" style="color:var(--text)"></span>.
-        Введите его, чтобы завершить регистрацию.
-      </p>
-      <div class="field">
-        <label for="confirm-code">Код подтверждения</label>
-        <input type="text" id="confirm-code" inputmode="numeric" pattern="\d{6}" maxlength="6" autocomplete="one-time-code" required>
-      </div>
-      <button type="submit" class="btn-primary" id="confirm-btn">Подтвердить</button>
-      <button type="button" class="btn-ghost" id="confirm-back" style="margin-top:.5rem">Назад</button>
+      <button type="submit" class="btn-primary" id="reg-btn">Создать аккаунт</button>
     </form>
     <a href="/" class="auth-back">← На сайт</a>
   </div>

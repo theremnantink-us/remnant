@@ -1,6 +1,13 @@
 /* ════════════════════════════════════════════════════════════
-   REMNANT — Booking page JS  (uses /api/slots + /api/bookings)
+   REMNANT — Booking page JS
 ════════════════════════════════════════════════════════════ */
+
+import { supabase } from './supabase-config.js';
+
+const DEFAULT_SLOTS = [
+  { start: '10:00', end: '16:00' },
+  { start: '16:00', end: '22:00' },
+];
 
 const MONTHS = ['Январь','Февраль','Март','Апрель','Май','Июнь','Июль','Август','Сентябрь','Октябрь','Ноябрь','Декабрь'];
 const DOW = ['Пн','Вт','Ср','Чт','Пт','Сб','Вс'];
@@ -16,18 +23,30 @@ const toStep2Btn = document.getElementById('toStep2');
 
 function pad(n) { return String(n).padStart(2, '0'); }
 
-function renderCalendar(year, month) {
+async function renderCalendar(year, month) {
   curYear = year; curMonth = month;
   calTitle.textContent = `${MONTHS[month]} ${year}`;
 
   const daysInMonth = new Date(year, month + 1, 0).getDate();
-  const today = new Date(); today.setHours(0, 0, 0, 0);
+  const from = `${year}-${pad(month + 1)}-01`;
+  const to   = `${year}-${pad(month + 1)}-${pad(daysInMonth)}`;
+
+  // Fetch which dates are explicitly open/partial for this month
+  const { data: blockRows } = await supabase
+    .from('blocked_dates')
+    .select('date, blocked_slots')
+    .gte('date', from)
+    .lte('date', to);
+  const blockMap = new Map((blockRows || []).map(r => [r.date, r.blocked_slots]));
+
+  let html = DOW.map(d => `<div class="cal-dow">${d}</div>`).join('');
   const first = new Date(year, month, 1);
   let startDay = first.getDay();
   if (startDay === 0) startDay = 7;
   startDay--;
 
-  let html = DOW.map(d => `<div class="cal-dow">${d}</div>`).join('');
+  const today = new Date(); today.setHours(0,0,0,0);
+
   for (let i = 0; i < startDay; i++) html += '<div class="cal-day empty"></div>';
 
   for (let d = 1; d <= daysInMonth; d++) {
@@ -37,7 +56,17 @@ function renderCalendar(year, month) {
     const isToday = dt.getTime() === today.getTime();
     const isSel   = iso === selectedDate;
     const cls = ['cal-day'];
-    if (isPast)  cls.push('disabled');
+
+    if (isPast) {
+      cls.push('disabled');
+    } else if (!blockMap.has(iso)) {
+      cls.push('disabled');                        // no row = closed by default
+    } else {
+      const val = blockMap.get(iso);
+      if (val === null) cls.push('disabled');      // explicitly closed
+      // [] or [slots] = clickable (fully open or partial)
+    }
+
     if (isToday) cls.push('today');
     if (isSel)   cls.push('selected');
     html += `<div class="${cls.join(' ')}" data-date="${iso}">${d}</div>`;
@@ -56,23 +85,42 @@ async function selectDate(iso) {
   slotInput.value = '';
   toStep2Btn.disabled = true;
 
-  calGrid.querySelectorAll('.cal-day').forEach(el =>
-    el.classList.toggle('selected', el.dataset.date === iso)
-  );
+  calGrid.querySelectorAll('.cal-day').forEach(el => el.classList.toggle('selected', el.dataset.date === iso));
   slotsContainer.style.display = 'block';
   slotsGrid.innerHTML = '<span class="slots-empty">Загрузка...</span>';
 
   try {
-    const res = await fetch(`/api/slots?date=${iso}`);
-    const data = await res.json();
+    // Fetch blocked info and existing bookings for this date in parallel
+    const [{ data: blockedRow }, { data: bookedRows }] = await Promise.all([
+      supabase.from('blocked_dates').select('blocked_slots').eq('date', iso).maybeSingle(),
+      supabase.from('bookings').select('time_slot').eq('date', iso).neq('status', 'cancelled'),
+    ]);
 
-    if (data.blocked || !data.slots?.length) {
+    // New model: no row OR null = fully closed; [] = fully open; [slots] = partial
+    const isFullyClosed = !blockedRow || blockedRow.blocked_slots === null;
+    const isFullyOpen   = blockedRow && Array.isArray(blockedRow.blocked_slots)
+                          && blockedRow.blocked_slots.length === 0;
+
+    if (isFullyClosed) {
+      slotsGrid.innerHTML = '<span class="slots-empty">Нет доступных слотов на эту дату</span>';
+      return;
+    }
+
+    const blockedSlots = isFullyOpen ? new Set() : new Set(blockedRow.blocked_slots);
+    const bookedSlots  = new Set((bookedRows || []).map(r => r.time_slot));
+
+    const slots = DEFAULT_SLOTS.map(s => ({
+      ...s,
+      available: !blockedSlots.has(s.start) && !bookedSlots.has(s.start),
+    }));
+
+    if (slots.every(s => !s.available)) {
       slotsGrid.innerHTML = '<span class="slots-empty">Нет доступных слотов на эту дату</span>';
       return;
     }
 
     slotsGrid.innerHTML = '';
-    data.slots.forEach(s => {
+    slots.forEach(s => {
       const btn = document.createElement('button');
       btn.type = 'button';
       btn.className = s.available ? 'slot-btn' : 'slot-btn taken';
@@ -109,9 +157,7 @@ document.getElementById('calNext').addEventListener('click', () => {
 });
 
 function goToStep(n) {
-  document.querySelectorAll('.form-step').forEach(el =>
-    el.classList.toggle('active', Number(el.dataset.step) === n)
-  );
+  document.querySelectorAll('.form-step').forEach(el => el.classList.toggle('active', Number(el.dataset.step) === n));
   document.querySelectorAll('.step-indicator .step').forEach(el => {
     const s = Number(el.dataset.step);
     el.classList.toggle('active', s === n);
@@ -147,31 +193,42 @@ form.addEventListener('submit', async (e) => {
   submitBtn.textContent = 'Отправка...';
 
   try {
+    // Check if user is logged in to attach user_id
+    const { data: { session } } = await supabase.auth.getSession();
+
+    // Upload reference photo if provided
+    let referenceUrl = null;
+    const refFile = refInput?.files?.[0];
+    if (refFile) {
+      submitBtn.textContent = 'Загрузка фото...';
+      const ext  = refFile.name.split('.').pop();
+      const path = `${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
+      const { error: uploadError } = await supabase.storage
+        .from('booking-references')
+        .upload(path, refFile, { contentType: refFile.type, upsert: false });
+      if (!uploadError) {
+        const { data: urlData } = supabase.storage.from('booking-references').getPublicUrl(path);
+        referenceUrl = urlData?.publicUrl || null;
+      }
+      submitBtn.textContent = 'Отправка...';
+    }
+
     const bookingData = {
-      date:        payload.date,
-      time_slot:   payload.time_slot,
-      style:       payload.style       || '',
-      size:        payload.size        || '',
-      description: payload.description || payload.notes || '',
-      name:        payload.name,
-      phone:       payload.phone,
-      email:       payload.email       || '',
-      location:    payload.location    || '',
+      date:          payload.date,
+      time_slot:     payload.time_slot,
+      style:         payload.style || null,
+      notes:         payload.notes || null,
+      name:          payload.name,
+      phone:         payload.phone,
+      status:        'new',
+      reference_url: referenceUrl,
     };
+    if (session?.user) bookingData.user_id = session.user.id;
 
-    const headers = { 'Content-Type': 'application/json' };
-    const clientToken = localStorage.getItem('remnant_client_token');
-    if (clientToken) headers['Authorization'] = `Bearer ${clientToken}`;
+    const { error } = await supabase.from('bookings').insert(bookingData);
 
-    const res = await fetch('/api/bookings', {
-      method: 'POST',
-      headers,
-      body: JSON.stringify(bookingData),
-    });
-    const result = await res.json();
-
-    if (!res.ok) {
-      alert(result.error || 'Ошибка при отправке');
+    if (error) {
+      alert(error.message || 'Ошибка при отправке');
       submitBtn.disabled = false;
       submitBtn.textContent = 'Записаться';
       return;
@@ -231,12 +288,12 @@ phoneInput.addEventListener('blur', () => {
   }
 });
 
-/* ── Reference photo (local preview only, no upload) ── */
-const refInput      = document.getElementById('reference');
-const refUploadBtn  = document.getElementById('refUploadBtn');
-const refPreview    = document.getElementById('refPreview');
+/* ── Reference photo upload ── */
+const refInput     = document.getElementById('reference');
+const refUploadBtn = document.getElementById('refUploadBtn');
+const refPreview   = document.getElementById('refPreview');
 const refPreviewImg = document.getElementById('refPreviewImg');
-const refRemoveBtn  = document.getElementById('refRemoveBtn');
+const refRemoveBtn = document.getElementById('refRemoveBtn');
 
 if (refUploadBtn) refUploadBtn.addEventListener('click', () => refInput?.click());
 
@@ -245,9 +302,9 @@ if (refInput) {
     const file = refInput.files[0];
     if (!file) return;
     const reader = new FileReader();
-    reader.onload = ev => {
-      if (refPreviewImg) refPreviewImg.src = ev.target.result;
-      if (refPreview) refPreview.classList.remove('hidden');
+    reader.onload = e => {
+      refPreviewImg.src = e.target.result;
+      refPreview.classList.remove('hidden');
     };
     reader.readAsDataURL(file);
   });
@@ -255,22 +312,27 @@ if (refInput) {
 
 if (refRemoveBtn) {
   refRemoveBtn.addEventListener('click', () => {
-    if (refInput) refInput.value = '';
-    if (refPreview) refPreview.classList.add('hidden');
-    if (refPreviewImg) refPreviewImg.src = '';
+    refInput.value = '';
+    refPreview.classList.add('hidden');
+    refPreviewImg.src = '';
   });
 }
 
-/* ── Pre-fill name / phone if client is logged in ── */
+/* ── Realtime: instantly reflect admin availability changes ── */
+supabase
+  .channel('booking-blocked-dates')
+  .on('postgres_changes', { event: '*', schema: 'public', table: 'blocked_dates' }, () => {
+    renderCalendar(curYear, curMonth);
+    if (selectedDate) selectDate(selectedDate);
+  })
+  .subscribe();
+
+// Pre-fill form if client is logged in
 (async function prefillClientData() {
   try {
-    const token = localStorage.getItem('remnant_client_token');
-    if (!token) return;
-    const res = await fetch('/api/client/profile', {
-      headers: { 'Authorization': `Bearer ${token}` },
-    });
-    if (!res.ok) return;
-    const profile = await res.json();
+    const { data: { session } } = await supabase.auth.getSession();
+    if (!session) return;
+    const { data: profile } = await supabase.from('profiles').select('name, phone').eq('id', session.user.id).single();
     const nameEl  = document.getElementById('name');
     const phoneEl = document.getElementById('phone');
     if (nameEl  && !nameEl.value  && profile?.name)  nameEl.value  = profile.name;
