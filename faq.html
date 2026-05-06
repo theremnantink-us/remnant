@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAQ | REMNANT Tattoo Studio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Montserrat:wght@700;800&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .faq-hero {
+            min-height: 60vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 4rem 2rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .faq-hero .section-label {
+            margin-bottom: 1rem;
+        }
+
+        .faq-hero .section-title {
+            font-size: clamp(3rem, 8vw, 5rem);
+            font-family: var(--font-serif);
+            font-weight: 300;
+            letter-spacing: -1px;
+            margin-bottom: 2rem;
+        }
+
+        .faq-container {
+            max-width: 900px;
+            margin: 4rem auto;
+            padding: 0 2rem;
+        }
+
+        .faq-item {
+            border-bottom: 1px solid var(--border);
+            padding: 2rem 0;
+        }
+
+        .faq-item:last-child {
+            border-bottom: none;
+        }
+
+        .faq-question {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            user-select: none;
+            transition: all 0.3s ease;
+        }
+
+        .faq-question:hover {
+            color: var(--accent);
+        }
+
+        .faq-question h3 {
+            font-family: var(--font-serif);
+            font-size: 1.3rem;
+            font-weight: 300;
+            margin: 0;
+            padding: 0;
+            text-align: left;
+        }
+
+        .faq-icon {
+            width: 18px;
+            height: 18px;
+            position: relative;
+            flex-shrink: 0;
+            margin-left: 2rem;
+        }
+
+        .faq-icon::before,
+        .faq-icon::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            background: var(--accent);
+            transition: transform .35s ease, opacity .35s ease;
+        }
+
+        .faq-icon::before {
+            width: 14px;
+            height: 1px;
+            transform: translate(-50%, -50%);
+        }
+
+        .faq-icon::after {
+            width: 1px;
+            height: 14px;
+            transform: translate(-50%, -50%);
+        }
+
+        .faq-item.open .faq-icon::after {
+            transform: translate(-50%, -50%) rotate(90deg);
+            opacity: 0;
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.45s ease, margin-top 0.3s ease;
+            margin-top: 0;
+        }
+
+        .faq-item.open .faq-answer {
+            max-height: 500px;
+            margin-top: 1.5rem;
+        }
+
+        .faq-answer p {
+            font-size: 0.95rem;
+            line-height: 1.8;
+            color: var(--text);
+            margin: 0;
+        }
+
+        .faq-answer p + p {
+            margin-top: 1rem;
+        }
+
+        .faq-cta {
+            max-width: 900px;
+            margin: 4rem auto;
+            padding: 3rem 2rem;
+            text-align: center;
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .faq-cta h2 {
+            font-family: var(--font-serif);
+            font-size: 1.8rem;
+            font-weight: 300;
+            margin-bottom: 1.5rem;
+        }
+
+        .faq-cta p {
+            font-size: 1rem;
+            color: rgba(232, 227, 220, 0.7);
+            margin-bottom: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .faq-hero .section-title {
+                font-size: 2.5rem;
+            }
+
+            .faq-question h3 {
+                font-size: 1.1rem;
+            }
+
+            .faq-icon {
+                margin-left: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<header>
+<nav class="nav" id="nav" role="navigation" aria-label="Основная навигация">
+  <a href="/" class="nav-logo">Remnant</a>
+  <div class="nav-links">
+    <a href="/faq">FAQ</a>
+    <a href="/master">Мастер</a>
+    <a href="/contacts">Контакты</a>
+    <a href="/aftercare">Уход</a>
+    <a href="/booking" class="nav-cta">Записаться</a>
+    <a href="/cabinet" class="nav-cabinet-btn" id="nav-cabinet-link">
+      <div class="nav-avatar" id="nav-avatar"><img id="nav-avatar-img" src="" alt=""><span id="nav-avatar-initials"></span></div>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" id="nav-cabinet-icon"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      <span id="nav-cabinet-text">Кабинет</span>
+    </a>
+  </div>
+  <button class="nav-burger" id="burger" aria-label="Меню" aria-expanded="false" aria-controls="mobile-menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+</header><!-- Mobile menu -->
+<div class="mobile-menu" id="mobile-menu">
+  <a href="/cabinet" onclick="closeMobileMenu()" class="mob-cabinet-icon" aria-label="Личный кабинет">
+    <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+  </a>
+  <a href="/faq" onclick="closeMobileMenu()">FAQ</a>
+  <a href="/master" onclick="closeMobileMenu()">Мастер</a>
+  <a href="/contacts" onclick="closeMobileMenu()">Контакты</a>
+  <a href="/aftercare" onclick="closeMobileMenu()">Уход</a>
+  <a href="/booking" onclick="closeMobileMenu()">Записаться</a>
+  <div class="mobile-menu-socials">
+    <a href="#" class="social-icon" aria-label="Instagram">
+      <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+    </a>
+    <a href="#" class="social-icon" aria-label="Telegram">
+      <svg viewBox="0 0 24 24"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+    </a>
+  </div>
+</div>
+
+    <!-- Hero Section -->
+    <section class="faq-hero fade-up">
+        <div class="section-label">Вопросы</div>
+        <h1 class="section-title">FAQ</h1>
+    </section>
+
+    <!-- FAQ Container -->
+    <section class="faq-container fade-up">
+        <div class="faq-item">
+            <div class="faq-question">
+                <h3>Больно ли делать татуировку?</h3>
+                <div class="faq-icon"></div>
+            </div>
+            <div class="faq-answer">
+                <p>Татуировка — это не совсем безболезненный процесс, но боль часто описывается как жжение или царапание. Степень дискомфорта зависит от вашего болевого порога, размера, стиля и места татуировки. На фотоплёй и костях боль ощущается острее, чем на мясистых частях. Наша студия использует современное оборудование и техники для минимизации дискомфорта.</p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">
+                <h3>Как подготовиться к сеансу?</h3>
+                <div class="faq-icon"></div>
+            </div>
+            <div class="faq-answer">
+                <p>За день до татуировки хорошо выспитесь. Приходите сытым и хорошо увлажненным организмом — это облегчит процесс. Избегайте алкоголя, наркотиков и кофеина, так как они разжижают кровь. Носите удобную, легко снимаемую одежду, чтобы мастер мог получить доступ к нужной зоне. Возьмите с собой воду и закуски — длительный сеанс может быть утомительным.</p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">
+                <h3>Сколько стоит татуировка?</h3>
+                <div class="faq-icon"></div>
+            </div>
+            <div class="faq-answer">
+                <p>Стоимость зависит от размера, сложности дизайна, стиля и времени работы. Минимальная цена за консультацию и простую работу — от 8000 рублей. Большие и сложные проекты могут стоить значительно дороже. Мы обсудим точную цену на консультации после просмотра вашего эскиза и определения объёма работы.</p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">
+                <h3>Можно ли принести свой эскиз?</h3>
+                <div class="faq-icon"></div>
+            </div>
+            <div class="faq-answer">
+                <p>Конечно! Мы приветствуем ваши идеи и эскизы. Если у вас уже есть готовый рисунок, покажите его нам на консультации. Мастер может адаптировать его под формат татуировки, улучшить пропорции и детали. Если идея только в голове, мастер создаст авторский эскиз, вдохновляясь вашим описанием и пожеланиями.</p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">
+                <h3>Как долго заживает татуировка?</h3>
+                <div class="faq-icon"></div>
+            </div>
+            <div class="faq-answer">
+                <p>Поверхностное заживление происходит в течение 7-10 дней. Однако полное заживление кожи может занять 3-4 недели. За это время татуировка пройдёт через фазы: отёк, покраснение, шелушение и окончательное восстановление. Важно правильно ухаживать за татуировкой в течение этого времени — это напрямую влияет на её внешний вид и яркость в будущем.</p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">
+                <h3>Можно ли перебить старую татуировку?</h3>
+                <div class="faq-icon"></div>
+            </div>
+            <div class="faq-answer">
+                <p>Да, но это зависит от характеристик старой работы. Если она светлая и контрастирует с новым дизайном, перебивка вполне возможна. Если же старая татуировка тёмная и большая, может потребоваться лазерное удаление перед тем, как наносить новую. На консультации мастер оценит состояние старой работы и предложит лучший вариант.</p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">
+                <h3>Какой стиль мне подойдёт?</h3>
+                <div class="faq-icon"></div>
+            </div>
+            <div class="faq-answer">
+                <p>Выбор стиля зависит от вашей идеи, места расположения и личных предпочтений. Fine Line идеален для минималистичных и изящных работ, Графика подходит для более выразительных и структурированных образов. Студия специализируется на точных, аккуратных работах, поэтому оба стиля делаются с максимальной чёткостью. На консультации мы обсудим ваши вдохновления и порекомендуем стиль.</p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">
+                <h3>Нужна ли предоплата?</h3>
+                <div class="faq-icon"></div>
+            </div>
+            <div class="faq-answer">
+                <p>Для бронирования места и времени в расписании мастера требуется предварительный платёж. Размер предоплаты зависит от сметной стоимости работы и обсуждается на консультации. Оставшаяся сумма оплачивается во время самого сеанса. Предоплата гарантирует вам место и позволяет мастеру спланировать своё время.</p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">
+                <h3>Можно ли записаться онлайн?</h3>
+                <div class="faq-icon"></div>
+            </div>
+            <div class="faq-answer">
+                <p>Да, вы можете отправить заявку через форму на сайте или написать нам в Telegram. После этого мастер свяжется с вами в течение 24 часов для обсуждения деталей, даты и времени визита.</p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">
+                <h3>Что нельзя делать после татуировки?</h3>
+                <div class="faq-icon"></div>
+            </div>
+            <div class="faq-answer">
+                <p>В первую неделю избегайте: плавания в бассейнах и морской воде, длительного воздействия прямых солнечных лучей, интенсивных физических нагрузок, алкоголя, острой еды. Не царапайте и не подбирайте корочку — это может привести к потере пигмента и инфекции. Также не рекомендуется посещать сауну, баню и тренажёрный зал в первые 2-3 недели.</p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">
+                <h3>Можно ли делать татуировку беременным?</h3>
+                <div class="faq-icon"></div>
+            </div>
+            <div class="faq-answer">
+                <p>Во время беременности обычно не рекомендуется делать новые татуировки из-за риска инфекции и неопределённого влияния на развитие плода. Существует также риск заражения иглой при плохой стерилизации. Рекомендуется дождаться окончания беременности и периода кормления, чтобы минимизировать риски для себя и ребёнка. Проконсультируйтесь с врачом перед сеансом.</p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">
+                <h3>Как ухаживать за татуировкой в первые дни?</h3>
+                <div class="faq-icon"></div>
+            </div>
+            <div class="faq-answer">
+                <p>В первые часы держите защитную плёнку (примерно 2-4 часа), потом аккуратно снимите её и промойте мягким мылом. Промокните полотенцем и нанесите тонкий слой специального ухода (мы рекомендуем проверенные средства). Повторяйте 2-3 раза в день в течение 7-10 дней. Не используйте жирные крема и вазелин — они препятствуют заживлению. Следуйте инструкциям, которые даст мастер — это критически важно.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="faq-cta fade-up">
+        <h2>Остались вопросы?</h2>
+        <p>Напишите нам в Telegram — это самый быстрый способ связаться с мастером</p>
+        <a href="https://t.me/remnant_tattoo" target="_blank" rel="noopener" class="btn btn-fill">Написать в Telegram</a>
+    </section>
+
+    <!-- Footer -->
+<footer class="footer">
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <span class="footer-logo">Remnant</span>
+      <p>Студия авторской татуировки в Москве. Fine Line и графика — наш язык.</p>
+      <div class="social-icons">
+        <a href="#" class="social-icon" aria-label="Instagram">
+          <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+        </a>
+        <a href="#" class="social-icon" aria-label="Telegram">
+          <svg viewBox="0 0 24 24"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+        </a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Навигация</h4>
+      <a href="/master">Мастер</a>
+      <a href="/contacts">Контакты</a>
+      <a href="/faq">FAQ</a>
+      <a href="/aftercare">Уход за тату</a>
+      <a href="/booking">Записаться</a>
+    </div>
+    <div class="footer-col">
+      <h4>Контакты</h4>
+      <a href="tel:+79151127866">+7 (915) 112-78-66</a>
+      <a href="mailto:hello@remnant.tattoo">hello@remnant.tattoo</a>
+      <a href="#">@remnant_tattoo</a>
+      <a href="#">Instagram</a>
+    </div>
+    <div class="footer-col">
+      <h4>Адрес</h4>
+      <p>ул. Лубянка, д. 14</p>
+      <p>Москва, 101000</p>
+      <p class="muted" style="margin-top:.8rem">По записи</p>
+      <div class="footer-map">
+        <iframe
+          src="https://yandex.ru/map-widget/v1/?ll=37.6285%2C55.7623&z=16&pt=37.6285,55.7623,pm2rdm"
+          width="100%"
+          height="180"
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          allowfullscreen
+        ></iframe>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 REMNANT. Все права защищены.</p>
+    <p><a href="#">Политика конфиденциальности</a></p>
+  </div>
+</footer>
+
+<script src="js/common.js" defer></script>
+</body>
+</html>

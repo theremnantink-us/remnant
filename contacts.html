@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Контакты | REMNANT Tattoo Studio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Montserrat:wght@700;800&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .studio-hero {
+            min-height: 60vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 4rem 2rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .studio-hero .section-label {
+            margin-bottom: 1rem;
+        }
+
+        .studio-hero .section-title {
+            font-size: clamp(3rem, 8vw, 5rem);
+            font-family: var(--font-serif);
+            font-weight: 300;
+            letter-spacing: -1px;
+            margin-bottom: 2rem;
+        }
+
+        .philosophy-section {
+            max-width: 900px;
+            margin: 4rem auto;
+            padding: 0 2rem;
+            text-align: center;
+        }
+
+        .philosophy-quote {
+            font-family: var(--font-serif);
+            font-size: clamp(1.5rem, 4vw, 2.2rem);
+            font-weight: 300;
+            line-height: 1.6;
+            color: var(--text);
+            margin-bottom: 1rem;
+        }
+
+        .values-section {
+            max-width: 1200px;
+            margin: 4rem auto;
+            padding: 0 2rem;
+        }
+
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 3rem;
+            margin-top: 2rem;
+        }
+
+        .value-card {
+            padding: 2rem;
+            border: 1px solid var(--border);
+            border-radius: 2px;
+        }
+
+        .value-card h3 {
+            font-family: var(--font-serif);
+            font-size: 1.8rem;
+            font-weight: 300;
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+
+        .value-card p {
+            font-size: 0.95rem;
+            line-height: 1.8;
+            color: var(--text);
+        }
+
+        .location-section {
+            max-width: 1200px;
+            margin: 4rem auto;
+            padding: 4rem 2rem;
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .location-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: start;
+        }
+
+        .location-info h2 {
+            font-family: var(--font-serif);
+            font-size: 2rem;
+            font-weight: 300;
+            margin-bottom: 2rem;
+        }
+
+        .location-item {
+            margin-bottom: 2rem;
+        }
+
+        .location-item-label {
+            font-size: 0.7rem;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+        }
+
+        .location-item-value {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: var(--text);
+        }
+
+        .location-item-value a {
+            color: var(--accent);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .location-item-value a:hover {
+            color: var(--text);
+        }
+
+        .location-map {
+            border-radius: 10px;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.08);
+            background: #050506;
+        }
+        .location-map iframe {
+            display: block;
+            width: 100%;
+            height: 320px;
+            border: 0;
+            filter: grayscale(1) brightness(0.55) contrast(1.2);
+        }
+
+        .find-us-section {
+            max-width: 1200px;
+            margin: 4rem auto;
+            padding: 3rem 2rem;
+            background: rgba(196, 168, 130, 0.03);
+            border: 1px solid var(--border);
+            border-radius: 2px;
+        }
+
+        .find-us-section h3 {
+            font-family: var(--font-serif);
+            font-size: 1.6rem;
+            font-weight: 300;
+            margin-bottom: 1.5rem;
+        }
+
+        .find-us-text {
+            font-size: 0.95rem;
+            line-height: 1.8;
+            color: var(--text);
+        }
+
+        @media (max-width: 768px) {
+            .studio-hero .section-title {
+                font-size: 2.5rem;
+            }
+
+            .values-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .location-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .philosophy-quote {
+                font-size: 1.3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<header>
+<nav class="nav" id="nav" role="navigation" aria-label="Основная навигация">
+  <a href="/" class="nav-logo">Remnant</a>
+  <div class="nav-links">
+    <a href="/faq">FAQ</a>
+    <a href="/master">Мастер</a>
+    <a href="/contacts">Контакты</a>
+    <a href="/aftercare">Уход</a>
+    <a href="/booking" class="nav-cta">Записаться</a>
+    <a href="/cabinet" class="nav-cabinet-btn" id="nav-cabinet-link">
+      <div class="nav-avatar" id="nav-avatar"><img id="nav-avatar-img" src="" alt=""><span id="nav-avatar-initials"></span></div>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" id="nav-cabinet-icon"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      <span id="nav-cabinet-text">Кабинет</span>
+    </a>
+  </div>
+  <button class="nav-burger" id="burger" aria-label="Меню" aria-expanded="false" aria-controls="mobile-menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+</header><!-- Mobile menu -->
+<div class="mobile-menu" id="mobile-menu">
+  <a href="/cabinet" onclick="closeMobileMenu()" class="mob-cabinet-icon" aria-label="Личный кабинет">
+    <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+  </a>
+  <a href="/faq" onclick="closeMobileMenu()">FAQ</a>
+  <a href="/master" onclick="closeMobileMenu()">Мастер</a>
+  <a href="/contacts" onclick="closeMobileMenu()">Контакты</a>
+  <a href="/aftercare" onclick="closeMobileMenu()">Уход</a>
+  <a href="/booking" onclick="closeMobileMenu()">Записаться</a>
+  <div class="mobile-menu-socials">
+    <a href="#" class="social-icon" aria-label="Instagram">
+      <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+    </a>
+    <a href="#" class="social-icon" aria-label="Telegram">
+      <svg viewBox="0 0 24 24"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+    </a>
+  </div>
+</div>
+
+    <!-- Hero Section -->
+    <section class="studio-hero fade-up">
+        <div class="section-label">Контакты</div>
+        <h1 class="section-title">REMNANT</h1>
+    </section>
+
+    <!-- Philosophy Section -->
+    <section class="philosophy-section fade-up">
+        <p class="philosophy-quote">Каждая татуировка — это форма диалога. Мы создаём пространство, где ваша история превращается в изображение, которое останется с вами навсегда.</p>
+    </section>
+
+    <!-- Values Section -->
+    <section class="values-section fade-up">
+        <h2 class="section-title" style="margin-bottom: 0;">Наши ценности</h2>
+        <div class="values-grid">
+            <div class="value-card">
+                <h3>Точность</h3>
+                <p>Тонкие линии требуют безупречной техники. Мы не спешим и уделяем внимание каждой детали вашей работы.</p>
+            </div>
+            <div class="value-card">
+                <h3>Диалог</h3>
+                <p>Каждая работа начинается с разговора. Слушать — это наше главное умение. Ваша идея важна для нас.</p>
+            </div>
+            <div class="value-card">
+                <h3>Забота</h3>
+                <p>От консультации до заживления — мы рядом на каждом этапе. Ваше благополучие — наша приоритет.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Location Section -->
+    <section class="location-section fade-up">
+        <div class="location-grid">
+            <div class="location-info">
+                <h2>Где нас найти</h2>
+                
+                <div class="location-item">
+                    <div class="location-item-label">Адрес</div>
+                    <div class="location-item-value">
+                        Москва<br>
+                        Лубянский проезд, 14
+                    </div>
+                </div>
+
+                <div class="location-item">
+                    <div class="location-item-label">Режим работы</div>
+                    <div class="location-item-value">
+                        Пн-Сб: 12:00 - 21:00<br>
+                        Вс: по записи
+                    </div>
+                </div>
+
+                <div class="location-item">
+                    <div class="location-item-label">Телефон</div>
+                    <div class="location-item-value">
+                        <a href="tel:+74950000000">+7 (495) 000-00-00</a>
+                    </div>
+                </div>
+
+                <div class="location-item">
+                    <div class="location-item-label">Email</div>
+                    <div class="location-item-value">
+                        <a href="mailto:hello@remnant.tattoo">hello@remnant.tattoo</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="location-map">
+                <iframe
+                    src="https://yandex.ru/map-widget/v1/?ll=37.6285%2C55.7623&z=16&pt=37.6285,55.7623,pm2rdm"
+                    width="100%"
+                    height="320"
+                    loading="lazy"
+                    referrerpolicy="no-referrer-when-downgrade"
+                    allowfullscreen
+                ></iframe>
+            </div>
+        </div>
+    </section>
+
+    <!-- Find Us Section -->
+    <section class="find-us-section fade-up">
+        <h3>Как нас найти</h3>
+        <div class="find-us-text">
+            <p>Студия расположена в самом центре Москвы, на Лубянском проезде. Добраться сюда легко — мы находимся в 5 минутах пешком от станции метро «Охотный ряд» и в 10 минутах от станции «Кузнецкий мост». Есть удобная парковка рядом со зданием. При входе попросите поднять на нужный этаж — мы ждём вас!</p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+<footer class="footer">
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <span class="footer-logo">Remnant</span>
+      <p>Студия авторской татуировки в Москве. Fine Line и графика — наш язык.</p>
+      <div class="social-icons">
+        <a href="#" class="social-icon" aria-label="Instagram">
+          <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+        </a>
+        <a href="#" class="social-icon" aria-label="Telegram">
+          <svg viewBox="0 0 24 24"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+        </a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Навигация</h4>
+      <a href="/master">Мастер</a>
+      <a href="/contacts">Контакты</a>
+      <a href="/faq">FAQ</a>
+      <a href="/aftercare">Уход за тату</a>
+      <a href="/booking">Записаться</a>
+    </div>
+    <div class="footer-col">
+      <h4>Контакты</h4>
+      <a href="tel:+79151127866">+7 (915) 112-78-66</a>
+      <a href="mailto:hello@remnant.tattoo">hello@remnant.tattoo</a>
+      <a href="#">@remnant_tattoo</a>
+      <a href="#">Instagram</a>
+    </div>
+    <div class="footer-col">
+      <h4>Адрес</h4>
+      <p>ул. Лубянка, д. 14</p>
+      <p>Москва, 101000</p>
+      <p class="muted" style="margin-top:.8rem">По записи</p>
+      <div class="footer-map">
+        <iframe
+          src="https://yandex.ru/map-widget/v1/?ll=37.6285%2C55.7623&z=16&pt=37.6285,55.7623,pm2rdm"
+          width="100%"
+          height="180"
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          allowfullscreen
+        ></iframe>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 REMNANT. Все права защищены.</p>
+    <p><a href="#">Политика конфиденциальности</a></p>
+  </div>
+</footer>
+
+<script src="js/common.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Уход за татуировкой | REMNANT Tattoo Studio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Montserrat:wght@700;800&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .ac-hero {
+            min-height: 55vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: calc(var(--nav-h) + 4rem) 2rem 4rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .ac-hero .section-title {
+            font-size: clamp(3rem, 8vw, 5.5rem);
+            font-family: var(--font-serif);
+            font-weight: 300;
+            letter-spacing: -1px;
+            margin: 1rem 0 1.5rem;
+        }
+        .ac-intro {
+            max-width: 720px;
+            margin: 0 auto;
+            font-size: 1rem;
+            line-height: 1.85;
+            color: rgba(232,227,220,0.75);
+        }
+
+        /* ── Tabs ── */
+        .ac-wrap { max-width: 960px; margin: 0 auto; padding: 0 2rem; }
+        .ac-tabs-nav {
+            display: flex;
+            gap: 0;
+            border-bottom: 1px solid var(--border);
+            margin: 5rem 0 0;
+        }
+        .ac-tab-btn {
+            flex: 1;
+            background: none;
+            border: none;
+            border-bottom: 2px solid transparent;
+            margin-bottom: -1px;
+            cursor: pointer;
+            font: 400 .72rem var(--font-sans);
+            letter-spacing: .22em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            padding: 1rem 0;
+            transition: color .25s, border-color .25s;
+        }
+        .ac-tab-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
+        .ac-tab-btn:hover:not(.active) { color: var(--text); }
+
+        .ac-tab-panel { display: none; padding: 4rem 0; }
+        .ac-tab-panel.active { display: block; }
+
+        /* ── Timeline ── */
+        .ac-timeline { display: flex; flex-direction: column; gap: 0; }
+        .ac-day {
+            display: grid;
+            grid-template-columns: 140px 1fr;
+            gap: 2.5rem;
+            padding: 2.5rem 0;
+            border-bottom: 1px solid var(--border);
+            align-items: start;
+        }
+        .ac-day:last-child { border-bottom: none; }
+        .ac-day-label {
+            font-family: var(--font-serif);
+            font-size: 1.5rem;
+            font-weight: 300;
+            color: var(--accent);
+            line-height: 1.2;
+            padding-top: .1rem;
+        }
+        .ac-day-body h4 {
+            font-size: .62rem;
+            letter-spacing: .35em;
+            text-transform: uppercase;
+            color: var(--text);
+            margin-bottom: .9rem;
+        }
+        .ac-day-body p {
+            font-size: .93rem;
+            color: rgba(232,227,220,0.72);
+            line-height: 1.85;
+            margin: 0 0 .75rem;
+        }
+        .ac-day-body p:last-child { margin: 0; }
+        .ac-warn {
+            margin-top: .85rem;
+            padding: .75rem 1rem;
+            border-left: 2px solid rgba(196,168,130,0.45);
+            font-size: .85rem;
+            color: rgba(232,227,220,0.55);
+            line-height: 1.7;
+        }
+
+        /* ── Do / Don't ── */
+        .ac-rules {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            padding: 5rem 0;
+            border-top: 1px solid var(--border);
+            margin-top: 5rem;
+        }
+        .ac-rules h3 {
+            font-family: var(--font-serif);
+            font-size: 1.35rem;
+            font-weight: 300;
+            margin-bottom: 2rem;
+        }
+        .ac-rules-do h3   { color: var(--accent); }
+        .ac-rules-dont h3 { color: var(--text); }
+        .ac-list { display: flex; flex-direction: column; gap: 1rem; }
+        .ac-item {
+            display: flex;
+            align-items: baseline;
+            gap: .75rem;
+            font-size: .88rem;
+            color: rgba(232,227,220,0.7);
+            line-height: 1.65;
+        }
+        .ac-item::before {
+            flex-shrink: 0;
+            font-size: .7rem;
+            font-weight: 500;
+        }
+        .ac-rules-do .ac-item::before   { content: "✓"; color: var(--accent); }
+        .ac-rules-dont .ac-item::before { content: "×"; color: rgba(232,227,220,0.4); }
+
+        /* ── Comparison ── */
+        .ac-compare {
+            border-top: 1px solid var(--border);
+            padding: 5rem 0;
+        }
+        .ac-compare h2 {
+            font-family: var(--font-serif);
+            font-size: clamp(1.5rem, 3vw, 2.2rem);
+            font-weight: 300;
+            margin-bottom: 2.5rem;
+        }
+        .ac-compare-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+        .ac-compare-card {
+            padding: 2rem 1.75rem;
+            border: 1px solid var(--border);
+            background: rgba(255,255,255,0.02);
+        }
+        .ac-compare-card h4 {
+            font-family: var(--font-serif);
+            font-size: 1.15rem;
+            font-weight: 300;
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+        .ac-compare-card p {
+            font-size: .88rem;
+            line-height: 1.75;
+            color: rgba(232,227,220,0.65);
+        }
+        .ac-short-rule {
+            margin-top: 2.5rem;
+            padding: 1.5rem 2rem;
+            border: 1px solid rgba(196,168,130,0.2);
+            background: rgba(196,168,130,0.04);
+        }
+        .ac-short-rule p {
+            font-size: .88rem;
+            line-height: 1.85;
+            color: rgba(232,227,220,0.7);
+        }
+        .ac-short-rule p + p { margin-top: .6rem; }
+
+        /* ── CTA ── */
+        .ac-cta {
+            text-align: center;
+            padding: 5rem 0 6rem;
+            border-top: 1px solid var(--border);
+        }
+        .ac-cta h3 {
+            font-family: var(--font-serif);
+            font-size: 1.5rem;
+            font-weight: 300;
+            margin-bottom: .85rem;
+        }
+        .ac-cta p {
+            font-size: .88rem;
+            color: rgba(232,227,220,0.5);
+            margin-bottom: 1.8rem;
+        }
+        .ac-cta-btns { display: flex; gap: 1rem; justify-content: center; }
+
+        @media (max-width: 768px) {
+            .ac-day { grid-template-columns: 1fr; gap: 1rem; }
+            .ac-day-label { font-size: 1.15rem; }
+            .ac-rules { grid-template-columns: 1fr; gap: 3rem; }
+            .ac-compare-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+<header>
+<nav class="nav" id="nav" role="navigation" aria-label="Основная навигация">
+  <a href="/" class="nav-logo">Remnant</a>
+  <div class="nav-links">
+    <a href="/faq">FAQ</a>
+    <a href="/master">Мастер</a>
+    <a href="/contacts">Контакты</a>
+    <a href="/aftercare">Уход</a>
+    <a href="/booking" class="nav-cta">Записаться</a>
+    <a href="/cabinet" class="nav-cabinet-btn" id="nav-cabinet-link">
+      <div class="nav-avatar" id="nav-avatar"><img id="nav-avatar-img" src="" alt=""><span id="nav-avatar-initials"></span></div>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" id="nav-cabinet-icon"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      <span id="nav-cabinet-text">Кабинет</span>
+    </a>
+  </div>
+  <button class="nav-burger" id="burger" aria-label="Меню" aria-expanded="false" aria-controls="mobile-menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+</header><!-- Mobile menu -->
+<div class="mobile-menu" id="mobile-menu">
+  <a href="/cabinet" onclick="closeMobileMenu()" class="mob-cabinet-icon" aria-label="Личный кабинет">
+    <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+  </a>
+  <a href="/faq" onclick="closeMobileMenu()">FAQ</a>
+  <a href="/master" onclick="closeMobileMenu()">Мастер</a>
+  <a href="/contacts" onclick="closeMobileMenu()">Контакты</a>
+  <a href="/aftercare" onclick="closeMobileMenu()">Уход</a>
+  <a href="/booking" onclick="closeMobileMenu()">Записаться</a>
+  <div class="mobile-menu-socials">
+    <a href="#" class="social-icon" aria-label="Instagram">
+      <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+    </a>
+    <a href="#" class="social-icon" aria-label="Telegram">
+      <svg viewBox="0 0 24 24"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+    </a>
+  </div>
+</div>
+            <div class="ac-day fade-up">
+                <div class="ac-day-label">День 2–3</div>
+                <div class="ac-day-body">
+                    <h4>Пленка остаётся</h4>
+                    <p>Если пленка держится хорошо, не протекает и не вызывает сильного раздражения — продолжайте носить её. Небольшое покраснение, чувство тепла или умеренный зуд допустимы.</p>
+                    <div class="ac-warn">Если появляется сильная боль, неприятный запах, выраженное покраснение, жжение или протекание — снимите пленку и свяжитесь с мастером.</div>
+                </div>
+            </div>
+            <div class="ac-day fade-up">
+                <div class="ac-day-label">День 4–5</div>
+                <div class="ac-day-body">
+                    <h4>Снятие пленки</h4>
+                    <p>Обычно в этот период пленку снимают, если мастер не указал другой срок. Снимайте аккуратно под тёплой водой, без резких движений.</p>
+                    <p>После снятия промойте татуировку мягким мылом без отдушек, промокните одноразовым бумажным полотенцем и нанесите тонкий слой увлажняющего средства.</p>
+                </div>
+            </div>
+            <div class="ac-day fade-up">
+                <div class="ac-day-label">День 6–7</div>
+                <div class="ac-day-body">
+                    <h4>Активное восстановление</h4>
+                    <p>Начинается сухость и стянутость. Промывайте татуировку 1–2 раза в день мягким мылом и наносите только тонкий слой крема — не перегружайте кожу.</p>
+                </div>
+            </div>
+            <div class="ac-day fade-up">
+                <div class="ac-day-label">День 8–14</div>
+                <div class="ac-day-body">
+                    <h4>Шелушение и зуд</h4>
+                    <p>Это нормальный этап заживления. Нельзя чесать татуировку, сдирать корочки или шелушащуюся кожу. Продолжайте лёгкое увлажнение и мягкое очищение.</p>
+                </div>
+            </div>
+            <div class="ac-day fade-up">
+                <div class="ac-day-label">2–4 недели</div>
+                <div class="ac-day-body">
+                    <h4>Финальное заживление</h4>
+                    <p>Внешне кожа почти полностью зажила, но внутреннее восстановление продолжается. Берегите татуировку от солнца, трения и сильного намокания.</p>
+                    <p>После полного заживления обязательно используйте SPF 30+.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ── VARIANT 2: PAD ── -->
+    <div class="ac-tab-panel" id="tab-pad">
+
+        <p style="font-size:.9rem;line-height:1.85;color:rgba(232,227,220,0.65);margin-bottom:3.5rem;max-width:680px">
+            Требует больше внимания, но позволяет лучше контролировать процесс заживления — особенно в первые дни.
+        </p>
+
+        <div class="ac-timeline">
+            <div class="ac-day fade-up">
+                <div class="ac-day-label">День 1</div>
+                <div class="ac-day-body">
+                    <h4>Сразу после сеанса</h4>
+                    <p>Татуировку закрывают одноразовой пеленкой или компрессом. Повязку держат чистой и меняют по рекомендации мастера. В первые часы может выделяться лимфа и немного пигмента — это нормально.</p>
+                </div>
+            </div>
+            <div class="ac-day fade-up">
+                <div class="ac-day-label">День 1–2</div>
+                <div class="ac-day-body">
+                    <h4>Первая смена</h4>
+                    <p>Пеленку снимают, татуировку промывают тёплой водой с мягким мылом, затем аккуратно промакивают бумажным полотенцем. Наносят тонкий слой заживляющего средства и при необходимости снова закрывают чистой пеленкой.</p>
+                </div>
+            </div>
+            <div class="ac-day fade-up">
+                <div class="ac-day-label">День 2–3</div>
+                <div class="ac-day-body">
+                    <h4>Регулярная смена</h4>
+                    <p>Пеленку меняют регулярно — особенно если она намокла или загрязнилась. Татуировку продолжают промывать и увлажнять. Не наносите слишком много крема: кожа должна дышать, а не находиться в «парниковом» эффекте.</p>
+                </div>
+            </div>
+            <div class="ac-day fade-up">
+                <div class="ac-day-label">День 4–5</div>
+                <div class="ac-day-body">
+                    <h4>Снижение выделений</h4>
+                    <p>Интенсивное выделение лимфы обычно уменьшается. Если мастер разрешил — пеленку можно использовать реже. Промывание остаётся обязательным 2–3 раза в день, увлажнение — тонким слоем.</p>
+                </div>
+            </div>
+            <div class="ac-day fade-up">
+                <div class="ac-day-label">День 6–7</div>
+                <div class="ac-day-body">
+                    <h4>Сухость и стянутость</h4>
+                    <p>Пеленку обычно уже не используют постоянно. Татуировку продолжают мягко мыть и увлажнять, избегая трения одеждой.</p>
+                </div>
+            </div>
+            <div class="ac-day fade-up">
+                <div class="ac-day-label">День 8–14</div>
+                <div class="ac-day-body">
+                    <h4>Шелушение и зуд</h4>
+                    <p>Это естественная часть заживления. Нельзя сдирать корочки, чесать кожу и использовать скрабы. Увлажнение продолжают по необходимости тонким слоем.</p>
+                </div>
+            </div>
+            <div class="ac-day fade-up">
+                <div class="ac-day-label">2–4 недели</div>
+                <div class="ac-day-body">
+                    <h4>Финальное заживление</h4>
+                    <p>Татуировка выглядит почти зажившей, но кожа ещё восстанавливается внутри. Продолжайте избегать солнца, бани, сауны, бассейна и интенсивных тренировок, если мастер не разрешил раньше.</p>
+                    <p>После полного заживления используйте солнцезащитный крем.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ── RULES: DO & DON'T ── -->
+    <div class="ac-rules fade-up">
+        <div class="ac-rules-do">
+            <h3>Делайте</h3>
+            <div class="ac-list">
+                <div class="ac-item">Мойте татуировку мягким мылом без отдушек</div>
+                <div class="ac-item">Используйте только чистые руки</div>
+                <div class="ac-item">Промокайте кожу бумажным полотенцем, не трите</div>
+                <div class="ac-item">Носите свободную чистую одежду</div>
+                <div class="ac-item">Спите на чистом белье</div>
+                <div class="ac-item">Пейте достаточно воды</div>
+                <div class="ac-item">Давайте коже шелушиться естественно</div>
+            </div>
+        </div>
+        <div class="ac-rules-dont">
+            <h3>Не делайте</h3>
+            <div class="ac-list">
+                <div class="ac-item">Не сдирайте корочки и не чешите татуировку</div>
+                <div class="ac-item">Не ходите в бассейн, море, баню и сауну в первые недели</div>
+                <div class="ac-item">Не подставляйте тату под прямое солнце</div>
+                <div class="ac-item">Не используйте жирные кремы и вазелин</div>
+                <div class="ac-item">Не наносите толстый слой ухода</div>
+                <div class="ac-item">Не занимайтесь интенсивным спортом в первые 1–2 недели</div>
+                <div class="ac-item">Не трогайте тату грязными руками</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ── COMPARISON ── -->
+    <div class="ac-compare fade-up">
+        <h2>Когда выбирают каждый способ</h2>
+        <div class="ac-compare-grid">
+            <div class="ac-compare-card">
+                <h4>Пленка</h4>
+                <p>Подходит, если нужна более простая схема ухода и меньше контакта с татуировкой в первые дни. Чаще её выбирают для небольших и средних работ, когда мастер использует современную заживляющую повязку.</p>
+            </div>
+            <div class="ac-compare-card">
+                <h4>Пеленка</h4>
+                <p>Подходит, если мастер рекомендует классический уход, татуировка крупная или важно регулярно контролировать процесс заживления. Требует больше внимания, но позволяет чаще промывать кожу.</p>
+            </div>
+        </div>
+        <div class="ac-short-rule">
+            <p><strong style="color:var(--accent)">Пленка</strong> — меньше действий, больше защиты в первые дни.</p>
+            <p><strong style="color:rgba(232,227,220,0.8)">Пеленка</strong> — больше контроля, больше ручного ухода.</p>
+        </div>
+    </div>
+
+    <!-- ── CTA ── -->
+    <div class="ac-cta fade-up">
+        <h3>Остались вопросы по уходу?</h3>
+        <p>Свяжитесь с мастером — поможем разобраться в любой ситуации</p>
+        <div class="ac-cta-btns">
+            <a href="tel:+79151127866" class="btn btn-outline">Позвонить</a>
+            <a href="/booking" class="btn btn-fill">Записаться</a>
+        </div>
+    </div>
+
+</div><!-- /ac-wrap -->
+
+<footer class="footer">
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <span class="footer-logo">Remnant</span>
+      <p>Авторская татуировка в Москве. Fine Line и графика.</p>
+      <div class="social-icons">
+        <a href="#" class="social-icon" aria-label="Instagram">
+          <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+        </a>
+        <a href="#" class="social-icon" aria-label="Telegram">
+          <svg viewBox="0 0 24 24"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+        </a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Навигация</h4>
+      <a href="/master">Мастер</a>
+      <a href="/contacts">Контакты</a>
+      <a href="/faq">FAQ</a>
+      <a href="/aftercare">Уход за тату</a>
+      <a href="/booking">Записаться</a>
+    </div>
+    <div class="footer-col">
+      <h4>Контакты</h4>
+      <a href="tel:+79151127866">+7 (915) 112-78-66</a>
+      <a href="mailto:hello@remnant.tattoo">hello@remnant.tattoo</a>
+      <a href="#">@remnant_tattoo</a>
+      <a href="#">Instagram</a>
+    </div>
+    <div class="footer-col">
+      <h4>Адрес</h4>
+      <p>Москва</p>
+      <p class="muted" style="margin-top:.8rem">Только по записи</p>
+      <div class="footer-map">
+        <iframe src="https://yandex.ru/map-widget/v1/?ll=37.6285%2C55.7623&z=16&pt=37.6285,55.7623,pm2rdm" width="100%" height="180" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 REMNANT. Все права защищены.</p>
+    <p><a href="#">Политика конфиденциальности</a></p>
+  </div>
+</footer>
+
+<script src="js/common.js" defer></script>
+<script>
+// Tab switching
+document.querySelectorAll('.ac-tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+        document.querySelectorAll('.ac-tab-btn').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.ac-tab-panel').forEach(p => p.classList.remove('active'));
+        btn.classList.add('active');
+        document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
+    });
+});
+
+// Fade-up observer
+const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
+}, { threshold: 0.08 });
+document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
+</script>
+</body>
+</html>

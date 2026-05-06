@@ -1,0 +1,65 @@
+# Dependencies
+server/node_modules/
+node_modules/
+
+# Build output
+dist/
+
+# Environment
+.env
+.env.local
+.env.production
+
+# DB files
+server/remnant.db
+server/remnant.db-shm
+server/remnant.db-wal
+
+# Logs
+*.log
+logs/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+
+# Deploy
+deploy.sh
+.gitnexus
+
+# Office lockfiles
+~$*
+
+# Screen recordings / large media
+*.mov
+*.mp4
+
+# Large 3D/texture sources (not part of runtime)
+*.usdz
+Female Head/
+NEW_Textures/
+public/source/
+
+# Local scratch vaults / external site dumps
+/REMNANT/
+monolithstudio.com/
+127.0.0.1_8081/
+
+# Agent / skills caches
+.agents/
+.stitch/
+.claude/
+skills-lock.json
+
+# Presentation binaries (kept outside git — large, low diffability)
+REMNANT_Diploma_Presentation.pdf
+REMNANT_Diploma_Presentation.pptx
+REMNANT_Diploma_Presentation/
+REMNANT_Web_Platform.pdf
+REMNANT_Web_Platform.pptx
+REMNANT_Web_Platform*.pptx
+

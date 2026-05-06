@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#080808"/>
+  <rect x="0" y="0" width="1200" height="2" fill="#c4a882" opacity="0.3"/>
+  <rect x="0" y="628" width="1200" height="2" fill="#c4a882" opacity="0.3"/>
+
+  <!-- Accent line left -->
+  <rect x="80" y="180" width="1" height="270" fill="#c4a882" opacity="0.4"/>
+
+  <!-- Label -->
+  <text x="600" y="210" text-anchor="middle" fill="#c4a882" font-family="Inter, system-ui, sans-serif" font-size="14" font-weight="400" letter-spacing="6" text-transform="uppercase" opacity="0.8">ТАТУ СТУДИЯ   ·   МОСКВА   ·   ЛУБЯНКА</text>
+
+  <!-- Main title -->
+  <text x="600" y="340" text-anchor="middle" fill="#e8e3dc" font-family="Georgia, 'Cormorant Garamond', serif" font-size="120" font-weight="300" letter-spacing="20">REMNANT</text>
+
+  <!-- Subtitle -->
+  <text x="600" y="410" text-anchor="middle" fill="#e8e3dc" font-family="Inter, system-ui, sans-serif" font-size="20" font-weight="300" letter-spacing="8" opacity="0.7">FINE LINE   ·   ГРАФИКА</text>
+
+  <!-- Bottom line -->
+  <text x="600" y="510" text-anchor="middle" fill="#c4a882" font-family="Inter, system-ui, sans-serif" font-size="13" font-weight="400" letter-spacing="4" opacity="0.6">АВТОРСКАЯ ТАТУИРОВКА   ·   ЗАПИСЬ ОНЛАЙН</text>
+
+  <!-- Decorative corners -->
+  <path d="M60 60 L60 100 M60 60 L100 60" stroke="#c4a882" stroke-width="0.5" fill="none" opacity="0.3"/>
+  <path d="M1140 60 L1140 100 M1140 60 L1100 60" stroke="#c4a882" stroke-width="0.5" fill="none" opacity="0.3"/>
+  <path d="M60 570 L60 530 M60 570 L100 570" stroke="#c4a882" stroke-width="0.5" fill="none" opacity="0.3"/>
+  <path d="M1140 570 L1140 530 M1140 570 L1100 570" stroke="#c4a882" stroke-width="0.5" fill="none" opacity="0.3"/>
+</svg>

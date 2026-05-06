@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+Disallow: /admin
+Disallow: /api/
+Disallow: /sw.js
+
+Sitemap: https://remnant.tattoo/sitemap.xml

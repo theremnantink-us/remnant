@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Admin — REMNANT</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/admin.css">
+  <link rel="stylesheet" href="css/orbital-nav.css">
+</head>
+<body>
+
+<!-- ═══ AUTH ═══ -->
+<div id="auth-screen" class="screen">
+  <div class="auth-card">
+    <span class="auth-logo">REMNANT</span>
+    <p class="auth-sub">Панель управления</p>
+    <form id="admin-login-form" novalidate>
+      <div class="field-error" id="login-error" aria-live="polite"></div>
+      <div class="field">
+        <label for="a-email">Email</label>
+        <input type="email" id="a-email" autocomplete="email" required>
+      </div>
+      <div class="field">
+        <label for="a-password">Пароль</label>
+        <div class="field-wrap">
+          <input type="password" id="a-password" autocomplete="current-password" required>
+          <button type="button" class="pw-toggle" data-for="a-password" aria-label="Показать">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="16"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg>
+          </button>
+        </div>
+      </div>
+      <button type="submit" class="btn-primary" id="login-btn">Войти</button>
+    </form>
+  </div>
+</div>
+
+<!-- ═══ APP ═══ -->
+<div id="app-screen" class="screen hidden">
+
+  <header class="adm-topbar" id="adm-topbar">
+    <button class="adm-topbar__back hidden" id="adm-back" aria-label="Назад к орбите" type="button">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M19 12H5M12 19l-7-7 7-7"/>
+      </svg>
+    </button>
+    <a href="/" class="adm-topbar__logo">Remnant</a>
+    <div class="adm-topbar__actions">
+      <button class="adm-topbar__btn adm-topbar__btn--home" data-section="dashboard" aria-label="Орбита">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="18"><circle cx="12" cy="12" r="3"/><ellipse cx="12" cy="12" rx="10" ry="4"/></svg>
+      </button>
+      <span class="adm-badge hidden" id="new-badge" aria-label="Новые заявки">0</span>
+      <button class="notif-bell" id="notif-bell-btn" aria-label="Уведомления">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="18"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>
+      </button>
+      <span class="adm-badge hidden" id="bell-badge">0</span>
+      <span id="adm-email-label" class="adm-topbar__email"></span>
+      <button class="adm-topbar__btn adm-topbar__btn--logout" id="adm-logout">Выйти</button>
+    </div>
+  </header>
+
+  <!-- Legacy sidebar nav kept hidden so any click handlers still bind safely -->
+  <aside class="adm-sidebar hidden" id="adm-sidebar" hidden aria-hidden="true">
+    <button class="adm-nav-item active" data-section="dashboard"></button>
+    <button class="adm-nav-item" data-section="bookings"></button>
+    <button class="adm-nav-item" data-section="schedule"></button>
+    <button class="adm-nav-item" data-section="analytics"></button>
+  </aside>
+  <div class="adm-backdrop hidden" id="adm-backdrop"></div>
+
+  <main class="adm-main">
+
+    <section class="adm-section active has-orbital" id="section-dashboard">
+      <div class="orbital-wrap">
+        <div id="adm-orbital"></div>
+      </div>
+      <!-- Hidden data anchors (used by loadDashboard) -->
+      <div hidden aria-hidden="true">
+        <span id="s-new">—</span>
+        <span id="s-confirmed">—</span>
+        <span id="s-done">—</span>
+        <span id="s-revenue">—</span>
+        <div id="recent-list"></div>
+      </div>
+    </section>
+
+    <section class="adm-section hidden" id="section-bookings">
+      <div class="adm-toolbar">
+        <h1 class="adm-page-title">Заявки</h1>
+        <div class="adm-toolbar-actions">
+          <input type="search" id="search-input" class="adm-search" placeholder="Поиск...">
+          <select id="status-filter" class="adm-select">
+            <option value="">Все статусы</option>
+            <option value="new">Новые</option>
+            <option value="confirmed">Подтверждено</option>
+            <option value="done">Завершено</option>
+            <option value="cancelled">Отменено</option>
+          </select>
+          <button class="btn-ghost" id="export-csv-btn">Экспорт CSV</button>
+        </div>
+      </div>
+      <div class="bookings-table-wrap">
+        <table class="bookings-table" id="bookings-table">
+          <thead>
+            <tr><th>Клиент</th><th>Дата</th><th>Время</th><th>Стиль</th><th>Статус</th><th></th></tr>
+          </thead>
+          <tbody id="bookings-tbody"></tbody>
+        </table>
+      </div>
+      <div class="bookings-cards hidden" id="bookings-cards"></div>
+    </section>
+
+    <section class="adm-section hidden" id="section-schedule">
+      <h1 class="adm-page-title">Расписание</h1>
+      <div class="schedule-layout">
+        <div class="calendar-wrap">
+          <div class="cal-header">
+            <button class="cal-nav" id="cal-prev">‹</button>
+            <span id="cal-title"></span>
+            <button class="cal-nav" id="cal-next">›</button>
+          </div>
+          <div class="cal-grid" id="cal-grid"></div>
+        </div>
+        <div class="schedule-sidebar">
+          <h3 id="selected-date-title">Выберите дату</h3>
+          <!-- Single date view -->
+          <div class="schedule-actions hidden" id="schedule-actions">
+            <p class="slots-section-label">Слоты времени</p>
+            <div class="slots-toggle-grid" id="slots-toggle-grid"></div>
+            <div class="schedule-day-btns">
+              <button class="btn-danger-block" id="block-day-btn">Закрыть весь день</button>
+              <button class="btn-ghost" id="unblock-day-btn" style="width:100%">Открыть весь день</button>
+            </div>
+            <p class="slots-section-label" style="margin-top:1.2rem">Записи на день</p>
+            <div id="date-bookings-list"></div>
+          </div>
+          <!-- Multi date view -->
+          <div class="multi-date-actions hidden" id="multi-date-actions">
+            <p class="slots-section-label" id="multi-date-count"></p>
+            <p class="multi-date-hint">Shift+клик — диапазон · перетащите для выделения</p>
+            <div class="schedule-day-btns" style="margin-top:1.2rem">
+              <button class="btn-ghost" id="batch-unblock-btn" style="width:100%">Открыть все</button>
+              <button class="btn-danger-block" id="batch-block-btn">Закрыть все</button>
+            </div>
+            <button class="btn-ghost" id="clear-selection-btn" style="width:100%;margin-top:.6rem;font-size:.8rem;opacity:.7">Снять выделение</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ ANALYTICS ═══ -->
+    <section class="adm-section hidden" id="section-analytics">
+      <h1 class="adm-page-title">Статистика</h1>
+
+      <!-- KPI row -->
+      <div class="an-kpi-row">
+        <div class="an-kpi-card">
+          <div class="an-kpi-num" id="an-total-bookings">—</div>
+          <div class="an-kpi-label">Всего записей</div>
+        </div>
+        <div class="an-kpi-card">
+          <div class="an-kpi-num" id="an-month-bookings">—</div>
+          <div class="an-kpi-label">Записей за месяц</div>
+        </div>
+        <div class="an-kpi-card">
+          <div class="an-kpi-num" id="an-conversion">—%</div>
+          <div class="an-kpi-label">Завершено</div>
+        </div>
+        <div class="an-kpi-card">
+          <div class="an-kpi-num" id="an-cancel-rate">—%</div>
+          <div class="an-kpi-label">Отменено</div>
+        </div>
+      </div>
+
+      <!-- Charts row 1 -->
+      <div class="an-charts-row">
+        <div class="an-chart-card an-chart-wide">
+          <div class="an-chart-title">Записи по дням (последние 30 дней)</div>
+          <div class="an-chart-wrap"><canvas id="chart-bookings-daily"></canvas></div>
+        </div>
+        <div class="an-chart-card">
+          <div class="an-chart-title">Статусы записей</div>
+          <div class="an-chart-wrap an-chart-wrap--sm"><canvas id="chart-statuses"></canvas></div>
+        </div>
+      </div>
+
+      <!-- Charts row 2 -->
+      <div class="an-charts-row">
+        <div class="an-chart-card">
+          <div class="an-chart-title">Записи по дням недели</div>
+          <div class="an-chart-wrap"><canvas id="chart-weekdays"></canvas></div>
+        </div>
+        <div class="an-chart-card">
+          <div class="an-chart-title">Стили (топ запросов)</div>
+          <div class="an-chart-wrap"><canvas id="chart-styles"></canvas></div>
+        </div>
+      </div>
+
+    </section>
+
+  </main>
+</div>
+
+<div class="modal-overlay hidden" id="booking-modal">
+  <div class="modal-card">
+    <div class="modal-header">
+      <h3 id="modal-title">Запись</h3>
+      <button class="modal-close" id="modal-close">✕</button>
+    </div>
+    <div id="modal-body"></div>
+    <div class="modal-actions" id="modal-actions"></div>
+  </div>
+</div>
+
+<div id="toast-container"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script src="js/glass-filter.js" defer></script>
+<script type="module" src="js/admin.js"></script>
+</body>
+</html>

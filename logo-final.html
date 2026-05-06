@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>REMNANT — Логотип</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&family=Inter:wght@300;400&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --bg: #080808;
+      --accent: #c4a882;
+      --text: #e8e3dc;
+      --muted: #3a3530;
+      --dim: #1e1c1a;
+    }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      font-weight: 300;
+    }
+
+    /* ── header ── */
+    header {
+      padding: 3rem 5vw 2.5rem;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      display: flex;
+      align-items: baseline;
+      gap: 2.5rem;
+    }
+    .h-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1rem;
+      font-weight: 300;
+      letter-spacing: .45em;
+      text-transform: uppercase;
+      color: var(--text);
+    }
+    .h-sub {
+      font-size: .52rem;
+      letter-spacing: .38em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    /* ── main grid ── */
+    .main {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px;
+      background: rgba(255,255,255,0.04);
+    }
+
+    /* ── mark card ── */
+    .card {
+      background: var(--bg);
+      padding: 5rem 4vw 4rem;
+      display: flex;
+      flex-direction: column;
+      gap: 3rem;
+      min-height: 500px;
+    }
+    .card-head {
+      display: flex;
+      align-items: baseline;
+      gap: 1.5rem;
+    }
+    .card-id {
+      font-size: .5rem;
+      letter-spacing: .4em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .card-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1rem;
+      font-weight: 300;
+      letter-spacing: .15em;
+      color: var(--text);
+    }
+
+    /* centre the mark */
+    .mark-stage {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* size strip */
+    .sizes {
+      display: flex;
+      align-items: flex-end;
+      gap: 3rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid rgba(255,255,255,0.05);
+    }
+    .size-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: .9rem;
+    }
+    .size-label {
+      font-size: .46rem;
+      letter-spacing: .3em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    /* ── bottom row: combos + light bg ── */
+    .combos {
+      grid-column: 1 / -1;
+      background: var(--bg);
+      border-top: 1px solid rgba(255,255,255,0.04);
+      padding: 4rem 5vw;
+      display: flex;
+      flex-direction: column;
+      gap: 3rem;
+    }
+    .combo-label {
+      font-size: .5rem;
+      letter-spacing: .42em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .combo-row {
+      display: flex;
+      align-items: center;
+      gap: 5rem;
+      flex-wrap: wrap;
+    }
+    .combo-item {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1.2rem;
+    }
+    .combo-item-label {
+      font-size: .46rem;
+      letter-spacing: .32em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .light-strip {
+      background: #f0ebe4;
+      border-radius: 6px;
+      padding: 2.5rem 3rem;
+      display: flex;
+      align-items: center;
+      gap: 5rem;
+      flex-wrap: wrap;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <span class="h-title">REMNANT</span>
+  <span class="h-sub">Финальные марки · 01 &amp; R</span>
+</header>
+
+<div class="main">
+
+  <!-- ══════════════════════════════════
+       МАРКА 01 — Разомкнутый круг
+  ══════════════════════════════════ -->
+  <div class="card">
+    <div class="card-head">
+      <span class="card-id">01</span>
+      <span class="card-name">Разомкнутый круг</span>
+    </div>
+
+    <div class="mark-stage">
+      <!-- 120×120, основная версия -->
+      <svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!--
+          Окружность радиусом 50, разрыв ~72° снизу-слева.
+          Дуга от 258° до 186° (по часовой) = почти полный круг.
+          Start: 258° → x=60+50·cos258°=60-10.4=49.6, y=60+50·sin258°=60-48.9=11.1
+          End:   186° → x=60+50·cos186°=60-49.6=10.4, y=60+50·sin186°=60+5.2=65.2
+        -->
+        <path
+          d="M 60 10
+             A 50 50 0 1 1 14.5 72"
+          stroke="#e8e3dc"
+          stroke-width="1.4"
+          fill="none"
+          stroke-linecap="round"
+        />
+        <!-- точка-акцент на конце обрыва -->
+        <circle cx="14.5" cy="72" r="3.5" fill="#c4a882"/>
+        <!-- сверхтонкое продолжение — «призрак» линии -->
+        <path
+          d="M 14.5 72 Q 8 82 12 92"
+          stroke="#c4a882"
+          stroke-width="0.6"
+          fill="none"
+          stroke-linecap="round"
+          opacity="0.3"
+          stroke-dasharray="2 4"
+        />
+      </svg>
+    </div>
+
+    <div class="sizes">
+      <!-- 64px -->
+      <div class="size-item">
+        <svg width="64" height="64" viewBox="0 0 120 120" fill="none">
+          <path d="M 60 10 A 50 50 0 1 1 14.5 72" stroke="#e8e3dc" stroke-width="2" fill="none" stroke-linecap="round"/>
+          <circle cx="14.5" cy="72" r="4.5" fill="#c4a882"/>
+        </svg>
+        <span class="size-label">64px</span>
+      </div>
+      <!-- 32px -->
+      <div class="size-item">
+        <svg width="32" height="32" viewBox="0 0 120 120" fill="none">
+          <path d="M 60 10 A 50 50 0 1 1 14.5 72" stroke="#e8e3dc" stroke-width="3" fill="none" stroke-linecap="round"/>
+          <circle cx="14.5" cy="72" r="6" fill="#c4a882"/>
+        </svg>
+        <span class="size-label">32px · favicon</span>
+      </div>
+      <!-- 16px -->
+      <div class="size-item">
+        <svg width="16" height="16" viewBox="0 0 120 120" fill="none">
+          <path d="M 60 10 A 50 50 0 1 1 14.5 72" stroke="#e8e3dc" stroke-width="5" fill="none" stroke-linecap="round"/>
+          <circle cx="14.5" cy="72" r="9" fill="#c4a882"/>
+        </svg>
+        <span class="size-label">16px</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════
+       МАРКА R — Lettermark, распад
+  ══════════════════════════════════ -->
+  <div class="card">
+    <div class="card-head">
+      <span class="card-id">R</span>
+      <span class="card-name">Lettermark — распад</span>
+    </div>
+
+    <div class="mark-stage">
+      <svg width="96" height="120" viewBox="0 0 96 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- ── стойка (вертикальная линия) ── -->
+        <line x1="16" y1="10" x2="16" y2="110" stroke="#e8e3dc" stroke-width="1.6" stroke-linecap="round"/>
+
+        <!-- ── чаша R (bowl): верхний арочный изгиб от стойки ── -->
+        <path
+          d="M 16 10 C 16 10, 62 10, 62 34 C 62 56, 16 56, 16 56"
+          stroke="#e8e3dc"
+          stroke-width="1.6"
+          fill="none"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+
+        <!-- ── диагональная ножка: начало — полная, конец — растворяется ── -->
+        <!-- сплошной участок (от чаши до ~60% пути) -->
+        <line
+          x1="16" y1="56"
+          x2="58" y2="96"
+          stroke="#e8e3dc"
+          stroke-width="1.6"
+          stroke-linecap="round"
+        />
+        <!-- истончение: штриховая часть, убывающая opacity -->
+        <line
+          x1="58" y1="96"
+          x2="76" y2="114"
+          stroke="#e8e3dc"
+          stroke-width="1.0"
+          stroke-linecap="round"
+          stroke-dasharray="3 4"
+          opacity="0.45"
+        />
+        <!-- финальный обрыв — золотая точка -->
+        <circle cx="58" cy="96" r="2.8" fill="#c4a882"/>
+        <!-- призрак продолжения -->
+        <line
+          x1="60" y1="98"
+          x2="74" y2="112"
+          stroke="#c4a882"
+          stroke-width="0.7"
+          stroke-linecap="round"
+          opacity="0.25"
+          stroke-dasharray="1.5 5"
+        />
+      </svg>
+    </div>
+
+    <div class="sizes">
+      <!-- 64px -->
+      <div class="size-item">
+        <svg width="64" height="80" viewBox="0 0 96 120" fill="none">
+          <line x1="16" y1="10" x2="16" y2="110" stroke="#e8e3dc" stroke-width="2.2" stroke-linecap="round"/>
+          <path d="M 16 10 C 16 10,62 10,62 34 C 62 56,16 56,16 56" stroke="#e8e3dc" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+          <line x1="16" y1="56" x2="58" y2="96" stroke="#e8e3dc" stroke-width="2.2" stroke-linecap="round"/>
+          <line x1="58" y1="96" x2="76" y2="114" stroke="#e8e3dc" stroke-width="1.3" stroke-linecap="round" stroke-dasharray="3 4" opacity="0.4"/>
+          <circle cx="58" cy="96" r="3.8" fill="#c4a882"/>
+        </svg>
+        <span class="size-label">64px</span>
+      </div>
+      <!-- 32px favicon -->
+      <div class="size-item">
+        <svg width="32" height="40" viewBox="0 0 96 120" fill="none">
+          <line x1="16" y1="10" x2="16" y2="110" stroke="#e8e3dc" stroke-width="3.5" stroke-linecap="round"/>
+          <path d="M 16 10 C 16 10,62 10,62 34 C 62 56,16 56,16 56" stroke="#e8e3dc" stroke-width="3.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+          <line x1="16" y1="56" x2="58" y2="96" stroke="#e8e3dc" stroke-width="3.5" stroke-linecap="round"/>
+          <line x1="58" y1="96" x2="74" y2="112" stroke="#e8e3dc" stroke-width="2" stroke-linecap="round" stroke-dasharray="4 5" opacity="0.4"/>
+          <circle cx="58" cy="96" r="5.5" fill="#c4a882"/>
+        </svg>
+        <span class="size-label">32px · favicon</span>
+      </div>
+      <!-- 16px -->
+      <div class="size-item">
+        <svg width="16" height="20" viewBox="0 0 96 120" fill="none">
+          <line x1="16" y1="10" x2="16" y2="110" stroke="#e8e3dc" stroke-width="6" stroke-linecap="round"/>
+          <path d="M 16 10 C 16 10,62 10,62 34 C 62 56,16 56,16 56" stroke="#e8e3dc" stroke-width="6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+          <line x1="16" y1="56" x2="58" y2="96" stroke="#e8e3dc" stroke-width="6" stroke-linecap="round"/>
+          <circle cx="58" cy="96" r="8" fill="#c4a882"/>
+        </svg>
+        <span class="size-label">16px</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════
+       КОМБИНАЦИИ + СВЕТЛЫЙ ФОН
+  ══════════════════════════════════ -->
+  <div class="combos">
+    <span class="combo-label">Применение</span>
+
+    <div class="combo-row">
+
+      <!-- Вариант: круг + wordmark -->
+      <div class="combo-item">
+        <span class="combo-item-label">Горизонтальный логотип</span>
+        <svg width="260" height="50" viewBox="0 0 260 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- марка 01 масштабирована -->
+          <path d="M 25 5 A 20 20 0 1 1 9 33" stroke="#e8e3dc" stroke-width="1.3" fill="none" stroke-linecap="round"/>
+          <circle cx="9" cy="33" r="2.5" fill="#c4a882"/>
+          <!-- разделитель -->
+          <line x1="60" y1="8" x2="60" y2="42" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+          <!-- wordmark -->
+          <text x="72" y="33"
+            font-family="'Cormorant Garamond', Georgia, serif"
+            font-size="22"
+            font-weight="300"
+            letter-spacing="8"
+            fill="#e8e3dc">REMNANT</text>
+        </svg>
+      </div>
+
+      <!-- Вариант: R + wordmark -->
+      <div class="combo-item">
+        <span class="combo-item-label">R-монограмма + название</span>
+        <svg width="250" height="50" viewBox="0 0 250 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- R марка, уменьшена -->
+          <line x1="8" y1="5" x2="8" y2="46" stroke="#e8e3dc" stroke-width="1.4" stroke-linecap="round"/>
+          <path d="M 8 5 C 8 5,30 5,30 17 C 30 28,8 28,8 28" stroke="#e8e3dc" stroke-width="1.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+          <line x1="8" y1="28" x2="28" y2="46" stroke="#e8e3dc" stroke-width="1.4" stroke-linecap="round"/>
+          <line x1="28" y1="46" x2="36" y2="54" stroke="#e8e3dc" stroke-width="0.9" stroke-linecap="round" stroke-dasharray="2 3" opacity="0.4"/>
+          <circle cx="28" cy="46" r="2.2" fill="#c4a882"/>
+          <!-- разделитель -->
+          <line x1="55" y1="8" x2="55" y2="42" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+          <!-- wordmark -->
+          <text x="68" y="33"
+            font-family="'Cormorant Garamond', Georgia, serif"
+            font-size="22"
+            font-weight="300"
+            letter-spacing="8"
+            fill="#e8e3dc">REMNANT</text>
+        </svg>
+      </div>
+
+      <!-- Вариант: только круг, крупно -->
+      <div class="combo-item">
+        <span class="combo-item-label">Standalone mark</span>
+        <svg width="56" height="56" viewBox="0 0 120 120" fill="none">
+          <path d="M 60 10 A 50 50 0 1 1 14.5 72" stroke="#e8e3dc" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+          <circle cx="14.5" cy="72" r="5" fill="#c4a882"/>
+        </svg>
+      </div>
+
+    </div>
+
+    <!-- светлый фон -->
+    <span class="combo-label" style="margin-top:.5rem">На светлом фоне</span>
+    <div class="light-strip">
+
+      <!-- 01 на светлом -->
+      <svg width="72" height="72" viewBox="0 0 120 120" fill="none">
+        <path d="M 60 10 A 50 50 0 1 1 14.5 72" stroke="#1a1816" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+        <circle cx="14.5" cy="72" r="4" fill="#8a7055"/>
+      </svg>
+
+      <!-- R на светлом -->
+      <svg width="58" height="72" viewBox="0 0 96 120" fill="none">
+        <line x1="16" y1="10" x2="16" y2="110" stroke="#1a1816" stroke-width="1.8" stroke-linecap="round"/>
+        <path d="M 16 10 C 16 10,62 10,62 34 C 62 56,16 56,16 56" stroke="#1a1816" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+        <line x1="16" y1="56" x2="58" y2="96" stroke="#1a1816" stroke-width="1.8" stroke-linecap="round"/>
+        <line x1="58" y1="96" x2="74" y2="112" stroke="#1a1816" stroke-width="1.1" stroke-linecap="round" stroke-dasharray="3 4" opacity="0.4"/>
+        <circle cx="58" cy="96" r="3.2" fill="#8a7055"/>
+      </svg>
+
+      <!-- горизонтальный на светлом -->
+      <svg width="240" height="44" viewBox="0 0 260 50" fill="none">
+        <path d="M 25 5 A 20 20 0 1 1 9 33" stroke="#1a1816" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+        <circle cx="9" cy="33" r="2.8" fill="#8a7055"/>
+        <line x1="60" y1="8" x2="60" y2="42" stroke="rgba(0,0,0,0.1)" stroke-width="1"/>
+        <text x="72" y="33" font-family="'Cormorant Garamond',Georgia,serif" font-size="22" font-weight="300" letter-spacing="8" fill="#1a1816">REMNANT</text>
+      </svg>
+
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>

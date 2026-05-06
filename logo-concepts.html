@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>REMNANT — Концепции логотипа</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --bg: #080808;
+      --surface: #111111;
+      --text: #e8e3dc;
+      --muted: #5a5550;
+      --accent: #c4a882;
+      --border: rgba(232,227,220,0.08);
+    }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      font-weight: 300;
+      min-height: 100vh;
+      padding: 4rem 5vw;
+    }
+    h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1rem;
+      font-weight: 300;
+      letter-spacing: .45em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 3rem;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+      gap: 2px;
+    }
+    .card {
+      background: var(--surface);
+      padding: 3.5rem 2.5rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2rem;
+      cursor: pointer;
+      transition: background .3s;
+      position: relative;
+    }
+    .card:hover { background: #161616; }
+    .card.selected { background: #161616; outline: 1px solid var(--accent); }
+    .card-label {
+      font-size: .56rem;
+      letter-spacing: .4em;
+      text-transform: uppercase;
+      color: var(--muted);
+      align-self: flex-start;
+    }
+    .card-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem;
+      font-weight: 300;
+      color: var(--text);
+      align-self: flex-start;
+      margin-top: -.5rem;
+    }
+    .logo-preview {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2.5rem 0;
+      min-height: 140px;
+    }
+    /* Dark / Light toggle per card */
+    .card-toggles {
+      display: flex;
+      gap: 1rem;
+      align-self: flex-start;
+    }
+    .toggle-btn {
+      font-size: .52rem;
+      letter-spacing: .3em;
+      text-transform: uppercase;
+      color: var(--muted);
+      background: none;
+      border: 1px solid var(--border);
+      padding: .3rem .7rem;
+      cursor: pointer;
+      transition: color .2s, border-color .2s;
+    }
+    .toggle-btn.active { color: var(--accent); border-color: rgba(196,168,130,.4); }
+    .card-desc {
+      font-size: .78rem;
+      line-height: 1.75;
+      color: var(--muted);
+      align-self: flex-start;
+    }
+    .preview-dark  { background: #080808; }
+    .preview-light { background: #f0ebe4; }
+
+    /* ── LOGO A — Lettermark R decay ── */
+    .logo-a svg { overflow: visible; }
+
+    /* ── LOGO E — full page width ── */
+    .logo-e { width: 100%; }
+  </style>
+</head>
+<body>
+
+<h1>Remnant · Концепции логотипа</h1>
+
+<div class="grid">
+
+  <!-- ═══ A: Lettermark R-decay ═══ -->
+  <div class="card" id="card-a">
+    <span class="card-label">Вариант A</span>
+    <span class="card-title">Lettermark — распад</span>
+    <div class="logo-preview preview-dark" id="preview-a">
+      <svg width="90" height="100" viewBox="0 0 90 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- Serif R constructed from paths, leg fades to nothing -->
+        <!-- Stem -->
+        <rect x="12" y="10" width="4" height="80" fill="#e8e3dc"/>
+        <!-- Bowl top -->
+        <path d="M16 10 Q52 10 52 30 Q52 50 16 50" stroke="#e8e3dc" stroke-width="3.5" fill="none"/>
+        <!-- Spine inside bowl -->
+        <line x1="16" y1="10" x2="16" y2="50" stroke="#e8e3dc" stroke-width="0" fill="none"/>
+        <!-- Leg — starts solid, dissolves into dots -->
+        <line x1="16" y1="50" x2="54" y2="90" stroke="#e8e3dc" stroke-width="3.2" stroke-linecap="round"
+              stroke-dasharray="60 0" opacity="1"/>
+        <!-- Ghost of leg — dashed continuation -->
+        <line x1="54" y1="90" x2="72" y2="110" stroke="#c4a882" stroke-width="1.5" stroke-linecap="round"
+              stroke-dasharray="3 5" opacity="0.5"/>
+        <!-- Sub label -->
+        <text x="13" y="118" font-family="'Inter', sans-serif" font-size="5.5" letter-spacing="4"
+              fill="#5a5550" text-anchor="start">TATTOO STUDIO</text>
+      </svg>
+    </div>
+    <p class="card-desc">Монограмма R — диагональная ножка «истончается» и растворяется. Буква незавершённа — как след, который остаётся.</p>
+  </div>
+
+  <!-- ═══ B: Wordmark + underline rule ═══ -->
+  <div class="card" id="card-b">
+    <span class="card-label">Вариант B</span>
+    <span class="card-title">Wordmark + черта</span>
+    <div class="logo-preview preview-dark" id="preview-b">
+      <svg width="280" height="72" viewBox="0 0 280 72" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <text x="140" y="40"
+              font-family="'Cormorant Garamond', Georgia, serif"
+              font-size="38"
+              font-weight="300"
+              letter-spacing="14"
+              fill="#e8e3dc"
+              text-anchor="middle">REMNANT</text>
+        <!-- thin rule, full width -->
+        <line x1="0" y1="52" x2="280" y2="52" stroke="#c4a882" stroke-width="0.7" opacity="0.9"/>
+        <!-- Tagline -->
+        <text x="140" y="65"
+              font-family="'Inter', sans-serif"
+              font-size="5.5"
+              letter-spacing="5.5"
+              fill="#5a5550"
+              text-anchor="middle">МОСКВА · ТАТУ СТУДИЯ</text>
+      </svg>
+    </div>
+    <p class="card-desc">Эдиториальный минимализм. Золотая линия — единственный цветной акцент. Легко масштабируется и читается на любом фоне.</p>
+  </div>
+
+  <!-- ═══ C: REM | NANT split ═══ -->
+  <div class="card" id="card-c">
+    <span class="card-label">Вариант C</span>
+    <span class="card-title">Wordmark — надлом</span>
+    <div class="logo-preview preview-dark" id="preview-c">
+      <svg width="300" height="60" viewBox="0 0 300 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- REM -->
+        <text x="112" y="42"
+              font-family="'Cormorant Garamond', Georgia, serif"
+              font-size="36"
+              font-weight="300"
+              letter-spacing="10"
+              fill="#e8e3dc"
+              text-anchor="end">REM</text>
+        <!-- vertical divider -->
+        <line x1="118" y1="8" x2="118" y2="52" stroke="#c4a882" stroke-width="0.8"/>
+        <!-- NANT -->
+        <text x="128" y="42"
+              font-family="'Cormorant Garamond', Georgia, serif"
+              font-size="36"
+              font-weight="300"
+              letter-spacing="10"
+              fill="#e8e3dc"
+              text-anchor="start">NANT</text>
+      </svg>
+    </div>
+    <p class="card-desc">Золотая черта делит слово пополам — REM и NANT. Визуальный разлом: «то, что осталось после». Нестандартно и запоминаемо.</p>
+  </div>
+
+  <!-- ═══ D: Emblem / seal ═══ -->
+  <div class="card" id="card-d">
+    <span class="card-label">Вариант D</span>
+    <span class="card-title">Эмблема — печать</span>
+    <div class="logo-preview preview-dark" id="preview-d">
+      <svg width="130" height="155" viewBox="0 0 130 155" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- outer ring -->
+        <circle cx="65" cy="68" r="52" stroke="#c4a882" stroke-width="0.7" fill="none"/>
+        <!-- inner ring -->
+        <circle cx="65" cy="68" r="46" stroke="rgba(196,168,130,0.25)" stroke-width="0.4" fill="none"/>
+        <!-- R letterform -->
+        <text x="65" y="88"
+              font-family="'Cormorant Garamond', Georgia, serif"
+              font-size="62"
+              font-weight="400"
+              fill="#e8e3dc"
+              text-anchor="middle">R</text>
+        <!-- wordmark below -->
+        <text x="65" y="138"
+              font-family="'Inter', sans-serif"
+              font-size="6"
+              letter-spacing="6.5"
+              fill="#5a5550"
+              text-anchor="middle">REMNANT</text>
+        <!-- small dots at compass points -->
+        <circle cx="65" cy="16" r="1.2" fill="#c4a882" opacity="0.6"/>
+        <circle cx="65" cy="120" r="1.2" fill="#c4a882" opacity="0.6"/>
+        <circle cx="13" cy="68" r="1.2" fill="#c4a882" opacity="0.6"/>
+        <circle cx="117" cy="68" r="1.2" fill="#c4a882" opacity="0.6"/>
+      </svg>
+    </div>
+    <p class="card-desc">Круглая печать с R в центре. Работает как клеймо мастера, подходит для сертификатов, фирменной упаковки, штампов.</p>
+  </div>
+
+  <!-- ═══ E: Needle wordmark ═══ -->
+  <div class="card" id="card-e">
+    <span class="card-label">Вариант E</span>
+    <span class="card-title">Wordmark — игла</span>
+    <div class="logo-preview preview-dark" id="preview-e">
+      <svg width="300" height="80" viewBox="0 0 300 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- REMNANT, last T leg becomes needle -->
+        <text x="10" y="48"
+              font-family="'Cormorant Garamond', Georgia, serif"
+              font-size="38"
+              font-weight="300"
+              letter-spacing="11"
+              fill="#e8e3dc">REMNAN</text>
+        <!-- T crossbar -->
+        <line x1="256" y1="16" x2="282" y2="16" stroke="#e8e3dc" stroke-width="2.2" stroke-linecap="round"/>
+        <!-- T stem turns into needle -->
+        <line x1="269" y1="16" x2="269" y2="58" stroke="#e8e3dc" stroke-width="2.2" stroke-linecap="round"/>
+        <!-- needle taper -->
+        <line x1="269" y1="58" x2="269" y2="74" stroke="#c4a882" stroke-width="1.2" stroke-linecap="round"/>
+        <polygon points="266,70 272,70 269,77" fill="#c4a882" opacity="0.9"/>
+      </svg>
+    </div>
+    <p class="card-desc">Последняя буква T превращается в иглу. Прямая отсылка к профессии, вписана в шрифт органично. Оригинально и нарративно.</p>
+  </div>
+
+  <!-- ═══ F: Stacked minimal ═══ -->
+  <div class="card" id="card-f">
+    <span class="card-label">Вариант F</span>
+    <span class="card-title">Стопка — блок</span>
+    <div class="logo-preview preview-dark" id="preview-f">
+      <svg width="200" height="90" viewBox="0 0 200 90" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- REMNANT large -->
+        <text x="100" y="44"
+              font-family="'Cormorant Garamond', Georgia, serif"
+              font-size="40"
+              font-weight="300"
+              letter-spacing="8"
+              fill="#e8e3dc"
+              text-anchor="middle">REMNANT</text>
+        <!-- thin separator -->
+        <line x1="28" y1="54" x2="172" y2="54" stroke="rgba(196,168,130,0.35)" stroke-width="0.6"/>
+        <!-- sub row: year · city · studio -->
+        <text x="100" y="67"
+              font-family="'Inter', sans-serif"
+              font-size="5.5"
+              letter-spacing="4.5"
+              fill="#5a5550"
+              text-anchor="middle">EST. 2023  ·  МОСКВА</text>
+      </svg>
+    </div>
+    <p class="card-desc">Блочный wordmark с датой основания и городом. Сдержанный, универсальный — хорошо смотрится в шапке сайта и на печатных материалах.</p>
+  </div>
+
+</div>
+
+<!-- Light bg comparison -->
+<div style="margin-top:2px;">
+  <div style="background:#f0ebe4; padding:3.5rem 2.5rem; display:flex; flex-wrap:wrap; gap:4rem; align-items:center; justify-content:center;">
+    <div style="text-align:center">
+      <div style="font-family:'Inter';font-size:.52rem;letter-spacing:.4em;text-transform:uppercase;color:#888;margin-bottom:1.5rem">На светлом фоне</div>
+      <svg width="220" height="56" viewBox="0 0 220 56" fill="none">
+        <text x="110" y="34" font-family="'Cormorant Garamond',Georgia,serif" font-size="30" font-weight="300" letter-spacing="11" fill="#1a1816" text-anchor="middle">REMNANT</text>
+        <line x1="0" y1="42" x2="220" y2="42" stroke="#8a7055" stroke-width="0.6"/>
+        <text x="110" y="52" font-family="'Inter',sans-serif" font-size="5" letter-spacing="4.5" fill="#aaa" text-anchor="middle">МОСКВА · ТАТУ СТУДИЯ</text>
+      </svg>
+    </div>
+    <div style="text-align:center">
+      <div style="font-family:'Inter';font-size:.52rem;letter-spacing:.4em;text-transform:uppercase;color:#888;margin-bottom:1.5rem">Компактная версия (nav)</div>
+      <svg width="140" height="36" viewBox="0 0 140 36" fill="none">
+        <text x="8" y="26" font-family="'Cormorant Garamond',Georgia,serif" font-size="24" font-weight="400" letter-spacing="6" fill="#1a1816">REMNANT</text>
+      </svg>
+    </div>
+    <div style="text-align:center">
+      <div style="font-family:'Inter';font-size:.52rem;letter-spacing:.4em;text-transform:uppercase;color:#888;margin-bottom:1.5rem">Favicon / соцсети</div>
+      <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+        <rect width="48" height="48" fill="#1a1816"/>
+        <text x="24" y="35" font-family="'Cormorant Garamond',Georgia,serif" font-size="30" font-weight="400" fill="#c4a882" text-anchor="middle">R</text>
+      </svg>
+    </div>
+  </div>
+</div>
+
+<div style="margin-top:3rem;font-family:'Inter',sans-serif;font-size:.7rem;line-height:1.8;color:#5a5550;max-width:700px;">
+  <strong style="color:#888;letter-spacing:.2em;font-size:.58rem;text-transform:uppercase;">Рекомендация</strong><br/>
+  Для сайта — <strong style="color:var(--accent)">B</strong> (wordmark + черта) в шапке и <strong style="color:var(--accent)">D</strong> (эмблема) как вторичный знак на деталях. Вместе они создают полноценную айдентику без излишней сложности.
+</div>
+
+</body>
+</html>

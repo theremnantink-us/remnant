@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>REMNANT — Тату студия в Москве · Fine Line и графика · Запись онлайн</title>
+  <meta name="description" content="REMNANT — авторская тату студия в Москве. Специализация: Fine Line, графика, минимализм. Бесплатная консультация и удобная онлайн-запись."/>
+  <meta name="keywords" content="тату студия Москва, татуировка Москва, fine line тату, графика тату, минимализм тату, REMNANT, тонкие линии, авторская татуировка"/>
+  <meta name="author" content="REMNANT Tattoo Studio"/>
+  <meta name="robots" content="index, follow"/>
+  <link rel="canonical" href="https://remnant.tattoo/"/>
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website"/>
+  <meta property="og:locale" content="ru_RU"/>
+  <meta property="og:site_name" content="REMNANT Tattoo"/>
+  <meta property="og:title" content="REMNANT — Авторская тату студия в Москве"/>
+  <meta property="og:description" content="Fine Line, графика, минимализм. Бесплатная консультация, онлайн-запись. Москва."/>
+  <meta property="og:url" content="https://remnant.tattoo/"/>
+  <meta property="og:image" content="https://remnant.tattoo/og-image.jpg"/>
+  <meta property="og:image:width" content="1200"/>
+  <meta property="og:image:height" content="630"/>
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:title" content="REMNANT — Авторская тату студия в Москве"/>
+  <meta name="twitter:description" content="Fine Line, графика, минимализм. Бесплатная консультация, онлайн-запись."/>
+  <meta name="twitter:image" content="https://remnant.tattoo/og-image.jpg"/>
+
+  <!-- Favicon + PWA -->
+  <link rel="icon" type="image/svg+xml" href="favicon.svg"/>
+  <link rel="apple-touch-icon" href="apple-touch-icon.png"/>
+  <link rel="manifest" href="manifest.json"/>
+  <meta name="theme-color" content="#080808"/>
+
+  <!-- Preload critical resources -->
+  <link rel="preload" href="style.css" as="style"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Montserrat:wght@700;800&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet"/>
+
+  <link rel="stylesheet" href="style.css?v=7"/>
+
+  <!-- GSAP -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js" defer></script>
+
+  <!-- Structured Data: LocalBusiness -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "TattooParlor",
+    "name": "REMNANT Tattoo Studio",
+    "description": "Авторская тату студия в Москве. Fine Line, графика, минимализм.",
+    "url": "https://remnant.tattoo",
+    "telephone": "+79151127866",
+    "email": "hello@remnant.tattoo",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Москва",
+      "addressLocality": "Москва",
+      "postalCode": "101000",
+      "addressCountry": "RU"
+    },
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": 55.7623,
+      "longitude": 37.6285
+    },
+    "openingHoursSpecification": {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],
+      "opens": "12:00",
+      "closes": "21:00"
+    },
+    "priceRange": "₽₽",
+    "image": "https://remnant.tattoo/og-image.jpg",
+    "sameAs": []
+  }
+  </script>
+
+  <!-- Structured Data: FAQ -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Больно ли делать татуировку?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Ощущения зависят от места нанесения, болевого порога и длительности сеанса. Большинство описывают это как лёгкое жжение или царапание."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Как подготовиться к сеансу?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Хорошо поешьте и выспитесь перед визитом. Наденьте удобную одежду с доступом к месту нанесения. Не употребляйте алкоголь минимум за 24 часа."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Сколько стоит татуировка?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Стоимость зависит от размера, сложности и времени работы. Минимальная стоимость сеанса — 5 000 ₽. Точная цена обсуждается на бесплатной консультации."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Можно ли принести свой эскиз?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Да. REMNANT работает как с готовыми идеями и эскизами, так и разрабатывает дизайн с нуля."
+        }
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+
+<!-- Skip navigation for accessibility -->
+<a href="#about" class="skip-nav">Перейти к содержимому</a>
+
+<canvas id="hero-canvas" aria-hidden="true"></canvas>
+<canvas id="smoke-canvas" aria-hidden="true"></canvas>
+<div class="cursor-light" id="cursor-light" aria-hidden="true"></div>
+
+<!-- ═══════ NAV ═══════ -->
+<header>
+<nav class="nav" id="nav" role="navigation" aria-label="Основная навигация">
+  <a href="/" class="nav-logo">Remnant</a>
+  <div class="nav-links">
+    <a href="/faq">FAQ</a>
+    <a href="/master">Мастер</a>
+    <a href="/contacts">Контакты</a>
+    <a href="/aftercare">Уход</a>
+    <a href="/booking" class="nav-cta">Записаться</a>
+    <a href="/cabinet" class="nav-cabinet-btn" id="nav-cabinet-link">
+      <div class="nav-avatar" id="nav-avatar"><img id="nav-avatar-img" src="" alt=""><span id="nav-avatar-initials"></span></div>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" id="nav-cabinet-icon"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      <span id="nav-cabinet-text">Кабинет</span>
+    </a>
+  </div>
+  <button class="nav-burger" id="burger" aria-label="Меню" aria-expanded="false" aria-controls="mobile-menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+</header>
+
+<!-- Mobile menu -->
+<div class="mobile-menu" id="mobile-menu">
+  <a href="/cabinet" onclick="closeMobileMenu()" class="mob-cabinet-icon" aria-label="Личный кабинет">
+    <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+  </a>
+  <a href="/faq" onclick="closeMobileMenu()">FAQ</a>
+  <a href="/master" onclick="closeMobileMenu()">Мастер</a>
+  <a href="/contacts" onclick="closeMobileMenu()">Контакты</a>
+  <a href="/aftercare" onclick="closeMobileMenu()">Уход</a>
+  <a href="/booking" onclick="closeMobileMenu()">Записаться</a>
+  <div class="mobile-menu-socials">
+    <a href="#" class="social-icon" aria-label="Instagram">
+      <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+    </a>
+    <a href="#" class="social-icon" aria-label="Telegram">
+      <svg viewBox="0 0 24 24"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+    </a>
+  </div>
+</div>
+
+<!-- ═══════ HERO ═══════ -->
+<main>
+<section class="hero" id="hero">
+  <div class="hero-overlay"></div>
+  <div class="hero-splite" id="hero-splite" aria-hidden="true">
+    <div class="hero-splite-line" id="splite-line"></div>
+    <div class="hero-splite-glow" id="splite-glow"></div>
+  </div>
+  <div class="hero-content">
+    <div class="hero-text" id="hero-text">
+      <span class="hero-label">Тату студия · Москва</span>
+      <h1 class="hero-title">REMNANT</h1>
+      <p class="hero-sub">Fine Line &nbsp;·&nbsp; Графика &nbsp;·&nbsp; Орнаментал &nbsp;·&nbsp; Геометрия &nbsp;·&nbsp; Минимализм</p>
+      <a href="/booking" class="btn btn-outline">Записаться на сеанс</a>
+    </div>
+  </div>
+  <div class="hero-time" id="hero-time"></div>
+  <div class="hero-scroll-hint" aria-hidden="true">
+    <span class="hero-scroll-label">Прокрути</span>
+    <span class="hero-scroll-bar"></span>
+  </div>
+</section>
+
+<!-- ═══════ SPACER: 3D анимация ═══════ -->
+<section class="scroll-spacer" aria-hidden="true"></section>
+
+<!-- ═══════ INFO STRIPS: все 4 до секции мастера ═══════ -->
+<div class="info-strips-section" id="about">
+
+  <div class="info-strip info-strip--left">
+    <span class="info-strip__num">01</span>
+    <div class="info-strip__bar"></div>
+    <div class="info-strip__body">
+      <span class="info-strip__title">Стиль</span>
+      <p class="info-strip__text">Fine Line · Графика · Минимализм · Геометрия · Орнамент</p>
+      <p class="info-strip__quote">Каждая работа создаётся с нуля — под тебя, под твою историю.</p>
+    </div>
+  </div>
+
+  <div class="info-strip info-strip--right">
+    <span class="info-strip__num">02</span>
+    <div class="info-strip__bar"></div>
+    <div class="info-strip__body">
+      <span class="info-strip__title">Опыт</span>
+      <p class="info-strip__text">2 года в индустрии.</p>
+    </div>
+  </div>
+
+  <div class="info-strip info-strip--left">
+    <span class="info-strip__num">03</span>
+    <div class="info-strip__bar"></div>
+    <div class="info-strip__body">
+      <span class="info-strip__title">Подход</span>
+      <p class="info-strip__text">Студия одного мастера — без конвейера. Консультация бесплатно, темп — твой.</p>
+    </div>
+  </div>
+
+  <div class="info-strip info-strip--right">
+    <span class="info-strip__num">04</span>
+    <div class="info-strip__bar"></div>
+    <div class="info-strip__body">
+      <span class="info-strip__title">Локация</span>
+      <p class="info-strip__text">Москва. Только по записи — запишись онлайн.</p>
+    </div>
+  </div>
+
+</div>
+
+<!-- ═══════ MASTER PREVIEW ═══════ -->
+<section class="master-preview">
+  <div class="glass-card master-card">
+    <div class="master-inner">
+      <div class="master-image">
+        <picture>
+          <source srcset="img/master-photo.webp" type="image/webp">
+          <img src="img/master-photo.jpg" alt="Билл Симпсон — тату мастер REMNANT" width="800" height="868" loading="lazy">
+        </picture>
+      </div>
+      <div class="master-info fade-up">
+        <span class="section-label">Мастер</span>
+        <h2 class="master-name">Билл<br>Симпсон</h2>
+        <p class="master-bio">Fine Line и графика — техники, в которых точность линии решает всё. Работаю с нуля: от идеи до финального эскиза. Без шаблонов — каждый проект авторский.</p>
+        <div class="master-tags">
+          <span class="tag">Fine Line</span>
+          <span class="tag">Графика</span>
+          <span class="tag">Минимализм</span>
+          <span class="tag">Геометрия</span>
+          <span class="tag">Орнамент</span>
+        </div>
+        <a href="/master" class="btn btn-outline">Посмотреть работы</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ PORTFOLIO PREVIEW ═══════ -->
+<section class="portfolio section">
+  <div class="glass-card portfolio-card">
+    <span class="section-label fade-up">Портфолио</span>
+    <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:0">
+      <h2 class="section-title fade-up delay-1">Избранные<br><em>Работы</em></h2>
+      <a href="/master" class="btn btn-accent fade-up delay-2" style="align-self:flex-end">Все работы</a>
+    </div>
+
+    <!-- Circular 3D gallery -->
+    <div class="circ-gallery-outer" id="circGallery">
+      <div class="circ-stage" id="circStage">
+        <div class="circ-item" data-full="works/work-01.webp" data-alt="Ботаника — папоротник и цветок">
+          <img src="works/thumb/work-01.webp" alt="Ботаника — папоротник и цветок" loading="lazy">
+        </div>
+        <div class="circ-item" data-full="works/work-02.webp" data-alt="She is in my veins">
+          <img src="works/thumb/work-02.webp" alt="She is in my veins" loading="lazy">
+        </div>
+        <div class="circ-item" data-full="works/work-03.webp" data-alt="Красные пауки-лилии">
+          <img src="works/thumb/work-03.webp" alt="Красные пауки-лилии" loading="lazy">
+        </div>
+        <div class="circ-item" data-full="works/work-04.webp" data-alt="Две птицы в полёте">
+          <img src="works/thumb/work-04.webp" alt="Две птицы в полёте" loading="lazy">
+        </div>
+        <div class="circ-item" data-full="works/work-05.webp" data-alt="Молния — рукав">
+          <img src="works/thumb/work-05.webp" alt="Молния — рукав" loading="lazy">
+        </div>
+        <div class="circ-item" data-full="works/work-06.webp" data-alt="Анубис — графика">
+          <img src="works/thumb/work-06.webp" alt="Анубис — графика" loading="lazy">
+        </div>
+      </div>
+      <div class="circ-hint">Перетащите или прокрутите · нажмите для просмотра</div>
+    </div>
+  </div>
+</section>
+
+<!-- Lightbox for circular gallery -->
+<div class="circ-lightbox hidden" id="circLightbox" role="dialog" aria-modal="true">
+  <div class="circ-lightbox-backdrop" id="circLbBackdrop"></div>
+  <button class="circ-lightbox-close" id="circLbClose" aria-label="Закрыть">✕</button>
+  <button class="circ-lightbox-nav prev" id="circLbPrev" aria-label="Назад">‹</button>
+  <button class="circ-lightbox-nav next" id="circLbNext" aria-label="Вперёд">›</button>
+  <div class="circ-lightbox-img-wrap">
+    <img id="circLbImg" src="" alt="">
+    <p class="circ-lightbox-caption" id="circLbCaption"></p>
+  </div>
+</div>
+
+<!-- ═══════ FAQ PREVIEW ═══════ -->
+<section class="faq-section section">
+  <div class="glass-card faq-card">
+    <span class="section-label fade-up">Вопросы</span>
+    <div style="display:flex;justify-content:space-between;align-items:flex-end">
+      <h2 class="section-title fade-up delay-1">Часто<br><em>Спрашивают</em></h2>
+      <a href="/faq" class="btn btn-accent fade-up delay-2" style="align-self:flex-end">Все вопросы</a>
+    </div>
+    <div class="faq-list" style="margin-top:3.5rem">
+      <div class="faq-item">
+        <button class="faq-question">Больно ли делать татуировку?<div class="faq-icon"></div></button>
+        <div class="faq-answer"><div class="faq-answer-inner">Ощущения зависят от места нанесения, болевого порога и длительности сеанса. Большинство описывают это как лёгкое жжение или царапание. Работа ведётся в комфортном темпе — с возможностью сделать паузу в любой момент.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question">Как подготовиться к сеансу?<div class="faq-icon"></div></button>
+        <div class="faq-answer"><div class="faq-answer-inner">Хорошо поешьте и выспитесь перед визитом. Наденьте удобную одежду с доступом к месту нанесения. Не употребляйте алкоголь минимум за 24 часа. Увлажните кожу за 2–3 дня, но не в день сеанса.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question">Сколько стоит татуировка?<div class="faq-icon"></div></button>
+        <div class="faq-answer"><div class="faq-answer-inner">Стоимость зависит от размера, сложности и времени работы. Минимальная стоимость сеанса — 5 000 ₽. Точная цена обсуждается на консультации — она всегда бесплатна.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question">Можно ли принести свой эскиз?<div class="faq-icon"></div></button>
+        <div class="faq-answer"><div class="faq-answer-inner">Да, конечно. REMNANT работает как с готовыми идеями и эскизами, так и разрабатывает дизайн с нуля. Главное — чтобы итоговая работа нравилась и была выполнена технически безупречно.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ CTA ═══════ -->
+<section class="cta-section fade-up">
+  <div class="glass-card cta-card">
+    <p style="font-size:.6rem;letter-spacing:.4em;text-transform:uppercase;color:var(--accent);margin-bottom:1.5rem">Готовы?</p>
+    <h2 class="cta-title">Создадим что-то<br><em>особенное</em> вместе</h2>
+    <p class="cta-sub">Запись открыта &nbsp;·&nbsp; Бесплатная консультация</p>
+    <a href="/booking" class="btn btn-fill" style="font-size:.68rem;padding:1rem 3rem">Записаться на сеанс</a>
+  </div>
+</section>
+</main>
+
+<!-- ═══════ LIGHTBOX ═══════ -->
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true">
+  <button class="lightbox-close" id="lb-close" aria-label="Закрыть">✕</button>
+  <button class="lightbox-prev" id="lb-prev" aria-label="Предыдущая">‹</button>
+  <img id="lb-img" src="" alt=""/>
+  <button class="lightbox-next" id="lb-next" aria-label="Следующая">›</button>
+</div>
+
+<!-- ═══════ FOOTER ═══════ -->
+<footer class="footer">
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <span class="footer-logo">Remnant</span>
+      <p>Авторская татуировка в Москве. Fine Line и графика.</p>
+      <div class="social-icons">
+        <a href="#" class="social-icon" aria-label="Instagram">
+          <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+        </a>
+        <a href="#" class="social-icon" aria-label="Telegram">
+          <svg viewBox="0 0 24 24"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+        </a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Навигация</h4>
+      <a href="/master">Мастер</a>
+      <a href="/contacts">Контакты</a>
+      <a href="/faq">FAQ</a>
+      <a href="/aftercare">Уход за тату</a>
+      <a href="/booking">Записаться</a>
+    </div>
+    <div class="footer-col">
+      <h4>Контакты</h4>
+      <a href="tel:+79151127866">+7 (915) 112-78-66</a>
+      <a href="mailto:hello@remnant.tattoo">hello@remnant.tattoo</a>
+      <a href="#">@remnant_tattoo</a>
+      <a href="#">Instagram</a>
+    </div>
+    <div class="footer-col">
+      <h4>Адрес</h4>
+      <p>Москва</p>
+      <p class="muted" style="margin-top:.8rem">Только по записи</p>
+      <div class="footer-map">
+        <iframe
+          src="https://yandex.ru/map-widget/v1/?ll=37.6285%2C55.7623&z=16&pt=37.6285,55.7623,pm2rdm"
+          width="100%"
+          height="180"
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          allowfullscreen
+        ></iframe>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 REMNANT. Все права защищены.</p>
+    <p><a href="#">Политика конфиденциальности</a></p>
+  </div>
+</footer>
+
+<!-- ═══════ THREE.JS HERO ═══════ -->
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.169.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.169.0/examples/jsm/"
+  }
+}
+</script>
+<script type="module" src="js/hero-3d.js?v=13"></script>
+
+<!-- ═══════ PAGE JS ═══════ -->
+<script src="js/common.js?v=3" defer></script>
+<script src="js/lightbox.js?v=2" defer></script>
+<script src="js/home.js?v=7" defer></script>
+<script src="js/glass-filter.js" defer></script>
+</body>
+</html>

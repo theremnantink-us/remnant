@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Личный кабинет — REMNANT</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/cabinet.css">
+  <link rel="stylesheet" href="css/orbital-nav.css">
+</head>
+<body>
+
+<!-- ═══ AUTH SCREEN ═══ -->
+<div id="auth-screen" class="screen">
+  <div class="auth-card">
+    <a href="/" class="auth-logo">REMNANT</a>
+    <div class="auth-tabs">
+      <button class="auth-tab active" data-tab="login">Войти</button>
+      <button class="auth-tab" data-tab="register">Регистрация</button>
+    </div>
+    <form id="login-form" class="auth-form active" novalidate>
+      <div class="field-error" id="login-error" aria-live="polite"></div>
+      <div class="field">
+        <label for="login-email">Email</label>
+        <input type="email" id="login-email" autocomplete="email" placeholder="you@example.com" required>
+      </div>
+      <div class="field">
+        <label for="login-password">Пароль</label>
+        <div class="field-wrap">
+          <input type="password" id="login-password" autocomplete="current-password" required>
+          <button type="button" class="pw-toggle" aria-label="Показать пароль" data-for="login-password">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="16"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg>
+          </button>
+        </div>
+      </div>
+      <button type="submit" class="btn-primary" id="login-btn">Войти</button>
+    </form>
+    <form id="register-form" class="auth-form" novalidate>
+      <div class="field-error" id="reg-error" aria-live="polite"></div>
+      <div class="field">
+        <label for="reg-name">Имя</label>
+        <input type="text" id="reg-name" autocomplete="name" required>
+      </div>
+      <div class="field">
+        <label for="reg-email">Email</label>
+        <input type="email" id="reg-email" autocomplete="email" placeholder="you@example.com" required>
+      </div>
+      <div class="field">
+        <label for="reg-phone">Телефон</label>
+        <input type="tel" id="reg-phone" autocomplete="tel" placeholder="+7 (___) ___-__-__" required pattern="[+\d\s\-\(\)]{7,}">
+      </div>
+      <div class="field">
+        <label for="reg-password">Пароль</label>
+        <div class="field-wrap">
+          <input type="password" id="reg-password" autocomplete="new-password" minlength="6" required>
+          <button type="button" class="pw-toggle" aria-label="Показать пароль" data-for="reg-password">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="16"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg>
+          </button>
+        </div>
+      </div>
+      <button type="submit" class="btn-primary" id="reg-btn">Создать аккаунт</button>
+    </form>
+    <a href="/" class="auth-back">← На сайт</a>
+  </div>
+</div>
+
+<!-- ═══ APP SCREEN ═══ -->
+<div id="app-screen" class="screen hidden">
+  <header class="cab-topbar" id="cab-topbar">
+    <button class="cab-topbar__back hidden" id="cab-back" aria-label="Назад к орбите" type="button">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M19 12H5M12 19l-7-7 7-7"/>
+      </svg>
+    </button>
+    <a href="/" class="cab-topbar__logo">Remnant</a>
+    <div class="cab-topbar__actions">
+      <button class="cab-topbar__btn cab-topbar__btn--home" data-tab="home" aria-label="Орбита">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="18"><circle cx="12" cy="12" r="3"/><ellipse cx="12" cy="12" rx="10" ry="4"/></svg>
+      </button>
+      <span class="notif-badge hidden" id="notif-badge">0</span>
+      <button class="cab-topbar__btn cab-topbar__btn--logout" id="logout-btn">Выйти</button>
+    </div>
+  </header>
+
+  <main class="cab-main">
+    <section class="cab-tab active" id="tab-home">
+      <div class="orbital-wrap">
+        <div id="cab-orbital"></div>
+      </div>
+      <!-- hidden legacy anchors (read by cabinet.js profile loader) -->
+      <div hidden aria-hidden="true">
+        <span id="stat-upcoming">—</span>
+        <span id="stat-total">—</span>
+        <span id="stat-done">—</span>
+        <span id="medals-visits-text"></span>
+        <span id="medals-next-text"></span>
+        <div id="medals-fill"></div>
+        <div id="medal-bronze"></div>
+        <div id="medal-silver"></div>
+        <div id="medal-gold"></div>
+        <div id="medal-platinum"></div>
+      </div>
+    </section>
+
+    <section class="cab-tab hidden" id="tab-bookings">
+      <div class="filter-pills">
+        <button class="pill active" data-filter="upcoming">Предстоящие</button>
+        <button class="pill" data-filter="past">Прошедшие</button>
+        <button class="pill" data-filter="all">Все</button>
+      </div>
+      <div class="bookings-list" id="bookings-list">
+        <div class="skeleton-block"></div>
+        <div class="skeleton-block"></div>
+      </div>
+    </section>
+
+    <section class="cab-tab hidden" id="tab-notifications">
+      <div class="notif-header">
+        <h2>Уведомления</h2>
+        <button class="btn-ghost" id="mark-all-read">Прочитать все</button>
+      </div>
+      <div class="notif-list" id="notif-list"></div>
+    </section>
+
+    <section class="cab-tab hidden" id="tab-profile">
+      <div class="acset-wrap">
+        <div class="acset-head">
+          <h2 class="acset-title">Настройки аккаунта</h2>
+          <p class="acset-sub">Управляйте профилем и личными данными</p>
+        </div>
+
+        <!-- Avatar -->
+        <div class="acset-row" id="acset-avatar-row">
+          <div class="acset-row-label">
+            <span class="acset-row-title">Аватар</span>
+            <span class="acset-row-desc">Нажмите на аватар чтобы загрузить фото</span>
+          </div>
+          <div class="acset-row-control">
+            <div class="acset-avatar-wrap" id="acset-avatar-wrap">
+              <div class="acset-avatar" id="acset-avatar">
+                <span id="acset-avatar-initials">?</span>
+                <img id="acset-avatar-img" src="" alt="" style="display:none">
+                <div class="acset-avatar-overlay">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                </div>
+              </div>
+              <input type="file" id="avatar-file-input" accept="image/*" style="display:none">
+            </div>
+            <div class="acset-tier-wrap">
+              <span class="acset-tier-badge" id="acset-tier-badge">Стандарт</span>
+              <span class="acset-tier-hint" id="acset-tier-hint"></span>
+            </div>
+          </div>
+        </div>
+        <div class="acset-divider"></div>
+
+        <!-- Name -->
+        <div class="acset-row">
+          <div class="acset-row-label">
+            <span class="acset-row-title">Имя</span>
+            <span class="acset-row-desc">Отображается в ваших записях</span>
+          </div>
+          <div class="acset-row-control">
+            <form class="acset-inline-form" id="name-form">
+              <input type="text" id="p-name" autocomplete="name" placeholder="Ваше имя">
+              <button type="submit" class="btn-ghost acset-save-btn">Сохранить</button>
+            </form>
+          </div>
+        </div>
+        <div class="acset-divider"></div>
+
+        <!-- Phone -->
+        <div class="acset-row">
+          <div class="acset-row-label">
+            <span class="acset-row-title">Телефон</span>
+            <span class="acset-row-desc">Используется при записи</span>
+          </div>
+          <div class="acset-row-control">
+            <form class="acset-inline-form" id="phone-form">
+              <input type="tel" id="p-phone" autocomplete="tel" placeholder="+7 (___) ___-__-__">
+              <button type="submit" class="btn-ghost acset-save-btn">Сохранить</button>
+            </form>
+          </div>
+        </div>
+        <div class="acset-divider"></div>
+
+        <!-- Email (readonly) -->
+        <div class="acset-row">
+          <div class="acset-row-label">
+            <span class="acset-row-title">Email</span>
+            <span class="acset-row-desc">Адрес для входа в аккаунт</span>
+          </div>
+          <div class="acset-row-control">
+            <input type="email" id="p-email" disabled autocomplete="email" class="acset-readonly-input">
+          </div>
+        </div>
+        <div class="acset-divider"></div>
+
+        <!-- Password -->
+        <div class="acset-row">
+          <div class="acset-row-label">
+            <span class="acset-row-title">Пароль</span>
+            <span class="acset-row-desc">Введите текущий пароль и задайте новый</span>
+          </div>
+          <div class="acset-row-control">
+            <form class="acset-stack-form" id="pw-change-form">
+              <input type="password" id="pw-current" autocomplete="current-password" placeholder="Текущий пароль">
+              <input type="password" id="pw-new" autocomplete="new-password" minlength="6" placeholder="Новый пароль (мин. 6 символов)">
+              <input type="password" id="pw-confirm" autocomplete="new-password" minlength="6" placeholder="Повторите новый пароль">
+              <button type="submit" class="btn-ghost acset-save-btn">Обновить пароль</button>
+            </form>
+          </div>
+        </div>
+        <div class="acset-divider"></div>
+
+        <!-- Stats + signout -->
+        <div class="acset-footer-row">
+          <div class="acset-stats">
+            <div class="acset-stat"><span class="acset-stat-num" id="pgc-visits">—</span><span class="acset-stat-label">Визитов</span></div>
+            <div class="acset-stat"><span class="acset-stat-num" id="pgc-upcoming-count">—</span><span class="acset-stat-label">Предстоящих</span></div>
+            <div class="acset-stat"><span class="acset-stat-num" id="acset-tier-visits">—</span><span class="acset-stat-label" id="acset-next-tier-label">До следующего уровня</span></div>
+          </div>
+          <button class="btn-ghost acset-signout" id="signout-btn">Выйти из аккаунта</button>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<div class="modal-overlay hidden" id="cancel-modal">
+  <div class="modal-card">
+    <h3>Отменить запись?</h3>
+    <div class="field">
+      <label for="cancel-reason">Причина (необязательно)</label>
+      <textarea id="cancel-reason" rows="3"></textarea>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-ghost" id="cancel-modal-close">Назад</button>
+      <button class="btn-danger" id="cancel-confirm">Отменить запись</button>
+    </div>
+  </div>
+</div>
+
+<script src="js/glass-filter.js" defer></script>
+<script type="module" src="js/cabinet.js"></script>
+</body>
+</html>

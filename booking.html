@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Онлайн-запись на тату сеанс — REMNANT Tattoo Studio, Москва</title>
+    <meta name="description" content="Запись на сеанс татуировки в REMNANT. Выберите дату, время и опишите идею. Fine Line, графика, минимализм. Бесплатная консультация."/>
+    <meta name="robots" content="index, follow"/>
+    <link rel="canonical" href="https://remnant.tattoo/booking"/>
+    <meta property="og:title" content="Онлайн-запись — REMNANT Tattoo"/>
+    <meta property="og:description" content="Запись на сеанс татуировки. Выберите удобную дату и время."/>
+    <meta property="og:url" content="https://remnant.tattoo/booking"/>
+    <meta property="og:type" content="website"/>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg"/>
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Montserrat:wght@700;800&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .booking-hero {
+            min-height: 60vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 4rem 2rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .booking-hero .section-label {
+            margin-bottom: 1rem;
+        }
+
+        .booking-hero .section-title {
+            font-size: clamp(3rem, 8vw, 5rem);
+            font-family: var(--font-serif);
+            font-weight: 300;
+            letter-spacing: -1px;
+            margin-bottom: 2rem;
+        }
+
+        .booking-container {
+            max-width: 1200px;
+            margin: 4rem auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: start;
+        }
+
+        .booking-form-section h2 {
+            font-family: var(--font-serif);
+            font-size: 1.8rem;
+            font-weight: 300;
+            margin-bottom: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.85rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            color: var(--text);
+            font-family: var(--font-sans);
+            font-size: 0.95rem;
+            border-radius: 2px;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .form-group select {
+            cursor: pointer;
+        }
+
+        .form-submit {
+            width: 100%;
+            margin-top: 1rem;
+        }
+
+        .booking-info-section {
+            padding: 2rem 0;
+        }
+
+        .booking-info-section h3 {
+            font-family: var(--font-serif);
+            font-size: 1.8rem;
+            font-weight: 300;
+            margin-bottom: 2rem;
+        }
+
+        .booking-info-item {
+            margin-bottom: 2.5rem;
+        }
+
+        .booking-info-label {
+            font-size: 0.7rem;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+        }
+
+        .booking-info-value {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: var(--text);
+        }
+
+        .booking-info-value a {
+            color: var(--accent);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .booking-info-value a:hover {
+            color: var(--text);
+        }
+
+        .booking-social {
+            display: flex;
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .booking-social a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border: 1px solid var(--border);
+            color: var(--accent);
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+
+        .booking-social a:hover {
+            border-color: var(--accent);
+            background: rgba(196, 168, 130, 0.05);
+        }
+
+        .booking-social svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        .booking-note {
+            margin-top: 3rem;
+            padding: 1.5rem;
+            background: rgba(196, 168, 130, 0.03);
+            border: 1px solid var(--border);
+            border-radius: 2px;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            color: var(--text);
+        }
+
+        .success-message {
+            display: none;
+            padding: 1.5rem;
+            background: rgba(196, 168, 130, 0.1);
+            border: 1px solid var(--accent);
+            border-radius: 2px;
+            color: var(--accent);
+            font-size: 0.95rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .success-message.show {
+            display: block;
+        }
+
+        .calendar { margin-bottom: 1.5rem; }
+        .cal-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; }
+        .cal-header h3 { font-family: var(--font-serif); font-weight: 300; font-size: 1.1rem; }
+        .cal-nav { background: none; border: 1px solid var(--border); color: var(--text); width: 36px; height: 36px; cursor: pointer; font-size: 1rem; display: flex; align-items: center; justify-content: center; transition: border-color .3s; }
+        .cal-nav:hover { border-color: var(--accent); color: var(--accent); }
+        .cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; text-align: center; }
+        .cal-dow { font-size: .6rem; letter-spacing: .2em; text-transform: uppercase; color: var(--text-muted); padding: .4rem 0; }
+        .cal-day { padding: .55rem .2rem; font-size: .85rem; border: 1px solid transparent; cursor: pointer; transition: all .2s; border-radius: 2px; color: var(--text); }
+        .cal-day:hover:not(.disabled):not(.selected) { border-color: var(--border); }
+        .cal-day.selected { background: var(--accent); color: var(--bg); border-color: var(--accent); }
+        .cal-day.disabled { color: var(--text-muted); opacity: .3; cursor: default; pointer-events: none; }
+        .cal-day.empty { pointer-events: none; }
+        .cal-day.today { border-color: var(--text-muted); }
+
+        .slots-container { margin-bottom: 1.5rem; }
+        .slots-label { font-size: .7rem; letter-spacing: .2em; text-transform: uppercase; color: var(--accent); margin-bottom: .6rem; display: block; }
+        .slots-grid { display: flex; flex-wrap: wrap; gap: .5rem; }
+        .slot-btn { padding: .5rem 1rem; font-size: .82rem; background: var(--surface); border: 1px solid var(--border); color: var(--text); cursor: pointer; font-family: var(--font-sans); transition: all .2s; border-radius: 2px; }
+        .slot-btn:hover:not(.taken):not(.chosen) { border-color: var(--accent); color: var(--accent); }
+        .slot-btn.chosen { background: var(--accent); color: var(--bg); border-color: var(--accent); }
+        .slot-btn.taken { opacity: .25; cursor: default; pointer-events: none; text-decoration: line-through; }
+        .slots-empty { font-size: .88rem; color: var(--text-muted); }
+
+        /* ── Reference upload ── */
+        .ref-upload-wrap { display: flex; flex-direction: column; gap: .6rem; }
+        .ref-upload-btn {
+          display: inline-flex; align-items: center; gap: .55rem;
+          padding: .65rem 1.1rem; border: 1px solid var(--border);
+          background: transparent; color: var(--text); font-family: var(--font-sans);
+          font-size: .82rem; letter-spacing: .06em; cursor: pointer;
+          transition: border-color .2s, background .2s;
+        }
+        .ref-upload-btn:hover { border-color: rgba(196,168,130,.6); background: rgba(196,168,130,.05); }
+        .ref-upload-hint { font-size: .72rem; color: var(--text-muted); line-height: 1.5; }
+        .ref-preview {
+          position: relative; display: inline-block;
+          max-width: 220px; border: 1px solid var(--border);
+        }
+        .ref-preview.hidden { display: none; }
+        .ref-preview img { width: 100%; display: block; }
+        .ref-remove-btn {
+          position: absolute; top: 6px; right: 6px;
+          background: rgba(8,8,8,.75); border: 1px solid var(--border);
+          color: var(--text); width: 24px; height: 24px;
+          display: flex; align-items: center; justify-content: center;
+          font-size: .75rem; cursor: pointer; line-height: 1;
+        }
+        .ref-remove-btn:hover { background: rgba(192,57,43,.6); }
+
+        .step-indicator { display: flex; gap: 1rem; margin-bottom: 2rem; }
+        .step { font-size: .65rem; letter-spacing: .2em; text-transform: uppercase; color: var(--text-muted); padding-bottom: .4rem; border-bottom: 2px solid var(--border); flex: 1; text-align: center; transition: all .3s; }
+        .step.active { color: var(--accent); border-color: var(--accent); }
+        .step.done { color: var(--text); border-color: var(--text); }
+
+        .form-step { display: none; }
+        .form-step.active { display: block; }
+
+        .step-nav { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin-top: 1.5rem; }
+        .step-nav .btn { width: 100%; text-align: center; }
+
+        @media (max-width: 768px) {
+            .booking-hero .section-title {
+                font-size: 2.5rem;
+            }
+
+            .booking-container {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+
+            .booking-info-section {
+                padding: 2rem;
+                background: var(--surface);
+                border: 1px solid var(--border);
+                border-radius: 2px;
+            }
+        }
+    </style>
+</head>
+<body>
+<header>
+<nav class="nav" id="nav" role="navigation" aria-label="Основная навигация">
+  <a href="/" class="nav-logo">Remnant</a>
+  <div class="nav-links">
+    <a href="/faq">FAQ</a>
+    <a href="/master">Мастер</a>
+    <a href="/contacts">Контакты</a>
+    <a href="/aftercare">Уход</a>
+    <a href="/booking" class="nav-cta">Записаться</a>
+    <a href="/cabinet" class="nav-cabinet-btn" id="nav-cabinet-link">
+      <div class="nav-avatar" id="nav-avatar"><img id="nav-avatar-img" src="" alt=""><span id="nav-avatar-initials"></span></div>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" id="nav-cabinet-icon"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      <span id="nav-cabinet-text">Кабинет</span>
+    </a>
+  </div>
+  <button class="nav-burger" id="burger" aria-label="Меню" aria-expanded="false" aria-controls="mobile-menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+</header><!-- Mobile menu -->
+<div class="mobile-menu" id="mobile-menu">
+  <a href="/cabinet" onclick="closeMobileMenu()" class="mob-cabinet-icon" aria-label="Личный кабинет">
+    <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+  </a>
+  <a href="/faq" onclick="closeMobileMenu()">FAQ</a>
+  <a href="/master" onclick="closeMobileMenu()">Мастер</a>
+  <a href="/contacts" onclick="closeMobileMenu()">Контакты</a>
+  <a href="/aftercare" onclick="closeMobileMenu()">Уход</a>
+  <a href="/booking" onclick="closeMobileMenu()">Записаться</a>
+  <div class="mobile-menu-socials">
+    <a href="#" class="social-icon" aria-label="Instagram">
+      <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+    </a>
+    <a href="#" class="social-icon" aria-label="Telegram">
+      <svg viewBox="0 0 24 24"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+    </a>
+  </div>
+</div>
+
+    <!-- Hero Section -->
+    <section class="booking-hero fade-up">
+        <div class="section-label">Запись</div>
+        <h1 class="section-title">Записаться</h1>
+    </section>
+
+    <!-- Booking Section -->
+    <section class="booking-container fade-up">
+        <div class="booking-form-section">
+            <h2>Форма заявки</h2>
+
+            <div class="step-indicator">
+              <div class="step active" data-step="1">1. Дата и время</div>
+              <div class="step" data-step="2">2. О татуировке</div>
+              <div class="step" data-step="3">3. Контакты</div>
+            </div>
+
+            <div class="success-message" id="successMessage">
+                Спасибо! Ваша заявка отправлена. Мы свяжемся с вами для подтверждения.
+            </div>
+
+            <form id="bookingForm" autocomplete="off">
+              <!-- STEP 1: Date & Time -->
+              <div class="form-step active" data-step="1">
+                <div class="calendar" id="calendar">
+                  <div class="cal-header">
+                    <button type="button" class="cal-nav" id="calPrev">‹</button>
+                    <h3 id="calTitle"></h3>
+                    <button type="button" class="cal-nav" id="calNext">›</button>
+                  </div>
+                  <div class="cal-grid" id="calGrid"></div>
+                </div>
+                <input type="hidden" name="date" id="bookingDate">
+
+                <div class="slots-container" id="slotsContainer" style="display:none">
+                  <span class="slots-label">Доступное время</span>
+                  <div class="slots-grid" id="slotsGrid"></div>
+                </div>
+                <input type="hidden" name="time_slot" id="bookingSlot">
+
+                <div class="step-nav">
+                  <button type="button" class="btn btn-fill" id="toStep2" disabled>Далее</button>
+                </div>
+              </div>
+
+              <!-- STEP 2: Tattoo details -->
+              <div class="form-step" data-step="2">
+                <div class="form-group">
+                  <label for="location">Место татуировки</label>
+                  <input type="text" id="location" name="location" placeholder="например, левое предплечье">
+                </div>
+                <div class="form-group">
+                  <label for="style">Стиль</label>
+                  <select id="style" name="style">
+                    <option value="">Выберите стиль</option>
+                    <option value="fine-line">Fine Line</option>
+                    <option value="graphics">Графика</option>
+                    <option value="geometry">Геометрия</option>
+                    <option value="ornament">Орнамент</option>
+                    <option value="other">Другое</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="size">Примерный размер</label>
+                  <select id="size" name="size">
+                    <option value="">Выберите размер</option>
+                    <option value="small">Маленький (до 5 см)</option>
+                    <option value="medium">Средний (5–15 см)</option>
+                    <option value="large">Большой (15+ см)</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="description">Описание идеи</label>
+                  <textarea id="description" name="description" placeholder="Расскажите о вашей идее: сюжет, настроение, детали — чем подробнее, тем лучше"></textarea>
+                </div>
+                <div class="form-group">
+                  <label for="reference">Фото-референс <span style="color:var(--text-muted);font-weight:400">(по желанию)</span></label>
+                  <div class="ref-upload-wrap" id="refUploadWrap">
+                    <input type="file" id="reference" name="reference" accept="image/*" style="display:none">
+                    <button type="button" class="ref-upload-btn" id="refUploadBtn">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                      Загрузить изображение
+                    </button>
+                    <span class="ref-upload-hint">JPG, PNG, WEBP · до 10 МБ · изображение будет видно мастеру</span>
+                    <div class="ref-preview hidden" id="refPreview">
+                      <img id="refPreviewImg" src="" alt="референс">
+                      <button type="button" class="ref-remove-btn" id="refRemoveBtn" aria-label="Удалить">✕</button>
+                    </div>
+                  </div>
+                </div>
+                <div class="step-nav">
+                  <button type="button" class="btn btn-outline" id="backStep1">Назад</button>
+                  <button type="button" class="btn btn-fill" id="toStep3">Далее</button>
+                </div>
+              </div>
+
+              <!-- STEP 3: Contact info -->
+              <div class="form-step" data-step="3">
+                <div class="form-group">
+                  <label for="name">Имя *</label>
+                  <input type="text" id="name" name="name" required>
+                </div>
+                <div class="form-group">
+                  <label for="phone">Телефон *</label>
+                  <input type="tel" id="phone" name="phone" required placeholder="+7 (___) ___-__-__">
+                </div>
+                <div class="form-group">
+                  <label for="email">Email</label>
+                  <input type="email" id="email" name="email">
+                </div>
+                <div class="step-nav">
+                  <button type="button" class="btn btn-outline" id="backStep2">Назад</button>
+                  <button type="submit" class="btn btn-fill form-submit">Записаться</button>
+                </div>
+              </div>
+            </form>
+        </div>
+
+        <div class="booking-info-section">
+            <h3>Контакты</h3>
+            <div class="booking-info-item">
+                <div class="booking-info-label">Телефон</div>
+                <div class="booking-info-value"><a href="tel:+79151127866">+7 (915) 112-78-66</a></div>
+            </div>
+            <div class="booking-info-item">
+                <div class="booking-info-label">Email</div>
+                <div class="booking-info-value"><a href="mailto:hello@remnant.tattoo">hello@remnant.tattoo</a></div>
+            </div>
+            <div class="booking-info-item">
+                <div class="booking-info-label">Адрес</div>
+                <div class="booking-info-value">Москва<br>ул. Лубянка, д. 14</div>
+            </div>
+            <div class="booking-info-item">
+                <div class="booking-info-label">Режим работы</div>
+                <div class="booking-info-value">По записи</div>
+            </div>
+            <div class="booking-info-item">
+                <div class="booking-info-label">Социальные сети</div>
+                <div class="booking-social">
+                    <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.07 1.645.07 4.849 0 3.205-.012 3.584-.07 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zM5.838 12c0-3.403 2.759-6.162 6.162-6.162 3.403 0 6.162 2.759 6.162 6.162 0 3.403-2.759 6.162-6.162 6.162-3.403 0-6.162-2.759-6.162-6.162zm2.889 0c0 1.861 1.51 3.372 3.372 3.372 1.861 0 3.372-1.511 3.372-3.372 0-1.861-1.511-3.372-3.372-3.372-1.861 0-3.372 1.511-3.372 3.372zm11.618-6.424c0 .795.645 1.44 1.44 1.44.795 0 1.44-.645 1.44-1.44 0-.795-.645-1.44-1.44-1.44-.795 0-1.44.645-1.44 1.44z"/></svg></a>
+                    <a href="#" aria-label="Telegram"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221l-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.446 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.334-.373-.121l-6.869 4.332-2.96-.924c-.64-.203-.658-.64.135-.954l11.566-4.461c.54-.203 1.01.131.84.951z"/></svg></a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+<footer class="footer">
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <span class="footer-logo">Remnant</span>
+      <p>Студия авторской татуировки в Москве. Fine Line и графика — наш язык.</p>
+      <div class="social-icons">
+        <a href="#" class="social-icon" aria-label="Instagram">
+          <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+        </a>
+        <a href="#" class="social-icon" aria-label="Telegram">
+          <svg viewBox="0 0 24 24"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+        </a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Навигация</h4>
+      <a href="/master">Мастер</a>
+      <a href="/contacts">Контакты</a>
+      <a href="/faq">FAQ</a>
+      <a href="/aftercare">Уход за тату</a>
+      <a href="/booking">Записаться</a>
+    </div>
+    <div class="footer-col">
+      <h4>Контакты</h4>
+      <a href="tel:+79151127866">+7 (915) 112-78-66</a>
+      <a href="mailto:hello@remnant.tattoo">hello@remnant.tattoo</a>
+      <a href="#">@remnant_tattoo</a>
+      <a href="#">Instagram</a>
+    </div>
+    <div class="footer-col">
+      <h4>Адрес</h4>
+      <p>ул. Лубянка, д. 14</p>
+      <p>Москва, 101000</p>
+      <p class="muted" style="margin-top:.8rem">По записи</p>
+      <div class="footer-map">
+        <iframe
+          src="https://yandex.ru/map-widget/v1/?ll=37.6285%2C55.7623&z=16&pt=37.6285,55.7623,pm2rdm"
+          width="100%"
+          height="180"
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          allowfullscreen
+        ></iframe>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 REMNANT. Все права защищены.</p>
+    <p><a href="#">Политика конфиденциальности</a></p>
+  </div>
+</footer>
+
+    <script src="js/common.js" defer></script>
+    <script src="js/glass-filter.js" defer></script>
+    <script type="module" src="js/booking.js"></script>
+</body>
+</html>
