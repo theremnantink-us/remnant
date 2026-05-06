@@ -3,7 +3,7 @@
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 const PHONE_DIGITS_RE = /^\d{10,15}$/;
 const STATUS_VALUES = ['new', 'confirmed', 'cancelled', 'done'];
-const STYLE_VALUES = ['fineline', 'graphics', 'geometry', 'ornament', 'other', ''];
+const STYLE_VALUES = ['fineline', 'fine-line', 'graphics', 'geometry', 'ornament', 'blackwork', 'realism', 'watercolor', 'traditional', 'other', ''];
 const SIZE_VALUES = ['small', 'medium', 'large', ''];
 
 export function isEmail(v) {
