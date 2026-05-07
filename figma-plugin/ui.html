@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    background: #080808;
+    color: #e8e3dc;
+    padding: 20px;
+    min-width: 280px;
+  }
+  h1 {
+    font-size: 16px;
+    font-weight: 400;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #c4a882;
+    margin-bottom: 6px;
+  }
+  p {
+    font-size: 11px;
+    color: #6e6660;
+    margin-bottom: 20px;
+    line-height: 1.5;
+  }
+  .pages-list {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 20px;
+  }
+  .page-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 10px;
+    background: #0f0f0f;
+    border: 1px solid #1a1a1a;
+    border-radius: 4px;
+    font-size: 12px;
+  }
+  .page-item input[type="checkbox"] {
+    accent-color: #c4a882;
+  }
+  .page-file {
+    color: #6e6660;
+    font-size: 10px;
+    margin-left: auto;
+  }
+  .options {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  .option-btn {
+    flex: 1;
+    padding: 8px;
+    background: #0f0f0f;
+    border: 1px solid #1a1a1a;
+    border-radius: 4px;
+    color: #e8e3dc;
+    font-size: 11px;
+    cursor: pointer;
+    transition: border-color 0.2s;
+  }
+  .option-btn.active {
+    border-color: #c4a882;
+    color: #c4a882;
+  }
+  .btn-generate {
+    width: 100%;
+    padding: 12px;
+    background: #c4a882;
+    border: none;
+    border-radius: 4px;
+    color: #080808;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+  .btn-generate:hover { background: #d4b892; }
+  .btn-generate:disabled { background: #3a3632; color: #6e6660; cursor: default; }
+  .status {
+    margin-top: 12px;
+    font-size: 11px;
+    color: #6e6660;
+    text-align: center;
+    min-height: 16px;
+  }
+  .divider {
+    border: none;
+    border-top: 1px solid #1a1a1a;
+    margin: 16px 0;
+  }
+  label { display: flex; align-items: center; gap: 8px; font-size: 12px; cursor: pointer; }
+  .view-label { font-size: 10px; margin-bottom: 6px; color: #6e6660; }
+</style>
+</head>
+<body>
+<h1>REMNANT</h1>
+<p>Generate desktop or mobile wireframe mockups for all website pages.</p>
+
+<div class="view-label">VIEW</div>
+<div class="options">
+  <button class="option-btn active" id="btn-desktop" onclick="setView('desktop')">Desktop 1440</button>
+  <button class="option-btn" id="btn-mobile" onclick="setView('mobile')">Mobile 375</button>
+</div>
+
+<hr class="divider">
+
+<div class="view-label">PAGES</div>
+<div class="pages-list" id="pagesList"></div>
+
+<hr class="divider">
+
+<button class="btn-generate" id="btnGenerate" onclick="generate()">Generate Mockups</button>
+<div class="status" id="status"></div>
+
+<script>
+var selectedView = 'desktop';
+var pages = [
+  { id: 'home',      name: 'Home',     file: 'index.html',    checked: true },
+  { id: 'master',    name: 'Master',   file: 'master.html',   checked: true },
+  { id: 'booking',   name: 'Booking',  file: 'booking.html',  checked: true },
+  { id: 'cabinet',   name: 'Cabinet',  file: 'cabinet.html',  checked: true },
+  { id: 'admin',     name: 'Admin',    file: 'admin.html',    checked: true },
+  { id: 'faq',       name: 'FAQ',      file: 'faq.html',      checked: true },
+  { id: 'aftercare', name: 'Aftercare',file: 'aftercare.html',checked: true },
+  { id: 'contacts',  name: 'Contacts', file: 'contacts.html', checked: true },
+];
+
+function renderList() {
+  var list = document.getElementById('pagesList');
+  list.innerHTML = '';
+  pages.forEach(function(p) {
+    var div = document.createElement('div');
+    div.className = 'page-item';
+    div.innerHTML =
+      '<input type="checkbox" id="chk_' + p.id + '"' + (p.checked ? ' checked' : '') + '>' +
+      '<label for="chk_' + p.id + '">' + p.name + '</label>' +
+      '<span class="page-file">' + p.file + '</span>';
+    div.querySelector('input').addEventListener('change', function(e) {
+      p.checked = e.target.checked;
+    });
+    list.appendChild(div);
+  });
+}
+
+function setView(view) {
+  selectedView = view;
+  document.getElementById('btn-desktop').className = 'option-btn' + (view === 'desktop' ? ' active' : '');
+  document.getElementById('btn-mobile').className = 'option-btn' + (view === 'mobile' ? ' active' : '');
+}
+
+function generate() {
+  var selected = pages.filter(function(p) { return p.checked; }).map(function(p) { return p.id; });
+  if (selected.length === 0) {
+    document.getElementById('status').textContent = 'Select at least one page.';
+    return;
+  }
+  document.getElementById('btnGenerate').disabled = true;
+  document.getElementById('status').textContent = 'Generating…';
+  parent.postMessage({ pluginMessage: { type: 'generate', pages: selected, view: selectedView } }, '*');
+}
+
+window.onmessage = function(event) {
+  var msg = event.data.pluginMessage;
+  if (!msg) return;
+  if (msg.type === 'progress') {
+    document.getElementById('status').textContent = msg.text;
+  }
+  if (msg.type === 'done') {
+    document.getElementById('status').textContent = 'Done! ' + msg.count + ' frames created.';
+    document.getElementById('btnGenerate').disabled = false;
+  }
+  if (msg.type === 'error') {
+    document.getElementById('status').textContent = 'Error: ' + msg.text;
+    document.getElementById('btnGenerate').disabled = false;
+  }
+};
+
+renderList();
+</script>
+</body>
+</html>
