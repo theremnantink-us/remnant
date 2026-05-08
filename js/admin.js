@@ -7,6 +7,7 @@ const ADM_ICONS = {
   schedule:  `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>`,
   analytics: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>`,
   recent:    `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v5h5"/><path d="M3.05 13A9 9 0 106 5.3L3 8"/><path d="M12 7v5l4 2"/></svg>`,
+  portfolio: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>`,
 };
 
 const STATUS_RU = { new: 'Новая', confirmed: 'Подтверждена', done: 'Завершена', cancelled: 'Отменена' };
@@ -279,6 +280,17 @@ function buildAdminOrbital(stats) {
       relatedIds: [1],
       ctaLabel: 'Все заявки',
       onActivate: () => showSection('bookings'),
+    },
+    {
+      id: 5,
+      title: 'Портфолио',
+      icon: ADM_ICONS.portfolio,
+      status: 'pending',
+      date: '',
+      content: 'Загрузка и управление фотографиями работ. Фото появляются на главной и странице мастера.',
+      relatedIds: [],
+      ctaLabel: 'Управлять фото',
+      onActivate: () => showSection('portfolio'),
     },
   ];
 
