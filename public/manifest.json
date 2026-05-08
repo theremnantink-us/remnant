@@ -1,7 +1,7 @@
 {
   "name": "REMNANT Tattoo Studio",
   "short_name": "REMNANT",
-  "description": "Авторская тату студия в Москве. Fine Line, графика, минимализм.",
+  "description": "Авторская тату студия в Москве. Графический реализм, чёрная графика.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#080808",

@@ -113,3 +113,10 @@ document.querySelectorAll('.faq-question').forEach(btn => {
     if (!wasOpen) item.classList.add('open');
   });
 });
+
+// Service Worker registration (push notifications + offline support)
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/sw.js', { scope: '/' }).catch(() => {});
+  });
+}

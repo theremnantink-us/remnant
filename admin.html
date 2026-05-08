@@ -68,6 +68,7 @@
     <button class="adm-nav-item" data-section="bookings"></button>
     <button class="adm-nav-item" data-section="schedule"></button>
     <button class="adm-nav-item" data-section="analytics"></button>
+    <button class="adm-nav-item" data-section="portfolio"></button>
   </aside>
   <div class="adm-backdrop hidden" id="adm-backdrop"></div>
 
@@ -199,6 +200,29 @@
         </div>
       </div>
 
+    </section>
+
+    <!-- ══ Portfolio CMS ══════════════════════════════ -->
+    <section class="adm-section hidden" id="section-portfolio">
+      <h1 class="adm-page-title">Портфолио</h1>
+
+      <!-- Upload zone -->
+      <div class="pf-upload-zone" id="pf-upload-zone">
+        <input type="file" id="pf-file-input" accept="image/jpeg,image/png,image/webp" multiple hidden/>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" width="32" height="32"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+        <p>Перетащите фото или <label for="pf-file-input" style="color:var(--accent);cursor:pointer;text-decoration:underline">выберите файлы</label></p>
+        <p style="font-size:.7rem;opacity:.4">JPG / PNG / WebP · до 10 МБ каждый</p>
+        <div class="pf-upload-progress hidden" id="pf-upload-progress">
+          <div class="pf-upload-bar" id="pf-upload-bar"></div>
+        </div>
+      </div>
+
+      <!-- Portfolio grid -->
+      <div class="pf-grid" id="pf-grid">
+        <div class="skeleton-block" style="height:200px"></div>
+        <div class="skeleton-block" style="height:200px"></div>
+        <div class="skeleton-block" style="height:200px"></div>
+      </div>
     </section>
 
   </main>

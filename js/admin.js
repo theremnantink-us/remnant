@@ -44,6 +44,7 @@ function showSection(name) {
   if (name === 'bookings')  loadBookings();
   if (name === 'schedule')  renderCalendar();
   if (name === 'analytics') loadAnalytics();
+  if (name === 'portfolio') loadPortfolio();
   const backBtn = document.getElementById('adm-back');
   if (backBtn) backBtn.classList.toggle('hidden', name === 'dashboard');
 }
@@ -975,3 +976,160 @@ function buildChart(id, type, data, extraOpts = {}) {
   // eslint-disable-next-line no-undef
   _charts[id] = new window['Chart'](canvas, { type, data, options: opts });
 }
+
+/* ══════════════════════════════════════════════════════════
+   PORTFOLIO CMS
+══════════════════════════════════════════════════════════ */
+let _pfItems = [];
+
+async function loadPortfolio() {
+  const grid = document.getElementById('pf-grid');
+  if (!grid) return;
+
+  const { data, error } = await supabase
+    .from('portfolio_items')
+    .select('*')
+    .order('sort_order', { ascending: true });
+
+  if (error) { toast('Ошибка загрузки портфолио: ' + error.message, 'error'); return; }
+  _pfItems = data || [];
+  renderPortfolioGrid();
+}
+
+function getPortfolioUrl(path) {
+  const { data } = supabase.storage.from('portfolio').getPublicUrl(path);
+  return data.publicUrl;
+}
+
+function renderPortfolioGrid() {
+  const grid = document.getElementById('pf-grid');
+  grid.innerHTML = '';
+
+  if (!_pfItems.length) {
+    grid.innerHTML = '<p style="color:var(--muted);grid-column:1/-1">Нет фотографий. Загрузите первое фото выше.</p>';
+    return;
+  }
+
+  _pfItems.forEach(item => {
+    const div = document.createElement('div');
+    div.className = 'pf-item';
+    div.dataset.id = item.id;
+
+    const img = document.createElement('img');
+    img.src = getPortfolioUrl(item.storage_path);
+    img.alt = item.caption || '';
+    img.loading = 'lazy';
+    div.appendChild(img);
+
+    const controls = document.createElement('div');
+    controls.className = 'pf-item__controls';
+
+    const captionInput = document.createElement('input');
+    captionInput.type = 'text';
+    captionInput.className = 'pf-item__caption';
+    captionInput.value = item.caption || '';
+    captionInput.placeholder = 'Подпись…';
+    captionInput.addEventListener('change', () => savePfCaption(item.id, captionInput.value));
+    controls.appendChild(captionInput);
+
+    const actions = document.createElement('div');
+    actions.className = 'pf-item__actions';
+
+    const toggle = document.createElement('button');
+    toggle.className = 'pf-item__toggle' + (item.visible ? ' visible' : '');
+    toggle.textContent = item.visible ? 'Видимо' : 'Скрыто';
+    toggle.addEventListener('click', () => togglePfVisibility(item));
+    actions.appendChild(toggle);
+
+    const del = document.createElement('button');
+    del.className = 'pf-item__delete';
+    del.title = 'Удалить';
+    del.innerHTML = '×';
+    del.addEventListener('click', () => deletePfItem(item));
+    actions.appendChild(del);
+
+    controls.appendChild(actions);
+    div.appendChild(controls);
+    grid.appendChild(div);
+  });
+}
+
+async function savePfCaption(id, caption) {
+  const { error } = await supabase.from('portfolio_items').update({ caption }).eq('id', id);
+  if (error) toast('Ошибка сохранения', 'error');
+}
+
+async function togglePfVisibility(item) {
+  const { error } = await supabase
+    .from('portfolio_items')
+    .update({ visible: !item.visible })
+    .eq('id', item.id);
+  if (error) { toast('Ошибка', 'error'); return; }
+  item.visible = !item.visible;
+  renderPortfolioGrid();
+}
+
+async function deletePfItem(item) {
+  if (!confirm('Удалить это фото?')) return;
+  const { error: storageErr } = await supabase.storage.from('portfolio').remove([item.storage_path]);
+  if (storageErr) { toast('Ошибка удаления файла', 'error'); return; }
+  const { error: dbErr } = await supabase.from('portfolio_items').delete().eq('id', item.id);
+  if (dbErr) { toast('Ошибка удаления записи', 'error'); return; }
+  _pfItems = _pfItems.filter(p => p.id !== item.id);
+  renderPortfolioGrid();
+  toast('Фото удалено');
+}
+
+async function uploadPortfolioFiles(files) {
+  const zone = document.getElementById('pf-upload-zone');
+  const progress = document.getElementById('pf-upload-progress');
+  const bar = document.getElementById('pf-upload-bar');
+  const total = files.length;
+  let done = 0;
+
+  progress.classList.remove('hidden');
+
+  for (const file of files) {
+    const ext = file.name.split('.').pop().toLowerCase();
+    const path = `${Date.now()}_${Math.random().toString(36).slice(2)}.${ext}`;
+    const { error: upErr } = await supabase.storage.from('portfolio').upload(path, file, { upsert: false });
+    if (upErr) { toast('Ошибка загрузки: ' + upErr.message, 'error'); continue; }
+
+    const maxOrder = _pfItems.reduce((m, p) => Math.max(m, p.sort_order), 0);
+    const { data, error: dbErr } = await supabase.from('portfolio_items').insert({
+      storage_path: path,
+      caption: file.name.replace(/\.[^.]+$/, '').replace(/[_-]/g, ' '),
+      sort_order: maxOrder + 1,
+      visible: true,
+    }).select().single();
+
+    if (dbErr) { toast('Ошибка записи в БД', 'error'); continue; }
+    _pfItems.push(data);
+    done++;
+    bar.style.width = Math.round((done / total) * 100) + '%';
+  }
+
+  progress.classList.add('hidden');
+  bar.style.width = '0%';
+  renderPortfolioGrid();
+  toast(`Загружено ${done} из ${total} фото`);
+}
+
+// Drag & drop + click upload
+(function initPfUpload() {
+  const zone = document.getElementById('pf-upload-zone');
+  const input = document.getElementById('pf-file-input');
+  if (!zone || !input) return;
+
+  zone.addEventListener('dragover', e => { e.preventDefault(); zone.classList.add('drag-over'); });
+  zone.addEventListener('dragleave', () => zone.classList.remove('drag-over'));
+  zone.addEventListener('drop', e => {
+    e.preventDefault();
+    zone.classList.remove('drag-over');
+    if (e.dataTransfer.files.length) uploadPortfolioFiles(Array.from(e.dataTransfer.files));
+  });
+  input.addEventListener('change', () => {
+    if (input.files.length) uploadPortfolioFiles(Array.from(input.files));
+    input.value = '';
+  });
+})();
