@@ -696,8 +696,8 @@ async function loadBookings(userId) {
     const d = new Date(next.date + 'T00:00');
     nbCard.innerHTML =
       `<div class="nb-date">${d.toLocaleDateString('ru', { day: 'numeric', month: 'long' })}</div>
-       <div class="nb-time">${next.time_slot}</div>
-       <div class="nb-style">${next.style || '—'}</div>`;
+       <div class="nb-time">${escapeHtml(next.time_slot || '')}</div>
+       <div class="nb-style">${escapeHtml(next.style || '—')}</div>`;
   } else {
     nbCard.innerHTML = '<p class="next-booking-empty">Нет предстоящих записей</p>';
   }
