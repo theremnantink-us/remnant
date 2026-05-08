@@ -1,6 +1,7 @@
 // js/cabinet.js
 import { supabase } from './supabase-config.js';
 import { createOrbital } from './orbital-nav.js';
+import { subscribePush, unsubscribePush, getPushStatus } from './push-client.js';
 
 /* ══ Loyalty tiers (frontend source of truth) ═════ */
 const LOYALTY_TIERS = [
@@ -185,9 +186,16 @@ document.getElementById('register-form').addEventListener('submit', async e => {
   });
 
   if (error) {
-    setError('reg-error', error.message === 'User already registered'
+    setError('reg-error', (error.message === 'User already registered' || error.message?.includes('already'))
       ? 'Этот email уже зарегистрирован'
       : error.message);
+    btn.disabled = false; btn.textContent = 'Создать аккаунт';
+    return;
+  }
+
+  // Supabase silently succeeds for existing emails — detect via empty identities
+  if (data.user && (!data.user.identities || data.user.identities.length === 0)) {
+    setError('reg-error', 'Этот email уже зарегистрирован');
     btn.disabled = false; btn.textContent = 'Создать аккаунт';
     return;
   }
@@ -195,6 +203,41 @@ document.getElementById('register-form').addEventListener('submit', async e => {
   if (data.user) {
     await supabase.from('profiles').upsert({ id: data.user.id, name, phone });
   }
+});
+
+
+/* ══ Forgot password ══════════════════════════════ */
+document.getElementById('forgot-btn')?.addEventListener('click', () => {
+  document.querySelectorAll('.auth-form').forEach(f => f.classList.remove('active'));
+  document.querySelectorAll('.auth-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('reset-form').classList.add('active');
+  clearErrors();
+});
+
+document.getElementById('back-to-login-btn')?.addEventListener('click', () => {
+  document.querySelectorAll('.auth-form').forEach(f => f.classList.remove('active'));
+  document.getElementById('login-form').classList.add('active');
+  document.querySelector('.auth-tab[data-tab=login]').classList.add('active');
+  clearErrors();
+});
+
+document.getElementById('reset-form')?.addEventListener('submit', async e => {
+  e.preventDefault();
+  clearErrors();
+  const email = document.getElementById('reset-email').value.trim();
+  const btn   = document.getElementById('reset-btn');
+  if (!email) return setError('reset-error', 'Введите email');
+  btn.disabled = true; btn.textContent = 'Отправляем...';
+  const { error } = await supabase.auth.resetPasswordForEmail(email, {
+    redirectTo: 'http://217.177.11.145/cabinet'
+  });
+  if (error) {
+    setError('reset-error', 'Ошибка: ' + error.message);
+  } else {
+    document.getElementById('reset-success').textContent = 'Ссылка отправлена — проверьте почту';
+    document.getElementById('reset-email').value = '';
+  }
+  btn.disabled = false; btn.textContent = 'Отправить ссылку';
 });
 
 /* ══ Nav tab clicks ═══════════════════════════════ */
@@ -221,8 +264,11 @@ supabase.auth.onAuthStateChange((_event, session) => {
 });
 
 supabase.auth.getSession().then(({ data: { session } }) => {
-  if (session) { showApp(); loadDashboard(session.user); }
-  else showAuth();
+  if (session) {
+    supabase.rpc("link_bookings_by_phone").then(null, () => {});
+    showApp();
+    loadDashboard(session.user);
+  } else showAuth();
 });
 
 /* ══ Dashboard loader ═════════════════════════════ */
@@ -238,6 +284,11 @@ async function loadDashboard(user) {
 
 /* ══ Orbital navigation ═══════════════════════════ */
 let _orbital = null;
+let _resizeTimer = null;
+window.addEventListener("resize", () => {
+  clearTimeout(_resizeTimer);
+  _resizeTimer = setTimeout(() => { if (document.getElementById("cab-orbital")) buildCabinetOrbital(); }, 200);
+});
 const ICONS = {
   bookings:     `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>`,
   newBooking:   `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>`,
@@ -371,7 +422,7 @@ function buildCabinetOrbital() {
   _orbital = createOrbital(mount, {
     nodes,
     center,
-    radius: 200,
+    radius: window.innerWidth <= 380 ? 100 : window.innerWidth <= 480 ? 115 : window.innerWidth <= 720 ? 145 : 200,
     autoRotate: true,
     onHubClick: () => showTab('profile'),
     hint: 'Клик на узел — карточка раздела · Повторный клик — открыть раздел',
@@ -670,12 +721,16 @@ function escapeHtml(s) {
 }
 
 async function loadBookings(userId) {
-  const { data: bookings } = await supabase
+  const { data: bookings, error: bookingsError } = await supabase
     .from('bookings')
     .select('id, date, time_slot, style, status, name, phone, reference_url, notes, created_at')
     .eq('user_id', userId)
     .order('date', { ascending: true });
 
+  if (bookingsError) {
+    console.error('loadBookings error:', bookingsError.message);
+    return;
+  }
   if (!bookings) return;
 
   const now      = todayLocal();
@@ -692,13 +747,13 @@ async function loadBookings(userId) {
   const next   = upcoming[0];
   const nbCard = document.getElementById('next-booking-card');
   document.getElementById('next-booking-skeleton')?.remove();
-  if (next) {
+  if (nbCard && next) {
     const d = new Date(next.date + 'T00:00');
     nbCard.innerHTML =
       `<div class="nb-date">${d.toLocaleDateString('ru', { day: 'numeric', month: 'long' })}</div>
        <div class="nb-time">${escapeHtml(next.time_slot || '')}</div>
        <div class="nb-style">${escapeHtml(next.style || '—')}</div>`;
-  } else {
+  } else if (nbCard) {
     nbCard.innerHTML = '<p class="next-booking-empty">Нет предстоящих записей</p>';
   }
 
@@ -852,6 +907,52 @@ async function loadNotifications(userId) {
     localStorage.setItem(readKey, JSON.stringify(keys));
     loadNotifications(userId);
   };
+
+  // Push notification toggle
+  const pushWrap   = document.getElementById('push-toggle-wrap');
+  const pushBtn    = document.getElementById('push-toggle-btn');
+  const pushStatus = document.getElementById('push-status-text');
+  if (pushWrap && pushBtn && pushStatus) {
+    const status = await getPushStatus();
+    if (status === 'unsupported') {
+      pushWrap.style.display = 'none';
+    } else if (status === 'denied') {
+      pushStatus.textContent = 'Заблокированы в настройках браузера';
+      pushBtn.textContent = 'Заблокированы';
+      pushBtn.disabled = true;
+    } else if (status === 'subscribed') {
+      pushStatus.textContent = 'Включены';
+      pushBtn.textContent = 'Отключить';
+      pushBtn.disabled = false;
+      pushBtn.classList.add('active');
+    } else {
+      pushStatus.textContent = 'Выключены';
+      pushBtn.textContent = 'Включить';
+      pushBtn.disabled = false;
+    }
+
+    pushBtn.addEventListener('click', async () => {
+      pushBtn.disabled = true;
+      const cur = await getPushStatus();
+      if (cur === 'subscribed') {
+        await unsubscribePush();
+        pushStatus.textContent = 'Выключены';
+        pushBtn.textContent = 'Включить';
+        pushBtn.classList.remove('active');
+      } else {
+        const ok = await subscribePush(userId);
+        if (ok) {
+          pushStatus.textContent = 'Включены';
+          pushBtn.textContent = 'Отключить';
+          pushBtn.classList.add('active');
+        } else {
+          pushStatus.textContent = 'Не удалось включить';
+          pushBtn.textContent = 'Включить';
+        }
+      }
+      pushBtn.disabled = false;
+    });
+  }
 }
 
 /* ══ Cancel modal ═════════════════════════════════ */

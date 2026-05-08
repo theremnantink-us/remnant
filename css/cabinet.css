@@ -1,3 +1,13 @@
+/* ── Local web fonts ── */
+@font-face { font-family:'Instrument Serif'; font-style:normal; font-weight:400; font-display:swap; src:url('/fonts/instrument-serif-latin-ext.woff2') format('woff2'); unicode-range:U+0100-02AF,U+0304,U+0308,U+0329,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20CF,U+2113,U+2C60-2C7F,U+A720-A7FF; }
+@font-face { font-family:'Instrument Serif'; font-style:normal; font-weight:400; font-display:swap; src:url('/fonts/instrument-serif-latin.woff2') format('woff2'); unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD; }
+@font-face { font-family:'Instrument Serif'; font-style:italic; font-weight:400; font-display:swap; src:url('/fonts/instrument-serif-italic-latin-ext.woff2') format('woff2'); unicode-range:U+0100-02AF,U+0304,U+0308,U+0329,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20CF,U+2113,U+2C60-2C7F,U+A720-A7FF; }
+@font-face { font-family:'Instrument Serif'; font-style:italic; font-weight:400; font-display:swap; src:url('/fonts/instrument-serif-italic-latin.woff2') format('woff2'); unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD; }
+@font-face { font-family:'Outfit'; font-style:normal; font-weight:300 500; font-display:swap; src:url('/fonts/outfit-latin-ext.woff2') format('woff2'); unicode-range:U+0100-02AF,U+0304,U+0308,U+0329,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20CF,U+2113,U+2C60-2C7F,U+A720-A7FF; }
+@font-face { font-family:'Outfit'; font-style:normal; font-weight:300 500; font-display:swap; src:url('/fonts/outfit-latin.woff2') format('woff2'); unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD; }
+@font-face { font-family:'Montserrat'; font-style:normal; font-weight:700 800; font-display:swap; src:url('/fonts/montserrat-latin-ext.woff2') format('woff2'); unicode-range:U+0100-02AF,U+0304,U+0308,U+0329,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20CF,U+2113,U+2C60-2C7F,U+A720-A7FF; }
+@font-face { font-family:'Montserrat'; font-style:normal; font-weight:700 800; font-display:swap; src:url('/fonts/montserrat-latin.woff2') format('woff2'); unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD; }
+
 /* ══════════════════════════════════════
    REMNANT Cabinet CSS
    #080808 bg · #c4a882 accent
@@ -220,6 +230,7 @@ html, body { height: 100%; background: var(--bg); color: var(--text); font-famil
 }
 .cab-topbar__logo {
   font-family: var(--font-serif);
+  font-style: italic;
   font-size: 1.45rem;
   font-weight: 400;
   letter-spacing: .22em;
@@ -859,4 +870,80 @@ html, body { height: 100%; background: var(--bg); color: var(--text); font-famil
 }
 @media (max-width: 420px) {
   .medals-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* ── Push notification toggle ──────────────────── */
+.push-toggle-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 0;
+  border-bottom: 1px solid rgba(232,227,220,0.07);
+}
+.push-toggle-info {
+  display: flex;
+  flex-direction: column;
+  gap: .25rem;
+}
+.push-toggle-title {
+  font-size: .78rem;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--text, #e8e3dc);
+}
+.push-toggle-sub {
+  font-size: .7rem;
+  color: var(--text-muted, #6e6660);
+}
+.push-toggle-btn {
+  flex-shrink: 0;
+  padding: .45rem 1.1rem;
+  border: 1px solid rgba(232,227,220,0.2);
+  border-radius: 3px;
+  background: transparent;
+  color: var(--text-muted, #6e6660);
+  font-size: .7rem;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: border-color .25s, color .25s, background .25s;
+}
+.push-toggle-btn:hover:not(:disabled) {
+  border-color: var(--accent, #c4a882);
+  color: var(--accent, #c4a882);
+}
+.push-toggle-btn.active {
+  border-color: var(--accent, #c4a882);
+  color: var(--accent, #c4a882);
+}
+.push-toggle-btn:disabled {
+  opacity: .4;
+  cursor: default;
+}
+
+/* ── Forgot password / Reset form ── */
+.auth-forgot {
+  background: none;
+  border: none;
+  color: var(--muted);
+  font-size: .72rem;
+  letter-spacing: .08em;
+  cursor: pointer;
+  padding: 0;
+  text-align: left;
+  transition: color .2s;
+  margin-top: -.2rem;
+}
+.auth-forgot:hover { color: var(--accent); }
+.auth-reset-hint {
+  font-size: .78rem;
+  color: var(--muted);
+  line-height: 1.5;
+  margin-bottom: .5rem;
+}
+.field-success {
+  font-size: .78rem;
+  color: #6dbf8b;
+  min-height: 1.2em;
+  padding: .1rem 0;
 }

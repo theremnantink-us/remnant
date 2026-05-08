@@ -12,23 +12,32 @@ if (nav) {
 }
 
 // Mobile menu
-const burger = document.getElementById('burger');
-const mobileMenu = document.getElementById('mobile-menu');
-if (burger && mobileMenu) {
-  burger.addEventListener('click', () => {
-    const open = mobileMenu.classList.toggle('open');
-    burger.classList.toggle('open', open);
-    burger.setAttribute('aria-expanded', open);
-    document.body.style.overflow = open ? 'hidden' : '';
-  });
-}
+const burger      = document.getElementById('burger');
+const mobileMenu  = document.getElementById('mobile-menu');
+const mmBackdrop  = document.getElementById('mmenu-backdrop');
+const mmClose     = document.getElementById('mmenu-close');
 
+function openMobileMenu() {
+  mobileMenu.classList.add('open');
+  burger.classList.add('open');
+  burger.setAttribute('aria-expanded', 'true');
+  if (mmBackdrop) mmBackdrop.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
 function closeMobileMenu() {
   if (!mobileMenu) return;
   mobileMenu.classList.remove('open');
-  burger.classList.remove('open');
+  if (burger) { burger.classList.remove('open'); burger.setAttribute('aria-expanded', 'false'); }
+  if (mmBackdrop) mmBackdrop.classList.remove('open');
   document.body.style.overflow = '';
 }
+if (burger && mobileMenu) {
+  burger.addEventListener('click', () => {
+    mobileMenu.classList.contains('open') ? closeMobileMenu() : openMobileMenu();
+  });
+}
+if (mmBackdrop) mmBackdrop.addEventListener('click', closeMobileMenu);
+if (mmClose)    mmClose.addEventListener('click', closeMobileMenu);
 window.closeMobileMenu = closeMobileMenu;
 
 // Nav avatar — shown when user is logged in (cached from cabinet session)

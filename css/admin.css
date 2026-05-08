@@ -521,6 +521,7 @@ html, body { height: 100%; background: var(--bg); color: var(--text); font-famil
   outline: none;
 }
 .pf-item__caption:focus { border-color: var(--accent); }
+.pf-item__caption-label { display: block; font-size: .6rem; letter-spacing: .12em; text-transform: uppercase; color: var(--text-muted); opacity: .55; margin-bottom: .2rem; pointer-events: none; }
 .pf-item__actions {
   display: flex;
   gap: .4rem;

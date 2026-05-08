@@ -298,7 +298,7 @@ function buildAdminOrbital(stats) {
   _admOrbital = createOrbital(mount, {
     nodes,
     center: { type: 'text', value: 'R' },
-    radius: 200,
+    radius: window.innerWidth <= 380 ? 100 : window.innerWidth <= 480 ? 115 : window.innerWidth <= 720 ? 145 : 200,
     autoRotate: true,
     onHubClick: () => showSection('bookings'),
     hint: 'Клик на узел — карточка раздела · Повторный клик — открыть раздел',
@@ -1047,12 +1047,21 @@ function renderPortfolioGrid() {
     const controls = document.createElement('div');
     controls.className = 'pf-item__controls';
 
+    const captionLabel = document.createElement('span');
+    captionLabel.className = 'pf-item__caption-label';
+    captionLabel.textContent = '✎ Название';
+    controls.appendChild(captionLabel);
+
     const captionInput = document.createElement('input');
     captionInput.type = 'text';
     captionInput.className = 'pf-item__caption';
     captionInput.value = item.caption || '';
-    captionInput.placeholder = 'Подпись…';
+    captionInput.placeholder = 'Введите название…';
+    captionInput.title = 'Нажмите Enter или кликните в другое место для сохранения';
     captionInput.addEventListener('change', () => savePfCaption(item.id, captionInput.value));
+    captionInput.addEventListener('keydown', e => {
+      if (e.key === 'Enter') { e.preventDefault(); savePfCaption(item.id, captionInput.value); captionInput.blur(); }
+    });
     controls.appendChild(captionInput);
 
     const actions = document.createElement('div');

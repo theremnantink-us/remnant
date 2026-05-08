@@ -7,7 +7,7 @@
     "build": "vite build",
     "preview": "vite preview",
     "server": "node --watch server/index.js",
-    "postbuild": "cp -r js dist/js && cp -r css dist/css"
+    "postbuild": "cp -r js dist/js && cp -r css dist/css && cp -r fonts dist/fonts && cp sw.js dist/sw.js"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.27",
