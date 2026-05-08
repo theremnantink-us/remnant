@@ -265,6 +265,48 @@ if (window.gsap && window.ScrollTrigger) {
   const stage = document.getElementById('circStage');
   if (!outer || !stage) return;
 
+  // On mobile: CSS handles flat horizontal scroll — no 3D needed
+  if (window.innerWidth <= 768) {
+    const items = Array.from(stage.querySelectorAll('.circ-item'));
+    // Set up lightbox clicks only
+    const lb      = document.getElementById('circLightbox');
+    const lbImg   = document.getElementById('circLbImg');
+    const lbCap   = document.getElementById('circLbCaption');
+    const lbClose = document.getElementById('circLbClose');
+    const lbPrev  = document.getElementById('circLbPrev');
+    const lbNext  = document.getElementById('circLbNext');
+    const lbBack  = document.getElementById('circLbBackdrop');
+    let lbIndex = 0;
+    const n = items.length;
+    function openLb(index) {
+      lbIndex = ((index % n) + n) % n;
+      const el = items[lbIndex];
+      lbImg.src = el.dataset.full;
+      lbImg.alt = el.dataset.alt || '';
+      lbCap.textContent = el.dataset.alt || '';
+      lb.classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeLb() {
+      lb.classList.add('hidden');
+      document.body.style.overflow = '';
+      lbImg.src = '';
+    }
+    items.forEach((el, i) => el.addEventListener('click', () => openLb(i)));
+    if (lbClose) lbClose.addEventListener('click', closeLb);
+    if (lbBack) lbBack.addEventListener('click', closeLb);
+    if (lbPrev) lbPrev.addEventListener('click', () => openLb(lbIndex - 1));
+    if (lbNext) lbNext.addEventListener('click', () => openLb(lbIndex + 1));
+    document.addEventListener('keydown', e => {
+      if (lb && !lb.classList.contains('hidden')) {
+        if (e.key === 'Escape') closeLb();
+        if (e.key === 'ArrowLeft') openLb(lbIndex - 1);
+        if (e.key === 'ArrowRight') openLb(lbIndex + 1);
+      }
+    });
+    return;
+  }
+
   const items  = Array.from(stage.querySelectorAll('.circ-item'));
   const n      = items.length;
   const RADIUS = window.innerWidth < 900 ? 300 : 620;

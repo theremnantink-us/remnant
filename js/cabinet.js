@@ -333,8 +333,8 @@ function buildCabinetOrbital() {
       energy: tier.pct,
       energyLabel: 'Прогресс до следующего уровня',
       relatedIds: [1, 5],
-      ctaLabel: 'Открыть профиль',
-      onActivate: () => showTab('profile'),
+      ctaLabel: 'Открыть медали',
+      onActivate: () => showTab('medals'),
     },
     {
       id: 5,

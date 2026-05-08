@@ -345,17 +345,21 @@ img { display:block; max-width:100%; }
   text-transform: uppercase;
   text-align: center;
   padding: 0.6rem 2rem;
+  transition: color .25s;
+}
+/* Only nav links animate in — not the cabinet icon or social links */
+.mobile-menu > a:not(.mob-cabinet-icon) {
   opacity: 0;
   transform: translateY(20px);
   transition: color .25s, opacity .3s, transform .3s;
 }
-.mobile-menu.open a { opacity: 1; transform: translateY(0); }
-.mobile-menu.open a:nth-child(1) { transition-delay: .04s; }
-.mobile-menu.open a:nth-child(2) { transition-delay: .08s; }
-.mobile-menu.open a:nth-child(3) { transition-delay: .12s; }
-.mobile-menu.open a:nth-child(4) { transition-delay: .16s; }
-.mobile-menu.open a:nth-child(5) { transition-delay: .20s; }
-.mobile-menu.open a:nth-child(6) { transition-delay: .24s; }
+.mobile-menu.open > a:not(.mob-cabinet-icon) { opacity: 1; transform: translateY(0); }
+.mobile-menu.open > a:not(.mob-cabinet-icon):nth-child(2) { transition-delay: .04s; }
+.mobile-menu.open > a:not(.mob-cabinet-icon):nth-child(3) { transition-delay: .08s; }
+.mobile-menu.open > a:not(.mob-cabinet-icon):nth-child(4) { transition-delay: .12s; }
+.mobile-menu.open > a:not(.mob-cabinet-icon):nth-child(5) { transition-delay: .16s; }
+.mobile-menu.open > a:not(.mob-cabinet-icon):nth-child(6) { transition-delay: .20s; }
+.mobile-menu.open > a:not(.mob-cabinet-icon):nth-child(7) { transition-delay: .24s; }
 .mobile-menu a:hover { color: var(--accent); }
 .mobile-menu-socials {
   display: flex;
@@ -1051,6 +1055,45 @@ img { display:block; max-width:100%; }
   transition: left .12s linear;
 }
 @media (max-width: 768px) {
+  /* Flatten 3D carousel to native horizontal scroll */
+  .circ-gallery-outer {
+    overflow-x: scroll;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    perspective: none;
+    height: auto;
+    cursor: default;
+    padding: 12px 0 20px;
+  }
+  .circ-gallery-outer::-webkit-scrollbar { display: none; }
+  #circStage {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    transform: none !important;
+    position: relative;
+    width: max-content;
+    height: auto;
+    padding: 0 20px;
+    gap: 14px;
+    transform-style: flat;
+  }
+  .circ-item {
+    position: relative !important;
+    left: auto !important;
+    top: auto !important;
+    transform: none !important;
+    margin-left: 0 !important;
+    margin-top: 0 !important;
+    flex-shrink: 0;
+    scroll-snap-align: center;
+    width: 220px;
+    height: 300px;
+    opacity: 1 !important;
+    scale: 1 !important;
+  }
   .circ-scroll-track { display: block; }
   .circ-hint { display: none; }
 }
