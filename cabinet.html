@@ -95,14 +95,43 @@
         <span id="stat-upcoming">—</span>
         <span id="stat-total">—</span>
         <span id="stat-done">—</span>
-        <span id="medals-visits-text"></span>
-        <span id="medals-next-text"></span>
-        <div id="medals-fill"></div>
-        <div id="medal-bronze"></div>
-        <div id="medal-silver"></div>
-        <div id="medal-gold"></div>
-        <div id="medal-platinum"></div>
       </div>
+
+      <!-- Medals Section -->
+      <section class="medals-section">
+        <h3 class="medals-title">Программа лояльности</h3>
+        <div class="medals-progress">
+          <div class="medals-bar-wrap">
+            <div class="medals-bar-fill" id="medals-fill"></div>
+          </div>
+          <div class="medals-stats">
+            <span id="medals-visits-text"></span>
+            <span id="medals-next-text"></span>
+          </div>
+        </div>
+        <div class="medals-grid">
+          <div class="medal-item" id="medal-bronze">
+            <div class="medal-icon"><svg viewBox="0 0 40 40" fill="none"><circle cx="20" cy="26" r="11" stroke-width="1.5"/><path d="M14.5 15L11 5h18l-3.5 10" stroke-width="1.5" stroke-linejoin="round"/><text x="20" y="30" text-anchor="middle" font-size="8" font-family="serif" letter-spacing="0">I</text></svg></div>
+            <span class="medal-label">Бронза</span>
+            <span class="medal-threshold">1 визит</span>
+          </div>
+          <div class="medal-item" id="medal-silver">
+            <div class="medal-icon"><svg viewBox="0 0 40 40" fill="none"><circle cx="20" cy="26" r="11" stroke-width="1.5"/><path d="M14.5 15L11 5h18l-3.5 10" stroke-width="1.5" stroke-linejoin="round"/><text x="20" y="30" text-anchor="middle" font-size="8" font-family="serif">II</text></svg></div>
+            <span class="medal-label">Серебро</span>
+            <span class="medal-threshold">3 визита</span>
+          </div>
+          <div class="medal-item" id="medal-gold">
+            <div class="medal-icon"><svg viewBox="0 0 40 40" fill="none"><circle cx="20" cy="26" r="11" stroke-width="1.5"/><path d="M14.5 15L11 5h18l-3.5 10" stroke-width="1.5" stroke-linejoin="round"/><text x="20" y="30" text-anchor="middle" font-size="8" font-family="serif">III</text></svg></div>
+            <span class="medal-label">Золото</span>
+            <span class="medal-threshold">5 визитов</span>
+          </div>
+          <div class="medal-item" id="medal-platinum">
+            <div class="medal-icon"><svg viewBox="0 0 40 40" fill="none"><circle cx="20" cy="26" r="11" stroke-width="1.5"/><path d="M14.5 15L11 5h18l-3.5 10" stroke-width="1.5" stroke-linejoin="round"/><text x="20" y="30" text-anchor="middle" font-size="9" font-family="serif">✦</text></svg></div>
+            <span class="medal-label">Платина</span>
+            <span class="medal-threshold">10 визитов</span>
+          </div>
+        </div>
+      </section>
     </section>
 
     <section class="cab-tab hidden" id="tab-bookings">

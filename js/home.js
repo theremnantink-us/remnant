@@ -298,6 +298,14 @@ if (window.gsap && window.ScrollTrigger) {
     });
   }
 
+  // Mobile scroll thumb
+  const scrollThumb = document.getElementById('circScrollThumb');
+  function updateScrollThumb() {
+    if (!scrollThumb) return;
+    const pct = (((rotY % 360) + 360) % 360) / 360;
+    scrollThumb.style.left = (pct * 72) + '%';
+  }
+
   function tick() {
     if (!isPointerDown) {
       rotY += autoSpeed;
@@ -305,6 +313,7 @@ if (window.gsap && window.ScrollTrigger) {
     rotY += (targetRotY - rotY) * 0.08;
     if (Math.abs(targetRotY - rotY) < 0.01 && !isPointerDown) targetRotY = rotY;
     applyRotation();
+    updateScrollThumb();
     requestAnimationFrame(tick);
   }
   tick();

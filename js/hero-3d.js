@@ -22,9 +22,9 @@ const camera = new THREE.PerspectiveCamera(38, 1, 0.1, 50);
 camera.position.set(0, 0.0, 3.8);
 
 /* ── Lights ── */
-scene.add(new THREE.AmbientLight(0x1a1520, 2.5));
+scene.add(new THREE.AmbientLight(0x0d0f14, 1.8));
 
-const key = new THREE.DirectionalLight(0xfff6e8, 5.5);
+const key = new THREE.DirectionalLight(0xf0f4ff, 4.5);
 key.position.set(3.5, 7, 4.5);
 scene.add(key);
 
@@ -36,12 +36,12 @@ const rim = new THREE.DirectionalLight(0x5060c8, 2.2);
 rim.position.set(-2, 4, -6);
 scene.add(rim);
 
-const bot = new THREE.DirectionalLight(0x80600a, 0.3);
+const bot = new THREE.DirectionalLight(0x1a1a2e, 0.15);
 bot.position.set(0, -5, 2);
 scene.add(bot);
 
 /* Cursor-reactive point light — warm gold, follows mouse */
-const cursorPL = new THREE.PointLight(0xc4a882, 0, 10);
+const cursorPL = new THREE.PointLight(0xd0d8e8, 0, 10);
 cursorPL.position.set(0, 0, 3);
 scene.add(cursorPL);
 
@@ -79,6 +79,11 @@ function showHeroText() {
   heroText.style.transition = 'opacity 1.5s ease, transform 1.5s ease';
   heroText.style.opacity = '1';
   heroText.style.transform = 'none';
+  // Hide loading screen when 3D is ready
+  const loaderEl = document.getElementById('remnant-loader');
+  const barEl = document.getElementById('loaderBar');
+  if (barEl) barEl.style.width = '100%';
+  if (loaderEl) setTimeout(() => loaderEl.classList.add('hidden'), 450);
 }
 
 const loader = new GLTFLoader();
@@ -194,13 +199,28 @@ loader.load(
       camera.userData.camProxy = camProxy;
     }
   },
-  undefined,
+  xhr => {
+    const barEl = document.getElementById('loaderBar');
+    if (barEl && xhr.lengthComputable) {
+      barEl.style.width = Math.min(90, (xhr.loaded / xhr.total * 90)) + '%';
+    }
+  },
   err => {
     console.warn('Model not loaded (need local server). Showing particle fallback.');
     showParticles();
     showHeroText();
   }
 );
+
+// Fallback: hide loader after 6s if model fails silently
+setTimeout(() => {
+  const loaderEl = document.getElementById('remnant-loader');
+  const barEl = document.getElementById('loaderBar');
+  if (loaderEl && !loaderEl.classList.contains('hidden')) {
+    if (barEl) barEl.style.width = '100%';
+    setTimeout(() => loaderEl.classList.add('hidden'), 350);
+  }
+}, 6000);
 
 /* ══════════════════════════════════════════════════════════
    TATTOO REVEAL — 7 состояний (head0..head6)
@@ -365,7 +385,7 @@ function showParticles() {
   const pos = new Float32Array(count * 3);
   for (let i = 0; i < count * 3; i++) pos[i] = (Math.random() - 0.5) * 8;
   geo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
-  const mat = new THREE.PointsMaterial({ color: 0xc4a882, size: 0.025, transparent: true, opacity: 0.6 });
+  const mat = new THREE.PointsMaterial({ color: 0x9ab0c8, size: 0.025, transparent: true, opacity: 0.6 });
   scene.add(new THREE.Points(geo, mat));
 }
 
