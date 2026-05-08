@@ -393,17 +393,6 @@ img { display:block; max-width:100%; }
   pointer-events: none;
   will-change: transform;
 }
-#smoke-canvas {
-  position: fixed;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  z-index: calc(var(--canvas-z, 0) + 1); /* всегда выше hero-canvas */
-  pointer-events: none;
-  opacity: var(--smoke-opacity, 1);
-  transition: opacity .5s ease;
-  will-change: transform;
-}
 /* Секции с контентом выше и canvas и дыма */
 .glass-card,
 .master-preview,
