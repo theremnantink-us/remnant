@@ -18,6 +18,13 @@ document.getElementById('modal-close')?.addEventListener('click', () => {
   document.getElementById('booking-modal').classList.add('hidden');
 });
 
+/* ══ Email notifications ═══════════════════════════ */
+async function notifyBooking(type, booking, clientEmail) {
+  return supabase.functions.invoke('notify-booking', {
+    body: { type, booking, client_email: clientEmail },
+  });
+}
+
 /* ══ Toast ════════════════════════════════════════ */
 function toast(msg, type = 'success') {
   const el = document.createElement('div');
@@ -201,7 +208,11 @@ async function loadDashboard() {
 
   list.querySelectorAll('[data-confirm]').forEach(btn => {
     btn.addEventListener('click', async () => {
-      await supabase.from('bookings').update({ status: 'confirmed' }).eq('id', btn.dataset.confirm);
+      const bookingId = btn.dataset.confirm;
+      await supabase.from('bookings').update({ status: 'confirmed' }).eq('id', bookingId);
+      // Send email notification (fire-and-forget — no await)
+      const { data: bk } = await supabase.from('bookings').select('*').eq('id', bookingId).single();
+      if (bk) notifyBooking('confirmed', bk).catch(() => {});
       toast('Запись подтверждена');
       loadDashboard();
     });

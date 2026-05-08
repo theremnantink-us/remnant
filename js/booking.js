@@ -225,13 +225,18 @@ form.addEventListener('submit', async (e) => {
     };
     if (session?.user) bookingData.user_id = session.user.id;
 
-    const { error } = await supabase.from('bookings').insert(bookingData);
+    const { data: inserted, error } = await supabase.from('bookings').insert(bookingData).select().single();
 
     if (error) {
       alert(error.message || 'Ошибка при отправке');
       submitBtn.disabled = false;
       submitBtn.textContent = 'Записаться';
       return;
+    }
+
+    // Notify studio about new booking (fire-and-forget)
+    if (inserted) {
+      supabase.functions.invoke('notify-booking', { body: { type: 'new', booking: inserted } }).catch(() => {});
     }
 
     successMessage.classList.add('show');
