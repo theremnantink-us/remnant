@@ -202,11 +202,11 @@ if (window.gsap && window.ScrollTrigger) {
     lbImg.src = '';
   }
 
-  // Click-vs-drag: only flag as drag when cursor moves > 6px from press point
+  // Click-vs-drag: flag as drag only when pointer moves > 12px (more tolerant on touch)
   let pointerDownX = 0, pointerDownY = 0, pointerMoved = false;
   stage.addEventListener('pointerdown', e => { pointerDownX = e.clientX; pointerDownY = e.clientY; pointerMoved = false; }, { passive: true });
   stage.addEventListener('pointermove', e => {
-    if (Math.abs(e.clientX - pointerDownX) > 6 || Math.abs(e.clientY - pointerDownY) > 6) pointerMoved = true;
+    if (Math.abs(e.clientX - pointerDownX) > 12 || Math.abs(e.clientY - pointerDownY) > 12) pointerMoved = true;
   }, { passive: true });
   items.forEach((el, i) => {
     el.addEventListener('click', () => { if (!pointerMoved) openLb(i); });
@@ -217,6 +217,22 @@ if (window.gsap && window.ScrollTrigger) {
     lbBack?.addEventListener('click', closeLb);
     lbPrev?.addEventListener('click', () => openLb(lbIndex - 1));
     lbNext?.addEventListener('click', () => openLb(lbIndex + 1));
+
+    // Swipe in lightbox (mobile)
+    let lbTouchX = 0, lbTouchY = 0;
+    lb.addEventListener('touchstart', e => {
+      lbTouchX = e.touches[0].clientX;
+      lbTouchY = e.touches[0].clientY;
+    }, { passive: true });
+    lb.addEventListener('touchend', e => {
+      const dx = e.changedTouches[0].clientX - lbTouchX;
+      const dy = e.changedTouches[0].clientY - lbTouchY;
+      if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 40) {
+        dx < 0 ? openLb(lbIndex + 1) : openLb(lbIndex - 1);
+      } else if (dy > 80 && Math.abs(dx) < 40) {
+        closeLb();
+      }
+    }, { passive: true });
   }
   document.addEventListener('keydown', e => {
     if (!lb || lb.classList.contains('hidden')) return;
@@ -249,3 +265,8 @@ if (heroText) {
     }
   }, { passive: true });
 }
+
+// Sound button click — delegates to AmbientAudio when ready
+document.getElementById('sound-btn')?.addEventListener('click', () => {
+  if (typeof AmbientAudio !== 'undefined') AmbientAudio.toggle();
+});

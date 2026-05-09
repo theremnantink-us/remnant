@@ -659,6 +659,61 @@ img { display:block; max-width:100%; }
   color: var(--text);
 }
 
+/* ── Sound button ─────────────────────────────────────────── */
+.sound-btn {
+  position: absolute;
+  bottom: calc(2.5rem + env(safe-area-inset-bottom, 0px));
+  left: 5vw;
+  z-index: 2;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: .4rem;
+  display: flex;
+  align-items: flex-end;
+  gap: 2.5px;
+  height: 20px;
+  opacity: .38;
+  transition: opacity .35s;
+}
+.sound-btn:hover { opacity: .75; }
+.sound-btn.snd-active { opacity: .65; }
+
+.snd-bar {
+  display: block;
+  width: 3px;
+  border-radius: 2px;
+  background: var(--text);
+  transform-origin: bottom;
+}
+.snd-bar:nth-child(1) { height: 6px; }
+.snd-bar:nth-child(2) { height: 12px; }
+.snd-bar:nth-child(3) { height: 9px; }
+.snd-bar:nth-child(4) { height: 14px; }
+
+/* idle: static subtle pulse when not playing */
+@keyframes sndIdle {
+  0%, 100% { transform: scaleY(1); }
+  50%       { transform: scaleY(0.5); }
+}
+.sound-btn:not(.snd-active) .snd-bar {
+  animation: sndIdle 2.4s ease-in-out infinite;
+}
+.sound-btn:not(.snd-active) .snd-bar:nth-child(2) { animation-delay: .3s; }
+.sound-btn:not(.snd-active) .snd-bar:nth-child(3) { animation-delay: .6s; }
+.sound-btn:not(.snd-active) .snd-bar:nth-child(4) { animation-delay: .15s; }
+
+/* active: faster equaliser dance */
+@keyframes sndEq1 { 0%,100%{height:6px}  25%{height:14px} 75%{height:4px}  }
+@keyframes sndEq2 { 0%,100%{height:12px} 25%{height:5px}  75%{height:16px} }
+@keyframes sndEq3 { 0%,100%{height:9px}  25%{height:16px} 75%{height:6px}  }
+@keyframes sndEq4 { 0%,100%{height:14px} 25%{height:7px}  75%{height:12px} }
+
+.sound-btn.snd-active .snd-bar:nth-child(1) { animation: sndEq1 .9s ease-in-out infinite; }
+.sound-btn.snd-active .snd-bar:nth-child(2) { animation: sndEq2 .7s ease-in-out infinite; }
+.sound-btn.snd-active .snd-bar:nth-child(3) { animation: sndEq3 1.1s ease-in-out infinite; }
+.sound-btn.snd-active .snd-bar:nth-child(4) { animation: sndEq4 .8s ease-in-out infinite; }
+
 /* ══════════════════════════════════════════════════════════
    SCROLL SPACERS & GLASS CARDS
 ══════════════════════════════════════════════════════════ */
