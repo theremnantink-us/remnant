@@ -202,14 +202,25 @@ if (window.gsap && window.ScrollTrigger) {
     lbImg.src = '';
   }
 
-  // Click-vs-drag: flag as drag only when pointer moves > 12px (more tolerant on touch)
-  let pointerDownX = 0, pointerDownY = 0, pointerMoved = false;
-  stage.addEventListener('pointerdown', e => { pointerDownX = e.clientX; pointerDownY = e.clientY; pointerMoved = false; }, { passive: true });
-  stage.addEventListener('pointermove', e => {
-    if (Math.abs(e.clientX - pointerDownX) > 12 || Math.abs(e.clientY - pointerDownY) > 12) pointerMoved = true;
-  }, { passive: true });
+  // Tap vs drag: per-item touch detection (stage-level pointermove is unreliable
+  // on horizontal scroll containers — any scroll sets moved flag before tap fires)
   items.forEach((el, i) => {
-    el.addEventListener('click', () => { if (!pointerMoved) openLb(i); });
+    let tx = 0, ty = 0, isTap = false;
+    el.addEventListener('touchstart', e => {
+      tx = e.touches[0].clientX;
+      ty = e.touches[0].clientY;
+      isTap = true;
+    }, { passive: true });
+    el.addEventListener('touchmove', e => {
+      if (isTap && (Math.abs(e.touches[0].clientX - tx) > 10 || Math.abs(e.touches[0].clientY - ty) > 10)) {
+        isTap = false;
+      }
+    }, { passive: true });
+    el.addEventListener('touchend', e => {
+      if (isTap) { e.preventDefault(); openLb(i); }
+      isTap = false;
+    }, { passive: false });
+    el.addEventListener('click', () => openLb(i)); // desktop / mouse
   });
 
   if (lb) {
