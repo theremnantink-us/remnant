@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Технические работы | REMNANT</title>
+  <meta name="robots" content="noindex"/>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #080808; --surface: #0f0f0f; --border: rgba(255,255,255,0.06);
+      --text: #e8e3dc; --muted: #6e6660; --accent: #c4a882;
+      --font-serif: 'Instrument Serif', Georgia, serif;
+      --font-sans: 'Outfit', system-ui, sans-serif;
+    }
+    @font-face { font-family:'Instrument Serif'; font-style:italic; font-weight:400; font-display:swap; src:url('/fonts/instrument-serif-italic-latin.woff2') format('woff2'); }
+    @font-face { font-family:'Outfit'; font-style:normal; font-weight:300 500; font-display:swap; src:url('/fonts/outfit-latin.woff2') format('woff2'); }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-sans);
+      min-height: 100svh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 2rem;
+    }
+    .logo {
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-size: 1.45rem;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 3rem;
+      text-decoration: none;
+    }
+    .icon {
+      width: 56px; height: 56px;
+      border: 1px solid var(--border);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 2rem;
+      color: var(--accent);
+      animation: spin 4s linear infinite;
+    }
+    @keyframes spin {
+      0%   { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    h1 {
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-size: clamp(1.8rem, 6vw, 3rem);
+      font-weight: 300;
+      letter-spacing: .04em;
+      color: var(--text);
+      margin-bottom: 1rem;
+    }
+    p {
+      font-size: .9rem;
+      color: var(--muted);
+      line-height: 1.75;
+      max-width: 380px;
+      margin: 0 auto 2rem;
+    }
+    .divider {
+      width: 40px; height: 1px;
+      background: var(--accent);
+      opacity: .35;
+      margin: 2rem auto;
+    }
+    .contact {
+      font-size: .75rem;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .contact a { color: var(--accent); text-decoration: none; }
+  </style>
+</head>
+<body>
+  <span class="logo">Remnant</span>
+
+  <div class="icon" aria-hidden="true">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+      <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/>
+    </svg>
+  </div>
+
+  <h1>Технические работы</h1>
+  <p>Сайт временно недоступен — идёт обновление. Обычно это занимает не более часа. Мы скоро вернёмся.</p>
+
+  <div class="divider"></div>
+  <p class="contact">
+    Записаться можно напрямую:<br>
+    <a href="mailto:theremnant.ink@gmail.com">theremnant.ink@gmail.com</a>
+  </p>
+</body>
+</html>

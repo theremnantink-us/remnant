@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>404 — Страница не найдена | REMNANT</title>
+  <meta name="robots" content="noindex"/>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg"/>
+  <link rel="apple-touch-icon" href="apple-touch-icon.png"/>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .error-page {
+      min-height: 100svh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 2rem;
+      gap: 0;
+    }
+    .error-code {
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-size: clamp(7rem, 25vw, 14rem);
+      font-weight: 300;
+      line-height: 1;
+      color: transparent;
+      -webkit-text-stroke: 1px rgba(196,168,130,0.25);
+      letter-spacing: -.04em;
+      user-select: none;
+      margin-bottom: 1rem;
+    }
+    .error-title {
+      font-family: var(--font-sans);
+      font-size: clamp(.65rem, 1.8vw, .8rem);
+      letter-spacing: .3em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 2.5rem;
+    }
+    .error-desc {
+      font-size: .95rem;
+      color: var(--text-muted);
+      max-width: 340px;
+      line-height: 1.7;
+      margin-bottom: 3rem;
+    }
+    .error-actions {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .error-line {
+      width: 1px;
+      height: 80px;
+      background: linear-gradient(to bottom, transparent, rgba(196,168,130,0.3), transparent);
+      margin: 0 auto 2rem;
+    }
+  </style>
+</head>
+<body>
+<nav class="nav" id="nav" role="navigation" aria-label="Основная навигация">
+  <a href="/" class="nav-logo">Remnant</a>
+  <div class="nav-links">
+    <a href="/faq">FAQ</a>
+    <a href="/master">Мастер</a>
+    <a href="/contacts">Контакты</a>
+    <a href="/aftercare">Уход</a>
+    <a href="/booking" class="nav-cta">Записаться</a>
+    <a href="/cabinet" class="nav-cabinet-btn" id="nav-cabinet-link">
+      <div class="nav-avatar" id="nav-avatar"><img id="nav-avatar-img" src="" alt=""><span id="nav-avatar-initials"></span></div>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" id="nav-cabinet-icon"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      <span id="nav-cabinet-text">Кабинет</span>
+    </a>
+  </div>
+  <a href="/cabinet" class="nav-mob-cab" aria-label="Личный кабинет">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="18" height="18"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+  </a>
+  <button class="nav-burger" id="burger" aria-label="Меню" aria-expanded="false" aria-controls="mobile-menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+<div class="mmenu-backdrop" id="mmenu-backdrop"></div>
+<div class="mobile-menu" id="mobile-menu" role="dialog" aria-modal="true" aria-label="Навигация">
+  <div class="mmenu-header">
+    <span class="mmenu-logo">Remnant</span>
+    <button class="mmenu-close" id="mmenu-close" aria-label="Закрыть">
+      <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><line x1="3" y1="3" x2="15" y2="15"/><line x1="15" y1="3" x2="3" y2="15"/></svg>
+    </button>
+  </div>
+  <nav class="mmenu-nav">
+    <a href="/faq" onclick="closeMobileMenu()"><span class="mmenu-num">01</span><span>FAQ</span></a>
+    <a href="/master" onclick="closeMobileMenu()"><span class="mmenu-num">02</span><span>Мастер</span></a>
+    <a href="/contacts" onclick="closeMobileMenu()"><span class="mmenu-num">03</span><span>Контакты</span></a>
+    <a href="/aftercare" onclick="closeMobileMenu()"><span class="mmenu-num">04</span><span>Уход</span></a>
+  </nav>
+  <div class="mmenu-footer">
+    <a href="/booking" onclick="closeMobileMenu()" class="mmenu-cta">Записаться на сеанс</a>
+    <a href="/cabinet" onclick="closeMobileMenu()" class="mmenu-cabinet">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      Личный кабинет
+    </a>
+  </div>
+</div>
+
+<main>
+  <div class="error-page">
+    <div class="error-code" aria-hidden="true">404</div>
+    <div class="error-line"></div>
+    <p class="error-title">Страница не найдена</p>
+    <p class="error-desc">Возможно, страница была перемещена, удалена или адрес введён с опечаткой.</p>
+    <div class="error-actions">
+      <a href="/" class="btn btn-fill">На главную</a>
+      <a href="/booking" class="btn btn-outline">Записаться</a>
+    </div>
+  </div>
+</main>
+
+<script src="js/common.js" defer></script>
+<script>
+  // Auto-redirect after 10s
+  let t = 10;
+  const tick = setInterval(() => {
+    t--;
+    if (t <= 0) { clearInterval(tick); location.href = '/'; }
+  }, 1000);
+</script>
+</body>
+</html>
