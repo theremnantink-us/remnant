@@ -8,6 +8,7 @@ const ADM_ICONS = {
   analytics: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>`,
   recent:    `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v5h5"/><path d="M3.05 13A9 9 0 106 5.3L3 8"/><path d="M12 7v5l4 2"/></svg>`,
   portfolio: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>`,
+  settings:  `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>`,
 };
 
 const STATUS_RU = { new: 'Новая', confirmed: 'Подтверждена', done: 'Завершена', cancelled: 'Отменена' };
@@ -53,6 +54,7 @@ function showSection(name) {
   if (name === 'schedule')  renderCalendar();
   if (name === 'analytics') loadAnalytics();
   if (name === 'portfolio') loadPortfolio();
+  if (name === 'settings')  loadSettings();
   const backBtn = document.getElementById('adm-back');
   if (backBtn) backBtn.classList.toggle('hidden', name === 'dashboard');
 }
@@ -291,6 +293,17 @@ function buildAdminOrbital(stats) {
       relatedIds: [],
       ctaLabel: 'Управлять фото',
       onActivate: () => showSection('portfolio'),
+    },
+    {
+      id: 6,
+      title: 'Настройки',
+      icon: ADM_ICONS.settings,
+      status: 'pending',
+      date: '',
+      content: 'Режим обслуживания и параметры сайта.',
+      relatedIds: [],
+      ctaLabel: 'Настройки',
+      onActivate: () => showSection('settings'),
     },
   ];
 
@@ -1057,10 +1070,15 @@ function renderPortfolioGrid() {
     captionInput.className = 'pf-item__caption';
     captionInput.value = item.caption || '';
     captionInput.placeholder = 'Введите название…';
-    captionInput.title = 'Нажмите Enter или кликните в другое место для сохранения';
-    captionInput.addEventListener('change', () => savePfCaption(item.id, captionInput.value));
+    captionInput.title = 'Enter или потеря фокуса — сохранить';
+    captionInput.addEventListener('input', () => captionInput.classList.remove('saved'));
+    captionInput.addEventListener('change', async () => {
+      await savePfCaption(item.id, captionInput.value);
+      captionInput.classList.add('saved');
+      setTimeout(() => captionInput.classList.remove('saved'), 1400);
+    });
     captionInput.addEventListener('keydown', e => {
-      if (e.key === 'Enter') { e.preventDefault(); savePfCaption(item.id, captionInput.value); captionInput.blur(); }
+      if (e.key === 'Enter') { e.preventDefault(); captionInput.blur(); }
     });
     controls.appendChild(captionInput);
 
@@ -1069,7 +1087,9 @@ function renderPortfolioGrid() {
 
     const toggle = document.createElement('button');
     toggle.className = 'pf-item__toggle' + (item.visible ? ' visible' : '');
-    toggle.textContent = item.visible ? 'Видимо' : 'Скрыто';
+    const eyeOn  = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="13" height="13"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg>`;
+    const eyeOff = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="13" height="13"><path d="M17.94 17.94A10.07 10.07 0 0112 20c-7 0-11-8-11-8a18.45 18.45 0 015.06-5.94M9.9 4.24A9.12 9.12 0 0112 4c7 0 11 8 11 8a18.5 18.5 0 01-2.16 3.19m-6.72-1.07a3 3 0 11-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>`;
+    toggle.innerHTML = (item.visible ? eyeOn : eyeOff) + `<span class="pf-toggle-text">${item.visible ? 'Видимо' : 'Скрыто'}</span>`;
     toggle.addEventListener('click', () => togglePfVisibility(item));
     actions.appendChild(toggle);
 
@@ -1098,7 +1118,19 @@ async function togglePfVisibility(item) {
     .eq('id', item.id);
   if (error) { toast('Ошибка', 'error'); return; }
   item.visible = !item.visible;
-  renderPortfolioGrid();
+  // Update only the affected card instead of full re-render
+  const card = document.querySelector(`.pf-item[data-id="${item.id}"]`);
+  if (card) {
+    const toggle = card.querySelector('.pf-item__toggle');
+    if (toggle) {
+      const eyeOn  = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="13" height="13"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg>`;
+      const eyeOff = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="13" height="13"><path d="M17.94 17.94A10.07 10.07 0 0112 20c-7 0-11-8-11-8a18.45 18.45 0 015.06-5.94M9.9 4.24A9.12 9.12 0 0112 4c7 0 11 8 11 8a18.5 18.5 0 01-2.16 3.19m-6.72-1.07a3 3 0 11-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>`;
+      toggle.innerHTML = (item.visible ? eyeOn : eyeOff) + `<span class="pf-toggle-text">${item.visible ? 'Видимо' : 'Скрыто'}</span>`;
+      toggle.className = 'pf-item__toggle' + (item.visible ? ' visible' : '');
+    }
+  } else {
+    renderPortfolioGrid();
+  }
 }
 
 async function deletePfItem(item) {
@@ -1145,6 +1177,58 @@ async function uploadPortfolioFiles(files) {
   bar.style.width = '0%';
   renderPortfolioGrid();
   toast(`Загружено ${done} из ${total} фото`);
+}
+
+/* ══ Maintenance Mode ═════════════════════════════ */
+let _maintenanceLoaded = false;
+
+async function loadSettings() {
+  if (_maintenanceLoaded) return;
+  _maintenanceLoaded = true;
+
+  const dot    = document.getElementById('maintenance-dot');
+  const text   = document.getElementById('maintenance-status-text');
+  const toggle = document.getElementById('maintenance-toggle');
+  const label  = document.getElementById('maintenance-toggle-label');
+  if (!dot || !text || !toggle || !label) return;
+
+  async function fetchState() {
+    const { data } = await supabase
+      .from('site_settings')
+      .select('value')
+      .eq('key', 'maintenance_mode')
+      .single();
+    return data?.value === 'true';
+  }
+
+  function applyState(on) {
+    dot.className = 'maintenance-dot ' + (on ? 'active' : 'inactive');
+    text.textContent = on ? 'Режим обслуживания включён' : 'Сайт работает в штатном режиме';
+    toggle.className = 'maintenance-toggle' + (on ? ' on' : '');
+    label.textContent = on ? 'Отключить' : 'Включить';
+    toggle.disabled = false;
+  }
+
+  const current = await fetchState();
+  applyState(current);
+
+  toggle.addEventListener('click', async () => {
+    toggle.disabled = true;
+    const isOn = toggle.classList.contains('on');
+    const newVal = String(!isOn);
+
+    const { error } = await supabase
+      .from('site_settings')
+      .upsert({ key: 'maintenance_mode', value: newVal }, { onConflict: 'key' });
+
+    if (error) {
+      toast('Ошибка сохранения настроек', 'error');
+      toggle.disabled = false;
+      return;
+    }
+    applyState(!isOn);
+    toast((!isOn) ? 'Режим обслуживания включён' : 'Сайт переведён в рабочий режим');
+  });
 }
 
 // Drag & drop + click upload
