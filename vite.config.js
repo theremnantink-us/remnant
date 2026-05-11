@@ -29,6 +29,7 @@ export default defineConfig({
         faq:         resolve(__dirname, 'faq.html'),
         aftercare:   resolve(__dirname, 'aftercare.html'),
         terms:       resolve(__dirname, 'terms.html'),
+        privacy:     resolve(__dirname, 'privacy.html'),
         e404:        resolve(__dirname, '404.html'),
         maintenance: resolve(__dirname, 'maintenance.html'),
       },

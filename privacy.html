@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Политика конфиденциальности | REMNANT</title>
+  <meta name="description" content="Политика конфиденциальности и обработки персональных данных студии татуировки REMNANT.">
+  <meta name="robots" content="noindex"/>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg"/>
+  <link rel="apple-touch-icon" href="apple-touch-icon.png"/>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .priv-hero {
+      min-height: 38vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: calc(var(--nav-h) + 3rem) 2rem 3rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .priv-hero .section-label { margin-bottom: 1.2rem; }
+    .priv-hero .section-title {
+      font-size: clamp(2rem, 6vw, 4rem);
+      font-family: var(--font-serif);
+      font-weight: 300;
+      letter-spacing: -.02em;
+      margin-bottom: 1.2rem;
+    }
+    .priv-hero p {
+      max-width: 480px;
+      font-size: .88rem;
+      line-height: 1.8;
+      color: var(--text-muted);
+    }
+    .priv-wrap {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 4.5rem 2rem 6rem;
+    }
+    .priv-section {
+      padding: 2.5rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .priv-section:last-child { border-bottom: none; }
+    .priv-section-num {
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-size: 3rem;
+      font-weight: 300;
+      color: var(--accent);
+      opacity: .2;
+      line-height: 1;
+      margin-bottom: .4rem;
+      display: block;
+    }
+    .priv-section h2 {
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+      font-weight: 300;
+      color: var(--text);
+      margin-bottom: 1.2rem;
+    }
+    .priv-section p {
+      font-size: .88rem;
+      line-height: 1.85;
+      color: var(--text-muted);
+      margin-bottom: .9rem;
+    }
+    .priv-section p:last-child { margin-bottom: 0; }
+    .priv-section ul {
+      list-style: none;
+      padding: 0;
+      margin: .8rem 0;
+    }
+    .priv-section ul li {
+      font-size: .88rem;
+      line-height: 1.75;
+      color: var(--text-muted);
+      padding: .3rem 0 .3rem 1.4rem;
+      position: relative;
+      border-bottom: 1px solid var(--border);
+    }
+    .priv-section ul li:last-child { border-bottom: none; }
+    .priv-section ul li::before {
+      content: '—';
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+      opacity: .55;
+    }
+    .priv-highlight {
+      background: var(--surface);
+      border-left: 2px solid var(--accent);
+      padding: 1rem 1.4rem;
+      margin: 1.2rem 0;
+      border-radius: 0 4px 4px 0;
+    }
+    .priv-highlight p { margin: 0; font-size: .83rem; }
+    .priv-contact {
+      margin-top: 3.5rem;
+      padding: 2rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      text-align: center;
+    }
+    .priv-contact p { font-size: .83rem; color: var(--text-muted); margin-bottom: .4rem; }
+    .priv-contact a { color: var(--accent); text-decoration: none; font-size: .83rem; }
+    .priv-contact a:hover { text-decoration: underline; }
+    .priv-updated {
+      font-size: .72rem;
+      letter-spacing: .12em;
+      color: var(--text-muted);
+      opacity: .45;
+      text-transform: uppercase;
+      text-align: center;
+      margin-top: 2.5rem;
+    }
+  </style>
+</head>
+<body>
+
+<nav class="nav" id="nav" role="navigation" aria-label="Основная навигация">
+  <a href="/" class="nav-logo">Remnant</a>
+  <div class="nav-links">
+    <a href="/faq">FAQ</a>
+    <a href="/master">Мастер</a>
+    <a href="/contacts">Контакты</a>
+    <a href="/aftercare">Уход</a>
+    <a href="/booking" class="nav-cta">Записаться</a>
+    <a href="/cabinet" class="nav-cabinet-btn" id="nav-cabinet-link">
+      <div class="nav-avatar" id="nav-avatar"><img id="nav-avatar-img" src="" alt=""><span id="nav-avatar-initials"></span></div>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" id="nav-cabinet-icon"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      <span id="nav-cabinet-text">Кабинет</span>
+    </a>
+  </div>
+  <a href="/cabinet" class="nav-mob-cab" aria-label="Личный кабинет">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="18" height="18"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+  </a>
+  <button class="nav-burger" id="burger" aria-label="Меню" aria-expanded="false" aria-controls="mobile-menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="mmenu-backdrop" id="mmenu-backdrop"></div>
+<div class="mobile-menu" id="mobile-menu" role="dialog" aria-modal="true" aria-label="Навигация">
+  <div class="mmenu-header">
+    <span class="mmenu-logo">Remnant</span>
+    <button class="mmenu-close" id="mmenu-close" aria-label="Закрыть">
+      <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><line x1="3" y1="3" x2="15" y2="15"/><line x1="15" y1="3" x2="3" y2="15"/></svg>
+    </button>
+  </div>
+  <nav class="mmenu-nav">
+    <a href="/faq" onclick="closeMobileMenu()"><span class="mmenu-num">01</span><span>FAQ</span></a>
+    <a href="/master" onclick="closeMobileMenu()"><span class="mmenu-num">02</span><span>Мастер</span></a>
+    <a href="/contacts" onclick="closeMobileMenu()"><span class="mmenu-num">03</span><span>Контакты</span></a>
+    <a href="/aftercare" onclick="closeMobileMenu()"><span class="mmenu-num">04</span><span>Уход</span></a>
+  </nav>
+  <div class="mmenu-footer">
+    <a href="/booking" onclick="closeMobileMenu()" class="mmenu-cta">Записаться на сеанс</a>
+    <a href="/cabinet" onclick="closeMobileMenu()" class="mmenu-cabinet">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      Личный кабинет
+    </a>
+  </div>
+</div>
+
+<main>
+  <div class="priv-hero">
+    <p class="section-label">Юридическая информация</p>
+    <h1 class="section-title">Политика<br>конфиденциальности</h1>
+    <p>Настоящая политика описывает, какие данные собирает студия REMNANT, как они используются и как мы обеспечиваем их защиту.</p>
+  </div>
+
+  <div class="priv-wrap">
+
+    <div class="priv-section">
+      <span class="priv-section-num">01</span>
+      <h2>Кто мы и к кому относится политика</h2>
+      <p>Оператором персональных данных является студия татуировки REMNANT (далее — «Студия»). Настоящая Политика распространяется на всех, кто использует сайт <strong>theremnant.ink</strong>, оставляет заявку на запись или регистрирует личный кабинет.</p>
+    </div>
+
+    <div class="priv-section">
+      <span class="priv-section-num">02</span>
+      <h2>Какие данные мы собираем</h2>
+      <p>При использовании сайта и услуг Студии могут собираться следующие данные:</p>
+      <ul>
+        <li>Имя и фамилия — для идентификации и общения</li>
+        <li>Номер телефона — для связи по вопросам записи</li>
+        <li>Адрес электронной почты — для подтверждений и уведомлений</li>
+        <li>Сведения о желаемой работе (место, размер, стиль, референсы)</li>
+        <li>Технические данные: IP-адрес, тип браузера, страницы посещений — автоматически через cookie</li>
+      </ul>
+    </div>
+
+    <div class="priv-section">
+      <span class="priv-section-num">03</span>
+      <h2>Как мы используем данные</h2>
+      <p>Собранные данные используются исключительно для:</p>
+      <ul>
+        <li>Записи на сеанс и подтверждения встречи</li>
+        <li>Связи с клиентом до, во время и после сеанса</li>
+        <li>Ведения истории посещений в личном кабинете</li>
+        <li>Отправки напоминаний и уведомлений о статусе записи</li>
+        <li>Улучшения работы сайта на основе агрегированной статистики</li>
+      </ul>
+      <div class="priv-highlight">
+        <p>Мы не продаём, не сдаём в аренду и не передаём ваши данные третьим лицам в коммерческих целях.</p>
+      </div>
+    </div>
+
+    <div class="priv-section">
+      <span class="priv-section-num">04</span>
+      <h2>Основания обработки</h2>
+      <p>Обработка персональных данных осуществляется на основании:</p>
+      <ul>
+        <li>Согласия субъекта — при заполнении формы записи</li>
+        <li>Исполнения договора — при оказании услуг татуировки</li>
+        <li>Законных интересов — для обеспечения безопасности и работоспособности сервиса</li>
+      </ul>
+    </div>
+
+    <div class="priv-section">
+      <span class="priv-section-num">05</span>
+      <h2>Хранение и защита</h2>
+      <p>Данные хранятся на защищённых серверах Supabase (ЕС/США) с шифрованием в покое и при передаче (TLS). Доступ к данным ограничен и предоставляется только лицам, непосредственно обеспечивающим работу Студии.</p>
+      <p>Срок хранения — не более 3 лет с даты последнего обращения, если иное не требуется законодательством или не запрошено вами.</p>
+    </div>
+
+    <div class="priv-section">
+      <span class="priv-section-num">06</span>
+      <h2>Cookie-файлы</h2>
+      <p>Сайт использует cookie для корректной работы авторизации, запоминания сессии и анализа посещаемости. Продолжая использовать сайт, вы соглашаетесь на использование cookie.</p>
+      <p>Вы можете отключить cookie в настройках браузера. Это может повлиять на работу личного кабинета и некоторых функций сайта.</p>
+    </div>
+
+    <div class="priv-section">
+      <span class="priv-section-num">07</span>
+      <h2>Ваши права</h2>
+      <p>Вы вправе в любой момент:</p>
+      <ul>
+        <li>Запросить доступ к своим персональным данным</li>
+        <li>Потребовать исправления неточных или устаревших данных</li>
+        <li>Отозвать согласие на обработку</li>
+        <li>Потребовать удаления данных («право на забвение»)</li>
+        <li>Подать жалобу в надзорный орган (Роскомнадзор)</li>
+      </ul>
+      <p>Для реализации прав направьте запрос на <a href="mailto:theremnant.ink@gmail.com" style="color:var(--accent);text-decoration:none">theremnant.ink@gmail.com</a>. Ответ — в течение 10 рабочих дней.</p>
+    </div>
+
+    <div class="priv-section">
+      <span class="priv-section-num">08</span>
+      <h2>Изменения политики</h2>
+      <p>Студия вправе обновлять настоящую Политику. Актуальная версия всегда доступна по адресу <a href="/privacy" style="color:var(--accent);text-decoration:none">theremnant.ink/privacy</a>. Продолжение использования сайта после публикации изменений означает их принятие.</p>
+    </div>
+
+    <div class="priv-contact">
+      <p>По вопросам обработки персональных данных:</p>
+      <a href="mailto:theremnant.ink@gmail.com">theremnant.ink@gmail.com</a>
+    </div>
+
+    <p class="priv-updated">Редакция от 1 мая 2025 года</p>
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <a href="/" class="footer-logo">Remnant</a>
+    <nav class="footer-links">
+      <a href="/faq">FAQ</a>
+      <a href="/master">Мастер</a>
+      <a href="/aftercare">Уход</a>
+      <a href="/contacts">Контакты</a>
+      <a href="/terms">Соглашение</a>
+    </nav>
+    <p class="footer-copy">© 2025 REMNANT Tattoo Studio</p>
+  </div>
+</footer>
+
+<script src="js/common.js" defer></script>
+</body>
+</html>
