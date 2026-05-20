@@ -1,28 +1,56 @@
-# Рисунок 4 — Структурная схема веб-приложения REMNANT
+# REMNANT — Структурная схема
 
-```mermaid
-graph TB
-    subgraph L1["Уровень представления"]
-        BC["Браузер клиента\nHTML / CSS / JS · Three.js · GSAP"]
-        BA["Браузер администратора\nadmin.html · admin.js"]
-        VITE["Vite Dev Server\nпорт 5173 · proxy /api → 3000"]
-    end
+## Уровень представления
 
-    subgraph L2["Уровень логики"]
-        EXPRESS["API-сервер Node.js / Express\nroutes: auth · bookings · slots · admin · client\nJWT-middleware · bcrypt · web-push"]
-    end
+### Браузер клиента
+#### HTML / CSS / JS
+#### Three.js
+##### Модель Female Head Anatomy.glb
+#### GSAP ScrollTrigger
+##### Scroll-анимация
 
-    subgraph L3["Уровень данных"]
-        MYSQL[("MySQL 8\nremnant_bd\n8 таблиц · host 127.0.0.1:3306")]
-        TG["Telegram Bot API\nTG_BOT_TOKEN · TG_CHAT_ID"]
-        WP["Web Push VAPID\npush_subscriptions · web-push npm"]
-    end
+### Браузер администратора
+#### admin.html
+#### JS-модуль admin.js
 
-    BC <-->|"HTTP/REST JSON"| EXPRESS
-    BA <-->|"HTTP/REST JSON"| EXPRESS
-    VITE -.->|"dev proxy"| EXPRESS
+### Vite Dev Server
+#### Порт 5173
+#### Proxy /api → localhost:3000
+#### HMR (Hot Module Replacement)
 
-    EXPRESS <-->|"SQL-запросы"| MYSQL
-    EXPRESS -->|"Bot API POST"| TG
-    EXPRESS -->|"push payload"| WP
-```
+## Уровень логики
+
+### Node.js / Express
+#### Порт 3000
+#### Маршруты
+##### /api/auth
+##### /api/bookings
+##### /api/slots
+##### /api/admin
+##### /api/client
+#### Безопасность
+##### JWT (jsonwebtoken)
+##### bcrypt (10 раундов)
+##### Helmet / CORS
+#### Уведомления
+##### web-push (VAPID)
+##### Telegram Bot API
+
+## Уровень данных
+
+### MySQL 8 — remnant_bd
+#### bookings
+#### clients
+#### admins
+#### availability
+#### date_overrides
+#### blocked_dates
+#### client_notifications
+#### push_subscriptions
+
+### Telegram Bot API
+#### Уведомление при новой записи
+
+### Web Push VAPID
+#### Подписки браузеров
+#### Push при смене статуса записи

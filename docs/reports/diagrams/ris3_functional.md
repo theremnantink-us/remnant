@@ -1,40 +1,58 @@
-# Рисунок 3 — Функциональная схема веб-приложения REMNANT
+# REMNANT — Функциональная схема
 
-```mermaid
-graph TD
-    USER["👤 Пользователь (клиент)"]
-    ADMIN["🔧 Администратор"]
+## Пользователь (клиент)
 
-    subgraph FRONTEND["Клиентский браузер — Frontend (HTML/CSS/JS · Three.js · GSAP)"]
-        INDEX["index.html\n3D-анимация"]
-        BOOKING["booking.html\nОнлайн-запись"]
-        CABINET["cabinet.html\nЛичный кабинет"]
-        ADMINP["admin.html\nПанель администратора"]
-        PORTFOLIO["portfolio.html\nГалерея работ"]
-    end
+### Браузер — Frontend
+#### index.html
+##### 3D-анимация (Three.js · GSAP)
+#### booking.html
+##### Онлайн-запись (3 шага)
+#### cabinet.html
+##### Личный кабинет
+#### portfolio.html
+##### Галерея работ
 
-    subgraph API["API-сервер Node.js / Express (порт 3000)"]
-        R_AUTH["/api/auth\nАдмин-логин"]
-        R_BOOK["/api/bookings\nЗаписи"]
-        R_SLOTS["/api/slots\nСвободные слоты"]
-        R_ADMIN["/api/admin\nCRUD администратора"]
-        R_CLIENT["/api/client\nЛичный кабинет"]
-    end
+## Администратор
 
-    DB[("MySQL\nremnant_bd")]
-    TG["Telegram Bot API"]
-    PUSH["Web Push VAPID"]
+### Браузер — Frontend
+#### admin.html
+##### Панель администратора
 
-    USER -->|"HTTP запросы"| FRONTEND
-    ADMIN -->|"управление"| ADMINP
+## API-сервер Node.js / Express (порт 3000)
 
-    FRONTEND -->|"HTTP /api/*"| API
+### /api/auth
+#### Авторизация администратора
+#### JWT-токен (localStorage)
 
-    R_AUTH --> DB
-    R_BOOK --> DB
-    R_BOOK -->|"уведомление"| TG
-    R_SLOTS --> DB
-    R_ADMIN --> DB
-    R_CLIENT --> DB
-    R_CLIENT -->|"push(payload)"| PUSH
-```
+### /api/bookings
+#### Создание записи (POST)
+#### Уведомление в Telegram
+
+### /api/slots
+#### Список свободных слотов (GET)
+#### Фильтрация по дате
+
+### /api/admin
+#### CRUD записей
+#### Управление расписанием
+#### Блокировка дат
+#### Push-рассылка
+
+### /api/client
+#### Авторизация клиента
+#### Профиль и история записей
+#### Уведомления
+
+## Внешние сервисы
+
+### MySQL remnant_bd
+#### 8 таблиц
+#### host 127.0.0.1:3306
+
+### Telegram Bot API
+#### TG_BOT_TOKEN
+#### TG_CHAT_ID
+
+### Web Push VAPID
+#### Подписки (push_subscriptions)
+#### web-push npm
