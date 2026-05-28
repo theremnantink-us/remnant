@@ -12,6 +12,14 @@ const DEFAULT_SLOTS = [
 const MONTHS = ['Январь','Февраль','Март','Апрель','Май','Июнь','Июль','Август','Сентябрь','Октябрь','Ноябрь','Декабрь'];
 const DOW = ['Пн','Вт','Ср','Чт','Пт','Сб','Вс'];
 
+function normalizePhone(raw) {
+  const digits = (raw || '').replace(/\D/g, '');
+  if (digits.startsWith('8') && digits.length === 11) return '+7' + digits.slice(1);
+  if (digits.startsWith('7') && digits.length === 11) return '+' + digits;
+  if (digits.length === 10) return '+7' + digits;
+  return digits ? '+' + digits : '';
+}
+
 let curYear, curMonth, selectedDate = null, selectedSlot = null;
 const calTitle = document.getElementById('calTitle');
 const calGrid = document.getElementById('calGrid');
@@ -219,7 +227,7 @@ form.addEventListener('submit', async (e) => {
       style:         payload.style || null,
       notes:         payload.notes || null,
       name:          payload.name,
-      phone:         payload.phone,
+      phone:         normalizePhone(payload.phone),
       status:        'new',
       reference_url: referenceUrl,
     };
