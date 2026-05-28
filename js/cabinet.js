@@ -323,24 +323,37 @@ function buildCabinetOrbital() {
     ? `До «${tier.next.label}» осталось ${tier.remain} визит${pluralVisit(tier.remain)}`
     : 'Максимальный уровень достигнут';
 
-  // Next booking
-  const nbCard = document.getElementById('next-booking-card');
-  const nbDate = nbCard?.querySelector('.nb-date')?.textContent?.trim() || '';
-  const nbTime = nbCard?.querySelector('.nb-time')?.textContent?.trim() || '';
-  const nbStyle = nbCard?.querySelector('.nb-style')?.textContent?.trim() || '';
-  const hasNext = !!nbDate;
+  // Records summary — derived from booking data so the card reflects past
+  // bookings too, not only upcoming ones.
+  const today = todayLocal();
+  const allBookings = window._allBookings || [];
+  const activeBookings = allBookings.filter(b => b.status !== 'cancelled');
+  const firstUpcoming = activeBookings
+    .filter(b => b.date >= today)
+    .sort((a, b) => a.date.localeCompare(b.date))[0] || null;
+  const lastPast = activeBookings
+    .filter(b => b.date < today)
+    .sort((a, b) => b.date.localeCompare(a.date))[0] || null;
+  const totalActive = activeBookings.length;
+  const fmtDay = (ds) => new Date(ds + 'T00:00').toLocaleDateString('ru', { day: 'numeric', month: 'long' });
+  const nbDate = firstUpcoming ? fmtDay(firstUpcoming.date) : '';
+  const nbTime = firstUpcoming ? (firstUpcoming.time_slot || '') : '';
+  const nbStyle = firstUpcoming ? (firstUpcoming.style || '') : '';
+  const hasNext = !!firstUpcoming;
 
   const nodes = [
     {
       id: 1,
       title: 'Записи',
       icon: ICONS.bookings,
-      badge: upcoming ? String(upcoming) : '',
-      status: upcoming ? 'in-progress' : 'pending',
-      date: hasNext ? nbDate : '',
+      badge: hasNext ? String(upcoming) : (totalActive ? String(totalActive) : ''),
+      status: hasNext ? 'in-progress' : (totalActive ? 'completed' : 'pending'),
+      date: hasNext ? nbDate : (lastPast ? fmtDay(lastPast.date) : ''),
       content: hasNext
         ? `Ближайшая запись: ${nbDate}${nbTime ? ' · ' + nbTime : ''}${nbStyle && nbStyle !== '—' ? ' · ' + nbStyle : ''}.`
-        : 'Предстоящих записей пока нет. Самое время запланировать следующий визит.',
+        : (totalActive
+            ? `Предстоящих записей нет. Всего записей: ${totalActive}${lastPast ? ' · последняя ' + fmtDay(lastPast.date) : ''}.`
+            : 'Записей пока нет. Самое время запланировать первый визит.'),
       energy: Math.min(100, Math.round((upcoming / 3) * 100) || 0),
       energyLabel: 'Загрузка календаря',
       relatedIds: [2, 6],
